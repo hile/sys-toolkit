@@ -199,7 +199,6 @@ class Processes(CachedMutableSequence):
 
         # Skip header line
         for line in lines[1:]:
-            print(f'PARSE "{line}"')
             process = Process(self, line)
             self.append(process)
 
