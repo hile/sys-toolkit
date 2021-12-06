@@ -1,0 +1,221 @@
+                 STARTED    PPID     PID  RUID  RGID RUSER       VSZ   RSS S TDEV     TIME COMMAND
+Fri Nov 19 18:31:26 2021       0       1     0     0 root     163968 10500 R    - 00:00:07 /sbin/init
+Fri Nov 19 18:31:26 2021       0       2     0     0 root          0     0 S    - 00:00:00 [kthreadd]
+Fri Nov 19 18:31:26 2021       2       3     0     0 root          0     0 I    - 00:00:00 [rcu_gp]
+Fri Nov 19 18:31:26 2021       2       4     0     0 root          0     0 I    - 00:00:00 [rcu_par_gp]
+Fri Nov 19 18:31:26 2021       2       6     0     0 root          0     0 I    - 00:00:00 [kworker/0:0H-events_highpri]
+Fri Nov 19 18:31:26 2021       2       9     0     0 root          0     0 I    - 00:00:00 [mm_percpu_wq]
+Fri Nov 19 18:31:26 2021       2      10     0     0 root          0     0 S    - 00:00:00 [rcu_tasks_rude_]
+Fri Nov 19 18:31:26 2021       2      11     0     0 root          0     0 S    - 00:00:00 [rcu_tasks_trace]
+Fri Nov 19 18:31:26 2021       2      12     0     0 root          0     0 S    - 00:00:00 [ksoftirqd/0]
+Fri Nov 19 18:31:26 2021       2      13     0     0 root          0     0 I    - 00:00:38 [rcu_sched]
+Fri Nov 19 18:31:26 2021       2      14     0     0 root          0     0 S    - 00:00:15 [migration/0]
+Fri Nov 19 18:31:26 2021       2      15     0     0 root          0     0 S    - 00:00:00 [cpuhp/0]
+Fri Nov 19 18:31:26 2021       2      16     0     0 root          0     0 S    - 00:00:00 [cpuhp/1]
+Fri Nov 19 18:31:26 2021       2      17     0     0 root          0     0 S    - 00:00:15 [migration/1]
+Fri Nov 19 18:31:26 2021       2      18     0     0 root          0     0 S    - 00:00:34 [ksoftirqd/1]
+Fri Nov 19 18:31:26 2021       2      20     0     0 root          0     0 I    - 00:00:00 [kworker/1:0H-events_highpri]
+Fri Nov 19 18:31:26 2021       2      21     0     0 root          0     0 S    - 00:00:00 [cpuhp/2]
+Fri Nov 19 18:31:26 2021       2      22     0     0 root          0     0 S    - 00:00:14 [migration/2]
+Fri Nov 19 18:31:26 2021       2      23     0     0 root          0     0 S    - 00:00:00 [ksoftirqd/2]
+Fri Nov 19 18:31:26 2021       2      25     0     0 root          0     0 I    - 00:00:00 [kworker/2:0H-events_highpri]
+Fri Nov 19 18:31:26 2021       2      26     0     0 root          0     0 S    - 00:00:00 [cpuhp/3]
+Fri Nov 19 18:31:26 2021       2      27     0     0 root          0     0 S    - 00:00:15 [migration/3]
+Fri Nov 19 18:31:26 2021       2      28     0     0 root          0     0 S    - 00:00:00 [ksoftirqd/3]
+Fri Nov 19 18:31:26 2021       2      30     0     0 root          0     0 I    - 00:00:00 [kworker/3:0H-kblockd]
+Fri Nov 19 18:31:27 2021       2      35     0     0 root          0     0 S    - 00:00:00 [kdevtmpfs]
+Fri Nov 19 18:31:27 2021       2      36     0     0 root          0     0 I    - 00:00:00 [netns]
+Fri Nov 19 18:31:27 2021       2      37     0     0 root          0     0 S    - 00:00:00 [kauditd]
+Fri Nov 19 18:31:27 2021       2      39     0     0 root          0     0 S    - 00:00:00 [khungtaskd]
+Fri Nov 19 18:31:27 2021       2      40     0     0 root          0     0 S    - 00:00:00 [oom_reaper]
+Fri Nov 19 18:31:27 2021       2      41     0     0 root          0     0 I    - 00:00:00 [writeback]
+Fri Nov 19 18:31:27 2021       2      42     0     0 root          0     0 S    - 00:01:10 [kcompactd0]
+Fri Nov 19 18:31:27 2021       2      43     0     0 root          0     0 S    - 00:00:00 [ksmd]
+Fri Nov 19 18:31:27 2021       2      44     0     0 root          0     0 S    - 00:00:11 [khugepaged]
+Fri Nov 19 18:31:27 2021       2      64     0     0 root          0     0 I    - 00:00:00 [kintegrityd]
+Fri Nov 19 18:31:27 2021       2      65     0     0 root          0     0 I    - 00:00:00 [kblockd]
+Fri Nov 19 18:31:27 2021       2      66     0     0 root          0     0 I    - 00:00:00 [blkcg_punt_bio]
+Fri Nov 19 18:31:27 2021       2      67     0     0 root          0     0 I    - 00:00:00 [edac-poller]
+Fri Nov 19 18:31:27 2021       2      68     0     0 root          0     0 I    - 00:00:00 [devfreq_wq]
+Fri Nov 19 18:31:27 2021       2      69     0     0 root          0     0 I    - 00:00:03 [kworker/0:1H-kblockd]
+Fri Nov 19 18:31:28 2021       2      71     0     0 root          0     0 S    - 00:00:00 [kswapd0]
+Fri Nov 19 18:31:28 2021       2      72     0     0 root          0     0 I    - 00:00:00 [kthrotld]
+Fri Nov 19 18:31:28 2021       2      73     0     0 root          0     0 S    - 00:00:00 [irq/24-pciehp]
+Fri Nov 19 18:31:28 2021       2      74     0     0 root          0     0 S    - 00:00:00 [irq/25-pciehp]
+Fri Nov 19 18:31:28 2021       2      75     0     0 root          0     0 S    - 00:00:00 [irq/26-pciehp]
+Fri Nov 19 18:31:28 2021       2      76     0     0 root          0     0 S    - 00:00:00 [irq/27-pciehp]
+Fri Nov 19 18:31:28 2021       2      77     0     0 root          0     0 S    - 00:00:00 [irq/28-pciehp]
+Fri Nov 19 18:31:28 2021       2      78     0     0 root          0     0 S    - 00:00:00 [irq/29-pciehp]
+Fri Nov 19 18:31:28 2021       2      79     0     0 root          0     0 S    - 00:00:00 [irq/30-pciehp]
+Fri Nov 19 18:31:28 2021       2      80     0     0 root          0     0 S    - 00:00:00 [irq/31-pciehp]
+Fri Nov 19 18:31:28 2021       2      81     0     0 root          0     0 S    - 00:00:00 [irq/32-pciehp]
+Fri Nov 19 18:31:28 2021       2      82     0     0 root          0     0 S    - 00:00:00 [irq/33-pciehp]
+Fri Nov 19 18:31:28 2021       2      83     0     0 root          0     0 S    - 00:00:00 [irq/34-pciehp]
+Fri Nov 19 18:31:28 2021       2      84     0     0 root          0     0 S    - 00:00:00 [irq/35-pciehp]
+Fri Nov 19 18:31:28 2021       2      85     0     0 root          0     0 S    - 00:00:00 [irq/36-pciehp]
+Fri Nov 19 18:31:28 2021       2      86     0     0 root          0     0 S    - 00:00:00 [irq/37-pciehp]
+Fri Nov 19 18:31:28 2021       2      87     0     0 root          0     0 S    - 00:00:00 [irq/38-pciehp]
+Fri Nov 19 18:31:28 2021       2      88     0     0 root          0     0 S    - 00:00:00 [irq/39-pciehp]
+Fri Nov 19 18:31:28 2021       2      89     0     0 root          0     0 S    - 00:00:00 [irq/40-pciehp]
+Fri Nov 19 18:31:28 2021       2      90     0     0 root          0     0 S    - 00:00:00 [irq/41-pciehp]
+Fri Nov 19 18:31:28 2021       2      91     0     0 root          0     0 S    - 00:00:00 [irq/42-pciehp]
+Fri Nov 19 18:31:28 2021       2      92     0     0 root          0     0 S    - 00:00:00 [irq/43-pciehp]
+Fri Nov 19 18:31:28 2021       2      93     0     0 root          0     0 S    - 00:00:00 [irq/44-pciehp]
+Fri Nov 19 18:31:28 2021       2      94     0     0 root          0     0 S    - 00:00:00 [irq/45-pciehp]
+Fri Nov 19 18:31:28 2021       2      95     0     0 root          0     0 S    - 00:00:00 [irq/46-pciehp]
+Fri Nov 19 18:31:28 2021       2      96     0     0 root          0     0 S    - 00:00:00 [irq/47-pciehp]
+Fri Nov 19 18:31:28 2021       2      97     0     0 root          0     0 S    - 00:00:00 [irq/48-pciehp]
+Fri Nov 19 18:31:28 2021       2      98     0     0 root          0     0 S    - 00:00:00 [irq/49-pciehp]
+Fri Nov 19 18:31:28 2021       2      99     0     0 root          0     0 S    - 00:00:00 [irq/50-pciehp]
+Fri Nov 19 18:31:28 2021       2     100     0     0 root          0     0 S    - 00:00:00 [irq/51-pciehp]
+Fri Nov 19 18:31:28 2021       2     101     0     0 root          0     0 S    - 00:00:00 [irq/52-pciehp]
+Fri Nov 19 18:31:28 2021       2     102     0     0 root          0     0 S    - 00:00:00 [irq/53-pciehp]
+Fri Nov 19 18:31:28 2021       2     103     0     0 root          0     0 S    - 00:00:00 [irq/54-pciehp]
+Fri Nov 19 18:31:28 2021       2     104     0     0 root          0     0 S    - 00:00:00 [irq/55-pciehp]
+Fri Nov 19 18:31:28 2021       2     105     0     0 root          0     0 I    - 00:00:00 [acpi_thermal_pm]
+Fri Nov 19 18:31:28 2021       2     106     0     0 root          0     0 I    - 00:00:03 [kworker/2:1H-kblockd]
+Fri Nov 19 18:31:28 2021       2     107     0     0 root          0     0 I    - 00:00:00 [ipv6_addrconf]
+Fri Nov 19 18:31:28 2021       2     116     0     0 root          0     0 I    - 00:00:00 [kstrp]
+Fri Nov 19 18:31:28 2021       2     119     0     0 root          0     0 I    - 00:00:00 [zswap-shrink]
+Fri Nov 19 18:31:29 2021       2     173     0     0 root          0     0 I    - 00:00:00 [mpt_poll_0]
+Fri Nov 19 18:31:29 2021       2     174     0     0 root          0     0 I    - 00:00:00 [mpt/0]
+Fri Nov 19 18:31:29 2021       2     175     0     0 root          0     0 I    - 00:00:00 [ata_sff]
+Fri Nov 19 18:31:29 2021       2     176     0     0 root          0     0 S    - 00:00:00 [scsi_eh_0]
+Fri Nov 19 18:31:29 2021       2     177     0     0 root          0     0 I    - 00:00:00 [scsi_tmf_0]
+Fri Nov 19 18:31:29 2021       2     178     0     0 root          0     0 S    - 00:00:00 [scsi_eh_1]
+Fri Nov 19 18:31:29 2021       2     179     0     0 root          0     0 I    - 00:00:00 [scsi_tmf_1]
+Fri Nov 19 18:31:29 2021       2     181     0     0 root          0     0 S    - 00:00:16 [irq/16-vmwgfx]
+Fri Nov 19 18:31:29 2021       2     182     0     0 root          0     0 I    - 00:00:00 [ttm_swap]
+Fri Nov 19 18:31:29 2021       2     183     0     0 root          0     0 S    - 00:00:00 [card0-crtc0]
+Fri Nov 19 18:31:29 2021       2     184     0     0 root          0     0 S    - 00:00:00 [card0-crtc1]
+Fri Nov 19 18:31:29 2021       2     185     0     0 root          0     0 S    - 00:00:00 [card0-crtc2]
+Fri Nov 19 18:31:29 2021       2     186     0     0 root          0     0 S    - 00:00:00 [card0-crtc3]
+Fri Nov 19 18:31:29 2021       2     187     0     0 root          0     0 S    - 00:00:00 [card0-crtc4]
+Fri Nov 19 18:31:29 2021       2     188     0     0 root          0     0 S    - 00:00:00 [card0-crtc5]
+Fri Nov 19 18:31:29 2021       2     189     0     0 root          0     0 S    - 00:00:00 [card0-crtc6]
+Fri Nov 19 18:31:29 2021       2     190     0     0 root          0     0 S    - 00:00:00 [card0-crtc7]
+Fri Nov 19 18:31:29 2021       2     191     0     0 root          0     0 I    - 00:00:03 [kworker/1:1H-kblockd]
+Fri Nov 19 18:31:29 2021       2     193     0     0 root          0     0 S    - 00:00:00 [scsi_eh_2]
+Fri Nov 19 18:31:29 2021       2     194     0     0 root          0     0 I    - 00:00:00 [scsi_tmf_2]
+Fri Nov 19 18:31:30 2021       2     197     0     0 root          0     0 I    - 00:00:03 [kworker/3:1H-kblockd]
+Fri Nov 19 18:31:30 2021       2     234     0     0 root          0     0 S    - 00:00:18 [jbd2/sda2-8]
+Fri Nov 19 18:31:30 2021       2     235     0     0 root          0     0 I    - 00:00:00 [ext4-rsv-conver]
+Fri Nov 19 18:31:30 2021       1     275     0     0 root      56792 21316 S    - 00:00:04 /lib/systemd/systemd-journald
+Fri Nov 19 18:31:30 2021       1     297     0     0 root     224344   284 S    - 00:00:00 vmware-vmblock-fuse /run/vmblock-fuse -o rw,subtype=vmware-vmblock,default_permissions,allow_other,dev,suid
+Fri Nov 19 18:31:30 2021       1     301     0     0 root      23516  6724 S    - 00:00:01 /lib/systemd/systemd-udevd
+Fri Nov 19 18:31:31 2021       2     352     0     0 root          0     0 I    - 00:00:00 [cryptd]
+Fri Nov 19 18:31:31 2021       1     515   101   101 systemd+  88508  6156 S    - 00:00:02 /lib/systemd/systemd-timesyncd
+Fri Nov 19 18:31:31 2021       2     521     0     0 root          0     0 I    - 00:00:00 [kworker/u257:1-hci0]
+Fri Nov 19 18:31:31 2021       2     522     0     0 root          0     0 I    - 00:00:00 [kworker/u257:2-hci0]
+Fri Nov 19 18:31:32 2021       1     525     0     0 root      50356 10692 S    - 00:00:00 /usr/bin/VGAuthService
+Fri Nov 19 18:31:32 2021       1     532     0     0 root     239188  7632 S    - 00:28:39 /usr/bin/vmtoolsd
+Fri Nov 19 18:31:32 2021       1     539     0     0 root      99824  5940 S    - 00:00:00 /sbin/dhclient -4 -v -i -pf /run/dhclient.ens33.pid -lf /var/lib/dhcp/dhclient.ens33.leases -I -df /var/lib/dhcp/dhclient6.ens33.leases ens33
+Fri Nov 19 18:31:32 2021       1     546     0     0 root     238996  7220 S    - 00:00:00 /usr/libexec/accounts-daemon
+Fri Nov 19 18:31:32 2021       1     549   110   115 avahi      7452  4116 S    - 00:00:07 avahi-daemon: running [fese.local]
+Fri Nov 19 18:31:32 2021       1     550     0     0 root      12748  6588 S    - 00:00:00 /usr/libexec/bluetooth/bluetoothd
+Fri Nov 19 18:31:32 2021       1     552     0     0 root       9220  2956 S    - 00:00:02 /usr/sbin/cron -f
+Fri Nov 19 18:31:32 2021       1     553   105   111 message+   9560  5756 S    - 00:00:05 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+Fri Nov 19 18:31:32 2021       1     554     0     0 root     257112 16584 S    - 00:00:32 /usr/sbin/NetworkManager --no-daemon
+Fri Nov 19 18:31:32 2021       1     559     0     0 root     235884 10080 R    - 00:00:00 /usr/libexec/polkitd --no-debug
+Fri Nov 19 18:31:32 2021       1     560     0     0 root     220740  5144 S    - 00:00:00 /usr/sbin/rsyslogd -n -iNONE
+Fri Nov 19 18:31:32 2021       1     561     0     0 root     235540  8316 S    - 00:00:00 /usr/libexec/switcheroo-control
+Fri Nov 19 18:31:32 2021       1     562     0     0 root      13992  7452 S    - 00:00:02 /lib/systemd/systemd-logind
+Fri Nov 19 18:31:32 2021       1     563     0     0 root     393584 12124 S    - 00:00:01 /usr/libexec/udisks2/udisksd
+Fri Nov 19 18:31:32 2021       1     564     0     0 root      14560  5232 S    - 00:00:09 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+Fri Nov 19 18:31:32 2021     549     566   110   115 avahi      7092   344 S    - 00:00:00 avahi-daemon: chroot helper
+Fri Nov 19 18:31:32 2021       1     584     0     0 root     314784 10632 S    - 00:00:00 /usr/sbin/ModemManager
+Fri Nov 19 18:31:32 2021       1     683     0     0 root     121256 23260 S    - 00:00:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+Fri Nov 19 18:31:32 2021       1     688     0     0 root      13292  7720 S    - 00:00:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+Fri Nov 19 18:31:32 2021       1     702     0     0 root     242200  8804 S    - 00:00:00 /usr/sbin/gdm3
+Fri Nov 19 18:31:32 2021     702     756     0  1000 root     169316 10124 S    - 00:00:00 gdm-session-worker [pam/gdm-autologin]
+Fri Nov 19 18:31:33 2021       1     796  1000  1000 hile      15772  9504 S    - 00:00:00 /lib/systemd/systemd --user
+Fri Nov 19 18:31:33 2021     796     797  1000  1000 hile     101488  2700 S    - 00:00:00 (sd-pam)
+Fri Nov 19 18:31:33 2021     796     816  1000  1000 hile      90860  5996 S    - 00:00:00 /usr/bin/pipewire
+Fri Nov 19 18:31:33 2021     796     817  1000  1000 hile     1423148 28284 S   - 00:00:21 /usr/bin/pulseaudio --daemonize=no --log-target=journal
+Fri Nov 19 18:31:33 2021     796     819  1000  1000 hile     585804 27136 S    - 00:00:00 /usr/libexec/tracker-miner-fs
+Fri Nov 19 18:31:33 2021       1     822   107   114 rtkit    153692  2992 S    - 00:00:20 /usr/libexec/rtkit-daemon
+Fri Nov 19 18:31:33 2021       1     824  1000  1000 hile     239916  6840 S    - 00:00:00 /usr/bin/gnome-keyring-daemon --daemonize --login
+Fri Nov 19 18:31:33 2021     756     830  1000  1000 hile     164828  8544 S    - 00:00:00 /usr/libexec/gdm-x-session --run-script /usr/bin/gnome-session
+Fri Nov 19 18:31:33 2021     796     831  1000  1000 hile       8952  5368 S    - 00:00:01 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+Fri Nov 19 18:31:33 2021     830     835  1000  1000 hile     1194408 111176 S  - 00:19:11 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -nolisten tcp -background none -noreset -keeptty -novtswitch -verbose 3
+Fri Nov 19 18:31:33 2021     816     838  1000  1000 hile      85300  6360 S    - 00:00:00 /usr/bin/pipewire-media-session
+Fri Nov 19 18:31:33 2021     796     842  1000  1000 hile     239620  9744 S    - 00:00:00 /usr/libexec/gvfsd
+Fri Nov 19 18:31:33 2021     796     857  1000  1000 hile     379924  8324 S    - 00:00:00 /usr/libexec/gvfsd-fuse /run/user/1000/gvfs -f
+Fri Nov 19 18:31:33 2021     796     862  1000  1000 hile     351800 12056 S    - 00:00:00 /usr/libexec/gvfs-udisks2-volume-monitor
+Fri Nov 19 18:31:33 2021     796     869  1000  1000 hile     314280  7688 S    - 00:01:30 /usr/libexec/gvfs-afc-volume-monitor
+Fri Nov 19 18:31:33 2021     796     874  1000  1000 hile     235788  6116 S    - 00:00:00 /usr/libexec/gvfs-goa-volume-monitor
+Fri Nov 19 18:31:33 2021     796     879  1000  1000 hile     552816 37800 S    - 00:00:00 /usr/libexec/goa-daemon
+Fri Nov 19 18:31:34 2021       2     882     0     0 root          0     0 S    - 00:00:00 [krfcommd]
+Fri Nov 19 18:31:34 2021     796     905  1000  1000 hile     314496  8948 S    - 00:00:00 /usr/libexec/goa-identity-service
+Fri Nov 19 18:31:34 2021     796     911  1000  1000 hile     235568  5760 S    - 00:00:00 /usr/libexec/gvfs-mtp-volume-monitor
+Fri Nov 19 18:31:34 2021     796     915  1000  1000 hile     237936  6252 S    - 00:00:00 /usr/libexec/gvfs-gphoto2-volume-monitor
+Fri Nov 19 18:31:34 2021       1     921     0     0 root     249720  8760 S    - 00:00:00 /usr/libexec/upowerd
+Fri Nov 19 18:31:35 2021     830     933  1000  1000 hile     300696 16028 S    - 00:00:00 /usr/libexec/gnome-session-binary --systemd
+Fri Nov 19 18:31:35 2021     933    1013  1000  1000 hile       5964   464 S    - 00:00:09 /usr/bin/ssh-agent /usr/bin/im-launch /usr/bin/gnome-session
+Fri Nov 19 18:31:35 2021     796    1045  1000  1000 hile     307424  8500 S    - 00:00:00 /usr/libexec/at-spi-bus-launcher
+Fri Nov 19 18:31:35 2021    1045    1050  1000  1000 hile       8040  4492 S    - 00:00:00 /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 3
+Fri Nov 19 18:31:35 2021     796    1080  1000  1000 hile      90712  4364 S    - 00:00:00 /usr/libexec/gnome-session-ctl --monitor
+Fri Nov 19 18:31:35 2021     796    1084  1000  1000 hile     661824 17376 S    - 00:00:00 /usr/libexec/gnome-session-binary --systemd-service --session=gnome
+Fri Nov 19 18:31:36 2021     796    1101  1000  1000 hile     4547116 333604 S  - 00:53:30 /usr/bin/gnome-shell
+Fri Nov 19 18:31:37 2021    1101    1133  1000  1000 hile     313984 11376 S    - 00:00:00 ibus-daemon --panel disable --xim
+Fri Nov 19 18:31:37 2021    1133    1137  1000  1000 hile     162596  7000 S    - 00:00:00 /usr/libexec/ibus-memconf
+Fri Nov 19 18:31:37 2021    1133    1138  1000  1000 hile     275040 27192 S    - 00:00:01 /usr/libexec/ibus-extension-gtk3
+Fri Nov 19 18:31:37 2021     796    1140  1000  1000 hile     196736 23064 S    - 00:00:00 /usr/libexec/ibus-x11 --kill-daemon
+Fri Nov 19 18:31:37 2021     796    1144  1000  1000 hile     236240  7208 S    - 00:00:00 /usr/libexec/ibus-portal
+Fri Nov 19 18:31:37 2021     796    1154  1000  1000 hile     165808  6528 S    - 00:00:10 /usr/libexec/at-spi2-registryd --use-gnome-session
+Fri Nov 19 18:31:37 2021     796    1158  1000  1000 hile     235480  4684 S    - 00:00:00 /usr/libexec/xdg-permission-store
+Fri Nov 19 18:31:37 2021     796    1160  1000  1000 hile     580928 20544 S    - 00:00:00 /usr/libexec/gnome-shell-calendar-server
+Fri Nov 19 18:31:38 2021     796    1169  1000  1000 hile     1075592 27908 S   - 00:00:00 /usr/libexec/evolution-source-registry
+Fri Nov 19 18:31:38 2021     796    1179  1000  1000 hile     852032 34584 S    - 00:00:00 /usr/libexec/evolution-calendar-factory
+Fri Nov 19 18:31:38 2021       1    1185     0     0 root     440832 45784 S    - 00:00:29 /usr/libexec/packagekitd
+Fri Nov 19 18:31:38 2021     796    1195  1000  1000 hile     156012  5460 S    - 00:00:00 /usr/libexec/dconf-service
+Fri Nov 19 18:31:38 2021     796    1198  1000  1000 hile     670948 28904 S    - 00:00:00 /usr/libexec/evolution-addressbook-factory
+Fri Nov 19 18:31:38 2021     796    1201  1000  1000 hile     2738208 27976 S   - 00:00:00 /usr/bin/gjs /usr/share/gnome-shell/org.gnome.Shell.Notifications
+Fri Nov 19 18:31:38 2021     796    1211  1000  1000 hile     309600  6588 S    - 00:00:00 /usr/libexec/gsd-a11y-settings
+Fri Nov 19 18:31:38 2021     796    1213  1000  1000 hile     600480 26268 S    - 00:00:03 /usr/libexec/gsd-color
+Fri Nov 19 18:31:38 2021     796    1215  1000  1000 hile     378880 18316 S    - 00:00:00 /usr/libexec/gsd-datetime
+Fri Nov 19 18:31:38 2021     796    1216  1000  1000 hile     311780  9468 S    - 00:00:12 /usr/libexec/gsd-housekeeping
+Fri Nov 19 18:31:38 2021     796    1219  1000  1000 hile     417952 24816 S    - 00:00:00 /usr/libexec/gsd-keyboard
+Fri Nov 19 18:31:38 2021     796    1221  1000  1000 hile     999020 28772 S    - 00:00:00 /usr/libexec/gsd-media-keys
+Fri Nov 19 18:31:38 2021     796    1227  1000  1000 hile     452492 25848 S    - 00:00:01 /usr/libexec/gsd-power
+Fri Nov 19 18:31:38 2021    1084    1229  1000  1000 hile     231792  7596 S    - 00:00:00 /usr/libexec/gsd-disk-utility-notify
+Fri Nov 19 18:31:38 2021     796    1239  1000  1000 hile     322940 10720 S    - 00:00:00 /usr/libexec/gsd-print-notifications
+Fri Nov 19 18:31:38 2021    1084    1240  1000  1000 hile     738628 72820 S    - 00:00:02 /usr/libexec/evolution-data-server/evolution-alarm-notify
+Fri Nov 19 18:31:38 2021     796    1241  1000  1000 hile     292932 41232 S    - 00:28:17 /usr/bin/vmtoolsd -n vmusr --blockFd 3
+Fri Nov 19 18:31:38 2021     796    1242  1000  1000 hile     457012  8088 S    - 00:00:00 /usr/libexec/gsd-rfkill
+Fri Nov 19 18:31:38 2021     796    1248  1000  1000 hile     235444  5880 S    - 00:00:00 /usr/libexec/gsd-screensaver-proxy
+Fri Nov 19 18:31:38 2021     796    1250  1000  1000 hile     464948 13912 S    - 00:00:03 /usr/libexec/gsd-sharing
+Fri Nov 19 18:31:38 2021     796    1251  1000  1000 hile     315268 10008 S    - 00:00:00 /usr/libexec/gsd-smartcard
+Fri Nov 19 18:31:38 2021     796    1258  1000  1000 hile     322244 10056 S    - 00:00:00 /usr/libexec/gsd-sound
+Fri Nov 19 18:31:38 2021    1084    1259  1000  1000 hile     1074732 114944 S  - 00:00:37 /usr/bin/gnome-software --gapplication-service
+Fri Nov 19 18:31:38 2021     796    1271  1000  1000 hile     458576  7144 S    - 00:00:00 /usr/libexec/gsd-usb-protection
+Fri Nov 19 18:31:38 2021     796    1273  1000  1000 hile     347552 15368 S    - 00:00:00 /usr/libexec/gsd-printer
+Fri Nov 19 18:31:38 2021     796    1276  1000  1000 hile     344240 23508 S    - 00:00:00 /usr/libexec/gsd-wacom
+Fri Nov 19 18:31:38 2021     796    1291  1000  1000 hile     344676 23900 S    - 00:00:00 /usr/libexec/gsd-xsettings
+Fri Nov 19 18:31:38 2021       1    1292   114   120 colord   245668 15516 S    - 00:00:00 /usr/libexec/colord
+Fri Nov 19 18:31:39 2021    1133    1385  1000  1000 hile     162592  9056 S    - 00:00:00 /usr/libexec/ibus-engine-simple
+Fri Nov 19 18:32:38 2021     796    1958  1000  1000 hile     162084  6284 S    - 00:00:00 /usr/libexec/gvfsd-metadata
+Sat Nov 20 16:05:13 2021     842    4981  1000  1000 hile     313620 10016 S    - 00:00:00 /usr/libexec/gvfsd-trash --spawner :1.6 /org/gtk/gvfs/exec_spaw/0
+Sat Nov 20 16:05:13 2021     842    4990  1000  1000 hile     387744  8320 S    - 00:00:00 /usr/libexec/gvfsd-network --spawner :1.6 /org/gtk/gvfs/exec_spaw/1
+Sat Nov 20 16:05:15 2021     842    5002  1000  1000 hile     315948  8416 S    - 00:00:00 /usr/libexec/gvfsd-dnssd --spawner :1.6 /org/gtk/gvfs/exec_spaw/3
+Sat Nov 27 03:25:39 2021    1101   25548  1000  1000 hile     3668224 523808 S  - 00:37:32 /usr/lib/firefox-esr/firefox-esr
+Sat Nov 27 03:25:40 2021   25548   25676  1000  1000 hile     27793208 205808 S - 00:02:07 /usr/lib/firefox-esr/firefox-esr -contentproc -childID 2 -isForBrowser -prefsLen 6389 -prefMapSize 220356 -parentBuildID 20210927121355 -appdir /usr/lib/firefox-esr/browser 25548 true tab
+Sat Nov 27 08:57:26 2021       2   27151     0     0 root          0     0 I    - 00:01:00 [kworker/3:2-events]
+Sat Nov 27 09:45:41 2021   25548   28107  1000  1000 hile     3191852 466956 S  - 00:23:53 /usr/lib/firefox-esr/firefox-esr -contentproc -childID 10 -isForBrowser -prefsLen 9793 -prefMapSize 220356 -parentBuildID 20210927121355 -appdir /usr/lib/firefox-esr/browser 25548 true tab
+Sat Nov 27 09:46:43 2021       2   28162     0     0 root          0     0 I    - 00:00:44 [kworker/1:3-events]
+Sat Nov 27 11:34:34 2021       2   28462     0     0 root          0     0 I    - 00:00:20 [kworker/0:0-events]
+Sat Nov 27 11:55:51 2021       2   28547     0     0 root          0     0 I    - 00:00:00 [kworker/u256:0-ext4-rsv-conversion]
+Sat Nov 27 11:59:38 2021   25548   28584  1000  1000 hile     2411372 111080 S  - 00:00:09 /usr/lib/firefox-esr/firefox-esr -contentproc -childID 11 -isForBrowser -prefsLen 9790 -prefMapSize 220356 -parentBuildID 20210927121355 -appdir /usr/lib/firefox-esr/browser 25548 true tab
+Sat Nov 27 12:31:07 2021       2   28750     0     0 root          0     0 I    - 00:00:00 [kworker/0:2]
+Sat Nov 27 12:45:16 2021       2   28786     0     0 root          0     0 I    - 00:00:00 [kworker/u256:1-ext4-rsv-conversion]
+Sat Nov 27 12:46:26 2021       2   28838     0     0 root          0     0 I    - 00:00:00 [kworker/3:1]
+Sat Nov 27 12:46:33 2021       2   28839     0     0 root          0     0 I    - 00:00:00 [kworker/2:0-events]
+Sat Nov 27 12:46:33 2021       2   28840     0     0 root          0     0 I    - 00:00:06 [kworker/2:2-events]
+Sat Nov 27 12:50:41 2021   25548   28846  1000  1000 hile     2390312 80380 S   - 00:00:01 /usr/lib/firefox-esr/firefox-esr -contentproc -childID 14 -isForBrowser -prefsLen 9790 -prefMapSize 220356 -parentBuildID 20210927121355 -appdir /usr/lib/firefox-esr/browser 25548 true tab
+Sat Nov 27 12:51:44 2021       2   28903     0     0 root          0     0 I    - 00:00:05 [kworker/1:0-events]
+Sat Nov 27 13:06:06 2021       2   28970     0     0 root          0     0 I    - 00:00:00 [kworker/u256:2-flush-8:0]
+Sat Nov 27 13:12:48 2021       2   29006     0     0 root          0     0 I    - 00:00:00 [kworker/u256:3-flush-8:0]
+Sat Nov 27 13:16:46 2021       2   29022     0     0 root          0     0 I    - 00:00:00 [kworker/0:1-events]
+Sat Nov 27 13:17:32 2021     688   29027     0     0 root      14708  9008 S    - 00:00:00 sshd: hile [priv]
+Sat Nov 27 13:17:32 2021   29027   29036  1000  1000 hile      14708  5996 S    - 00:00:00 sshd: hile@notty
+Sat Nov 27 13:17:32 2021   29036   29037  1000  1000 hile      12236  3332 R    - 00:00:00 ps -wwaxo lstart,ppid,pid,ruid,rgid,ruser,vsz,rss,state,tdev,time,command

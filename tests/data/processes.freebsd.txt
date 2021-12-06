@@ -1,0 +1,106 @@
+STARTED                   PPID   PID  RUID  RGID RUSER             VSZ     RSS STAT TDEV        TIME COMMAND
+Wed Nov 17 15:55:03 2021     0     0     0     0 root                0   16176 DLs     -    24:52.79 [kernel]
+Wed Nov 17 15:55:03 2021     0     1     0     0 root            11824    1112 ILs     -     0:00.77 /sbin/init
+Wed Nov 17 15:55:03 2021     0     2     0     0 root                0      64 DL      -     0:00.00 [KTLS]
+Wed Nov 17 15:55:03 2021     0     3     0     0 root                0      16 DL      -     0:00.00 [crypto]
+Wed Nov 17 15:55:03 2021     0     4     0     0 root                0      16 DL      -     0:00.00 [crypto returns 0]
+Wed Nov 17 15:55:03 2021     0     5     0     0 root                0      16 DL      -     0:00.00 [crypto returns 1]
+Wed Nov 17 15:55:03 2021     0     6     0     0 root                0      16 DL      -     0:00.00 [crypto returns 2]
+Wed Nov 17 15:55:03 2021     0     7     0     0 root                0      16 DL      -     0:00.00 [crypto returns 3]
+Wed Nov 17 15:55:03 2021     0     8     0     0 root                0      32 DL      -     0:37.82 [cam]
+Wed Nov 17 15:55:03 2021     0     9     0     0 root                0      16 DL      -     0:00.08 [soaiod1]
+Wed Nov 17 15:55:03 2021     0    10     0     0 root                0      16 DL      -     0:00.00 [audit]
+Wed Nov 17 15:55:03 2021     0    11     0     0 root                0      64 RNL     - 87604:13.00 [idle]
+Wed Nov 17 15:55:03 2021     0    12     0     0 root                0     272 WL      -    13:11.32 [intr]
+Wed Nov 17 15:55:03 2021     0    13     0     0 root                0      48 DL      -     0:00.05 [geom]
+Wed Nov 17 15:55:03 2021     0    14     0     0 root                0      16 DL      -     0:00.00 [sequencer 00]
+Wed Nov 17 15:55:03 2021     0    15     0     0 root                0     320 DL      -    11:53.92 [usb]
+Wed Nov 17 15:55:03 2021     0    16     0     0 root                0      16 DL      -     0:00.08 [soaiod2]
+Wed Nov 17 15:55:03 2021     0    17     0     0 root                0      16 DL      -     0:00.08 [soaiod3]
+Wed Nov 17 15:55:03 2021     0    18     0     0 root                0      16 DL      -     0:00.08 [soaiod4]
+Wed Nov 17 15:55:03 2021     0    19     0     0 root                0    1952 DL      -     2:33.04 [zfskern]
+Wed Nov 17 15:55:03 2021     0    20     0     0 root                0      16 DL      -     0:11.23 [acpi_thermal]
+Wed Nov 17 15:55:03 2021     0    21     0     0 root                0      16 DL      -     0:02.09 [acpi_cooling1]
+Wed Nov 17 15:55:03 2021     0    22     0     0 root                0      16 DL      -     2:39.15 [rand_harvestq]
+Wed Nov 17 15:55:03 2021     0    23     0     0 root                0      48 DL      -     1:02.96 [pagedaemon]
+Wed Nov 17 15:55:03 2021     0    24     0     0 root                0      16 DL      -     0:00.00 [vmdaemon]
+Wed Nov 17 15:55:03 2021     0    25     0     0 root                0     128 DL      -     0:30.53 [bufdaemon]
+Wed Nov 17 15:55:03 2021     0    26     0     0 root                0      16 DL      -     0:02.39 [vnlru]
+Wed Nov 17 15:55:03 2021     0    27     0     0 root                0      16 DL      -     0:05.30 [syncer]
+Wed Nov 17 15:55:03 2021     0    28     0     0 root                0      16 DL      -     0:01.51 [enc_daemon0]
+Wed Nov 17 15:55:03 2021     0    29     0     0 root                0      16 DL      -     0:17.62 [g_eli[0] ada0p4]
+Wed Nov 17 15:55:03 2021     0    30     0     0 root                0      16 DL      -     0:14.57 [g_eli[1] ada0p4]
+Wed Nov 17 15:55:03 2021     0    31     0     0 root                0      16 DL      -     0:17.36 [g_eli[2] ada0p4]
+Wed Nov 17 15:55:03 2021     0    32     0     0 root                0      16 DL      -     0:17.24 [g_eli[3] ada0p4]
+Wed Nov 17 15:55:12 2021     0  3296     0     0 root                0      16 DL      -     0:00.00 [g_eli[0] ada0p3]
+Wed Nov 17 15:55:12 2021     0  3966     0     0 root                0      16 DL      -     0:00.00 [g_eli[1] ada0p3]
+Wed Nov 17 15:55:24 2021     1  4422     0     0 root            13020    2396 Is      -     0:00.00 /usr/sbin/iscsid
+Wed Nov 17 15:55:12 2021     0  4437     0     0 root                0      16 DL      -     0:00.00 [g_eli[2] ada0p3]
+Wed Nov 17 15:55:12 2021     0  5199     0     0 root                0      16 DL      -     0:00.00 [g_eli[3] ada0p3]
+Thu Nov 18 02:52:04 2021     1  5479     0     0 root            20464    4428 Is      -     0:00.03 nfsd: master (nfsd)
+Wed Nov 17 15:55:24 2021     1  5918     0     0 root            13168    2412 Is      -     0:00.00 nfsuserd: master (nfsuserd)
+Thu Nov 18 02:52:04 2021  5479  6126     0     0 root            12784    2784 S       -    10:58.02 nfsd: server (nfsd)
+Wed Nov 17 15:55:24 2021  5918  6175     0     0 root            13168    2420 S       -     0:00.19 nfsuserd: slave (nfsuserd)
+Wed Nov 17 15:55:24 2021  5918  6699     0     0 root            13168    2420 I       -     0:00.35 nfsuserd: slave (nfsuserd)
+Wed Nov 17 15:55:24 2021  5918  7500     0     0 root            13168    2420 I       -     0:00.19 nfsuserd: slave (nfsuserd)
+Wed Nov 17 15:55:24 2021  5918  8122     0     0 root            13168    2420 I       -     0:00.15 nfsuserd: slave (nfsuserd)
+Thu Nov 18 03:01:00 2021 76830 18048     0     0 root            12964    2708 I       -     0:00.00 cron: running job (cron)
+Thu Nov 18 03:01:00 2021 18048 19397     0     0 root            13624    3212 Is      -     0:00.00 /bin/sh - /usr/sbin/periodic daily
+Thu Nov 18 03:01:00 2021 19397 20546     0     0 root            12768    2244 I       -     0:00.00 lockf -t 0 /var/run/periodic.daily.lock /bin/sh /usr/sbin/periodic LOCKED daily
+Thu Nov 18 03:01:00 2021 20546 21117     0     0 root            13624    3204 I       -     0:00.00 /bin/sh /usr/sbin/periodic LOCKED daily
+Thu Dec  2 21:38:13 2021 75103 21131     0  1085 root            21388    9424 Is      -     0:00.02 sshd: hile [priv] (sshd)
+Thu Dec  2 21:38:13 2021 21131 22730  1085  1085 hile            21392    9444 S       -     0:00.01 sshd: hile@pts/1 (sshd)
+Thu Nov 18 03:01:00 2021 21117 25574     0     0 root            13624    3220 I       -     0:00.00 /bin/sh /usr/sbin/periodic LOCKED daily
+Wed Nov 17 15:55:24 2021     0 26640     0     0 root                0      64 DL      -     0:00.00 [ng_queue]
+Wed Nov 17 15:55:25 2021     1 41277     0     0 root           282656    4440 Is      -     0:00.57 /usr/sbin/rpc.statd
+Wed Nov 17 15:55:25 2021     1 42314     0     0 root            20564    4424 Ss      -     0:00.95 /usr/sbin/rpc.lockd
+Wed Nov 17 15:55:25 2021     1 46121     0     0 root            13224    3100 Ss      -    35:43.09 /usr/local/bin/mDNSResponderPosix -n nacon -b -P /var/run/mdnsresponderposix.pid
+Tue Nov 30 22:31:53 2021     1 48586     0     0 root            12876    2360 Is      -     0:00.01 daemon: /usr/local/sbin/pdns_recursor[49138] (daemon)
+Tue Nov 30 22:31:53 2021 48586 49138   120   120 pdns_recursor   75492   34284 I       -     0:41.54 /usr/local/sbin/pdns_recursor --daemon=no --write-pid=no
+Wed Nov 17 15:55:25 2021     1 49894     0     0 root            12872    2376 Ss      -     0:54.91 /usr/sbin/powerd
+Wed Nov 17 15:55:25 2021     1 53810   123   123 ntpd            21992    5684 Ss      -     0:30.49 /usr/sbin/ntpd -p /var/db/ntp/ntpd.pid -c /etc/ntp.conf -f /var/db/ntp/ntpd.drift
+Sat Nov 20 04:15:00 2021 76830 56864     0     0 root            12964    2708 I       -     0:00.00 cron: running job (cron)
+Sat Nov 20 04:15:00 2021 56864 58116     0     0 root            13624    3212 Is      -     0:00.00 /bin/sh - /usr/sbin/periodic weekly
+Sat Nov 20 04:15:00 2021 58116 59570     0     0 root            12768    2244 I       -     0:00.00 lockf -t 0 /var/run/periodic.weekly.lock /bin/sh /usr/sbin/periodic LOCKED weekly
+Sat Nov 20 04:15:00 2021 59570 59962     0     0 root            13624    3204 I       -     0:00.00 /bin/sh /usr/sbin/periodic LOCKED weekly
+Wed Nov 17 15:55:25 2021     1 62050     0     0 root            12920    2872 Ss      -     0:07.04 /usr/sbin/syslogd -ss
+Sat Nov 20 04:15:00 2021 59962 62483     0     0 root            13624    3212 I       -     0:00.00 /bin/sh /usr/sbin/periodic LOCKED weekly
+Sat Nov 20 04:15:00 2021 62483 62834     0     0 root            13624    3212 I       -     0:00.00 /bin/sh - /etc/periodic/weekly/310.locate
+Sat Nov 20 04:15:00 2021 62834 65025     0 65534 root            13708    3220 IN      -     0:00.00 su -fm nobody
+Thu Nov 18 03:01:00 2021 25574 65644     0     0 root            13624    3212 I       -     0:00.00 /bin/sh /etc/periodic/daily/400.status-disks
+Wed Nov 17 15:55:25 2021     1 65669     0     0 root            15800    4428 S       -     0:13.03 /usr/local/sbin/netatalk
+Sat Nov 20 04:15:00 2021 65025 65857 65534 65534 nobody          14440    4052 IN      -     0:00.00 su (zsh)
+Sat Nov 20 04:15:00 2021 65857 66018 65534 65534 nobody          13624    3192 IN      -     0:00.00 /bin/sh /usr/libexec/locate.updatedb
+Thu Nov 18 03:01:00 2021 65644 66311     0     0 root            13624    3208 I       -     0:00.00 /bin/sh /etc/periodic/daily/400.status-disks
+Thu Nov 18 03:01:00 2021 66311 66691     0     0 root            13004    2732 D       -     0:00.00 df -l -h
+Thu Nov 18 03:01:00 2021 66311 66838     0     0 root            15332    2388 I       -     0:00.00 cat
+Thu Nov 18 02:51:36 2021     1 68640     0     0 root            12856    2704 Ss      -     0:00.85 /usr/sbin/rpcbind
+Sat Nov 20 04:15:00 2021 66018 70253 65534 65534 nobody          12816    2724 DN      -     0:00.06 find -s / ! ( -fstype zfs -or -fstype msdosfs ) -prune -or -path /tmp -prune -or -path /usr/tmp -prune -or -path /var/tmp -prune -or -path /var/db/portsnap -prune -or -path /var/db/freebsd-update -prune -or -name .zfs -type d -prune -or -print
+Sat Nov 20 04:15:00 2021 66018 70524 65534 65534 nobody          13624    3184 IN      -     0:00.00 /bin/sh /usr/libexec/locate.mklocatedb -presort
+Sat Nov 20 04:15:00 2021 70524 70944 65534 65534 nobody          12896    2452 IN      -     0:00.00 locate.code /tmp/locateFmJeSV0Tkw/mklocateMznuoAzhZe/_mklocatedb70524.bigrams
+Wed Nov 17 15:55:25 2021     1 75103     0     0 root            20952    8268 Is      -     0:07.98 /usr/sbin/sshd
+Wed Nov 17 15:55:26 2021     1 76830     0     0 root            12964    2712 Is      -     0:04.06 /usr/sbin/cron -s
+Wed Nov 17 15:55:24 2021     1 78971     0     0 root            11492    1492 Is      -     0:03.22 /sbin/devd
+Wed Nov 17 15:55:26 2021 65669 88659     0     0 root            26984    9912 I       -     0:00.01 /usr/local/sbin/afpd -d -F /usr/local/etc/afp.conf
+Wed Nov 17 15:55:26 2021 65669 89363     0     0 root            14672    3292 I       -     0:00.00 /usr/local/sbin/cnid_metad -d -F /usr/local/etc/afp.conf
+Thu Nov 18 02:51:54 2021     1 89768     0     0 root            20592    4692 Ss      -     0:45.01 /usr/sbin/mountd -r /etc/exports /etc/zfs/exports
+Wed Nov 17 21:16:31 2021     1 26799     0     0 root            15564    6056 I    0x4f     0:00.06 -su (zsh)
+Wed Nov 17 15:55:26 2021     1 84586     0     0 root            12892    2416 Is+  0x5a     0:00.00 /usr/libexec/getty Pc ttyv0
+Wed Nov 17 15:55:26 2021     1 85054     0     0 root            12892    2416 Is+  0x5b     0:00.00 /usr/libexec/getty Pc ttyv1
+Wed Nov 17 15:55:26 2021     1 85834     0     0 root            12892    2416 Is+  0x5c     0:00.00 /usr/libexec/getty Pc ttyv2
+Wed Nov 17 15:55:26 2021     1 86239     0     0 root            12892    2416 Is+  0x5d     0:00.00 /usr/libexec/getty Pc ttyv3
+Wed Nov 17 15:55:26 2021     1 86677     0     0 root            12892    2416 Is+  0x5e     0:00.00 /usr/libexec/getty Pc ttyv4
+Wed Nov 17 15:55:26 2021     1 86967     0     0 root            12892    2416 Is+  0x5f     0:00.00 /usr/libexec/getty Pc ttyv5
+Wed Nov 17 15:55:26 2021     1 87858     0     0 root            12892    2416 Is+  0x60     0:00.00 /usr/libexec/getty Pc ttyv6
+Wed Nov 17 15:55:26 2021     1 88168     0     0 root            12892    2416 Is+  0x61     0:00.00 /usr/libexec/getty Pc ttyv7
+Wed Nov 17 20:14:43 2021     1 38557     0     0 root            18712    6924 I    0x85     0:00.72 -su (zsh)
+Wed Nov 17 21:17:33 2021     1 34362     0     0 root            15564    6056 I    0x90     0:00.08 -su (zsh)
+Wed Nov 17 21:19:42 2021     1 63150     0     0 root            15564    6056 I    0x91     0:00.05 -su (zsh)
+Wed Nov 17 21:21:15 2021     1 87509     0     0 root            15564    6056 I    0x92     0:00.07 -su (zsh)
+Wed Nov 17 21:07:36 2021     1 73561     0     0 root            18584    6736 I    0x93     0:00.09 -su (zsh)
+Wed Nov 17 21:08:37 2021     1 81803     0     0 root            15564    6056 I    0x9a     0:00.07 -su (zsh)
+Thu Dec  2 21:38:13 2021 22730 22942  1085  1085 hile            15564    6072 Ss   0xad     0:00.07 -zsh (zsh)
+Thu Dec  2 21:38:43 2021 22942 24682  1085     0 hile            13708    3224 S    0xad     0:00.01 su -
+Thu Dec  2 21:38:44 2021 24682 25038     0     0 root            18584    6672 S    0xad     0:00.08 -su (zsh)
+Thu Dec  2 21:38:56 2021 25038 26833     0     0 root            13548    3332 R+   0xad     0:00.00 ps -wwaxo lstart,ppid,pid,ruid,rgid,ruser,vsz,rss,state,tdev,time,command
+Wed Nov 17 15:59:24 2021     1 15353     0     0 root            13704    4040 I    0xd8     0:00.03 /bin/sh /usr/local/sbin/vm _run www /vms/.iso/debian-11.0.0-amd64-DVD-1.iso
