@@ -1,19 +1,20 @@
 """
-Test cli_toolkit.encoders functions
+Unit tests for sys_toolkit.encoders functions
 """
 
 import json
 
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
-import pytz
 import pytest
 
 from sys_toolkit.encoders import DateTimeEncoder, format_timedelta, yaml_dump
 
+TEST_TIMEZONE = 'UTC'
 TEST_DATE = datetime(
     year=2020, month=1, day=2, hour=1, minute=2, second=3,
-    tzinfo=pytz.UTC
+    tzinfo=ZoneInfo(TEST_TIMEZONE),
 )
 
 TEST_DICT = {
@@ -98,13 +99,13 @@ def test_encoders_datetime_with_timezone():
     """
     Test encoding datetime with different timezone values
     """
-    testdata = {'datetime': TEST_DATE.astimezone(pytz.timezone('Europe/Helsinki'))}
+    testdata = {'datetime': TEST_DATE.astimezone(ZoneInfo('Europe/Helsinki'))}
     expected = f'{{"datetime": "{TEST_DATE.isoformat()}"}}'
     result = json.dumps(testdata, cls=DateTimeEncoder)
     assert isinstance(result, str)
     assert result == expected
 
-    testdata = {'datetime': TEST_DATE.astimezone(pytz.timezone('US/Eastern'))}
+    testdata = {'datetime': TEST_DATE.astimezone(ZoneInfo('US/Eastern'))}
     result = json.dumps(testdata, cls=DateTimeEncoder)
     assert isinstance(result, str)
     assert result == expected

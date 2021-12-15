@@ -6,8 +6,8 @@ These classes have moved from *systematic* and *cli-toolkit* modules to this mod
 
 ## Installing
 
-This module has minimal dependencies (PyYAML and pytz modules) and should install with *pip*
-on any recent python version. The module has been tested with python 3.9 and python 3.10.
+This module has minimal dependencies (PyYAML) and should install with *pip* on any recent
+python version. The module has been tested with python 3.9 and python 3.10.
 
 ## Running unit tests and linters
 
