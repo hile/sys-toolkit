@@ -34,7 +34,7 @@ lint:
 test:
 	tox -e unittest
 
-publish: clean
+publish: clean build
 	poetry publish
 
 tag-release:
