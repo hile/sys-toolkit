@@ -1,4 +1,4 @@
 """
 Toolkit of python operating system utilities
 """
-__version__ = '1.2.0'
+__version__ = '1.2.1'
