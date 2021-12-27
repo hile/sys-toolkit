@@ -38,7 +38,7 @@ publish: clean build
 	poetry publish
 
 tag-release:
-	git tag -a ${VERSION} -m "Publish release ${VERSION}"
+	git tag --annotate ${VERSION} --message "Publish release ${VERSION}"
 	git push origin ${VERSION}
 
 .PHONY: all test
