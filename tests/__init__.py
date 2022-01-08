@@ -1,7 +1,3 @@
 """
-Define constants for unit tests
+Unit tests for sys-toolkit
 """
-
-from pathlib import Path
-
-DATA_DIRECTORY = Path(__file__).parent.joinpath('data')

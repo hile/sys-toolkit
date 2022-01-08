@@ -9,6 +9,12 @@ class CommandError(Exception):
     """
 
 
+class ConfigurationError(Exception):
+    """
+    Errors raised by configuration processing
+    """
+
+
 class LoggerError(Exception):
     """
     Exceptions raised by logging configuration

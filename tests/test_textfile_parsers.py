@@ -6,11 +6,11 @@ import pytest
 from sys_toolkit.exceptions import FileParserError
 from sys_toolkit.textfile import LineTextFile, SortedLineTextFile
 
-from . import DATA_DIRECTORY
+from .conftest import MOCK_DATA
 
-TEST_FILE = DATA_DIRECTORY.joinpath('linefile')
-TEST_FILE_CUSTOM_COMMENTS = DATA_DIRECTORY.joinpath('linefile_custom_comments')
-TEST_FILE_SORTED = DATA_DIRECTORY.joinpath('linefile_sorted')
+TEST_FILE = MOCK_DATA.joinpath('linefile')
+TEST_FILE_CUSTOM_COMMENTS = MOCK_DATA.joinpath('linefile_custom_comments')
+TEST_FILE_SORTED = MOCK_DATA.joinpath('linefile_sorted')
 
 SKIPPED_LINE = 'skipme'
 

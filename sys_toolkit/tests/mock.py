@@ -51,10 +51,11 @@ class MockRunCommandLineOutput(MockCalledMethod):
     Mock calling sys_toolkit.subprocess.run_command_lineoutput and returning data
     read from a file instead
     """
-    def __init__(self, path, encoding='utf-8', stderr=None):
+    def __init__(self, path=None, encoding='utf-8', stdout=None, stderr=None):
         super().__init__()
         self.path = path
         self.encoding = encoding
+        self.stdout = stdout if stdout else []
         self.stderr = stderr if stderr else ''
 
     def __call__(self, *args, **kwargs):
@@ -62,8 +63,10 @@ class MockRunCommandLineOutput(MockCalledMethod):
         Call mocked check_output, storing call argument and returning data from self.path file
         """
         super().__call__(*args, **kwargs)
-        with open(self.path, encoding=self.encoding) as handle:
-            return handle.read().splitlines(), self.stderr
+        if self.path is not None:
+            with open(self.path, encoding=self.encoding) as handle:
+                return handle.read().splitlines(), self.stderr
+        return self.stdout, self.stderr
 
 
 # pylint: disable=too-few-public-methods
