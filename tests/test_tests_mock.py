@@ -7,6 +7,9 @@ import pytest
 from sys_toolkit.tests.mock import (
     MockCalledMethod,
     MockCheckOutput,
+    MockReturnEmptyList,
+    MockReturnFalse,
+    MockReturnTrue,
     MockException,
     MOCK_ERROR_MESSAGE
 )
@@ -149,3 +152,36 @@ def test_tests_mock_exception_custom_error_args():
     exception = raised_error._excinfo[1]
     assert isinstance(exception, MockError)
     assert str(exception) == ''
+
+
+def test_tests_mock_return_method_valies_true():
+    """
+    Unit test for mock method that always returns True
+    """
+    limit = 2
+    method = MockReturnTrue()
+    for i in range(0, limit):
+        assert method() is True
+    assert method.call_count == limit
+
+
+def test_tests_mock_return_method_valies_false():
+    """
+    Unit test for mock method that always returns False
+    """
+    limit = 2
+    method = MockReturnFalse()
+    for i in range(0, limit):
+        assert method() is False
+    assert method.call_count == limit
+
+
+def test_tests_mock_return_method_valies_empty_list():
+    """
+    Unit test for mock method that always returns empty list
+    """
+    limit = 2
+    method = MockReturnEmptyList()
+    for i in range(0, limit):
+        assert method() == []
+    assert method.call_count == limit

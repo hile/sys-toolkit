@@ -28,6 +28,33 @@ class MockCalledMethod:
         return self.return_value
 
 
+# pylint: disable=too-few-public-methods
+class MockReturnTrue(MockCalledMethod):
+    """
+    Mock a method to always return True
+    """
+    def __init__(self):
+        super().__init__(return_value=True)
+
+
+# pylint: disable=too-few-public-methods
+class MockReturnFalse(MockCalledMethod):
+    """
+    Mock a method to always return False
+    """
+    def __init__(self):
+        super().__init__(return_value=False)
+
+
+# pylint: disable=too-few-public-methods
+class MockReturnEmptyList(MockCalledMethod):
+    """
+    Mock a method to always return None
+    """
+    def __init__(self):
+        super().__init__(return_value=[])
+
+
 class MockCheckOutput(MockCalledMethod):
     """
     Mock calling subprocess.check_output and returning data read from a file instead
