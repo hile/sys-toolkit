@@ -29,8 +29,9 @@ def test_path_executables_load():
     assert executables.get('jvodsav') is None
     assert isinstance(executables.get('sh'), Path)
 
+    # Note: some systems have multiple sh on path
     paths = executables.paths('sh')
-    assert len(paths) == 1
+    assert len(paths) >= 1
     for path in paths:
         assert isinstance(path, Path)
 
