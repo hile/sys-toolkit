@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.9"
 PyYAML = "^6.0"
 inflection = "^0.5"
 
