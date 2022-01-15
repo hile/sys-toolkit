@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sys-toolkit"
-version = "2.0.0"
+version = "2.0.1"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
 license = "PSF"
