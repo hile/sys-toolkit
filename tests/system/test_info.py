@@ -69,6 +69,7 @@ def test_system_info_object_darwin_macos_hostname_command_error(mock_bsd_error_h
     """
     obj = SystemInfo()
     with pytest.raises(ValueError):
+        # pylint: disable=pointless-statement
         obj.hostname
 
 

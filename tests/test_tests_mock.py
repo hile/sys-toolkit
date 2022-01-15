@@ -160,7 +160,7 @@ def test_tests_mock_return_method_valies_true():
     """
     limit = 2
     method = MockReturnTrue()
-    for i in range(0, limit):
+    for _i in range(0, limit):
         assert method() is True
     assert method.call_count == limit
 
@@ -171,7 +171,7 @@ def test_tests_mock_return_method_valies_false():
     """
     limit = 2
     method = MockReturnFalse()
-    for i in range(0, limit):
+    for _i in range(0, limit):
         assert method() is False
     assert method.call_count == limit
 
@@ -182,6 +182,6 @@ def test_tests_mock_return_method_valies_empty_list():
     """
     limit = 2
     method = MockReturnEmptyList()
-    for i in range(0, limit):
+    for _i in range(0, limit):
         assert method() == []
     assert method.call_count == limit
