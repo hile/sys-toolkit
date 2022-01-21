@@ -16,6 +16,8 @@ import os
 from collections.abc import Collection
 from pathlib import Path
 
+from .platform import detect_platform_family
+
 
 class Executables(Collection):
     """
@@ -25,6 +27,8 @@ class Executables(Collection):
 
     Cache can be looked up by command name or with .get() method
     """
+    __platform_family__ = None
+    """OS Platform family"""
     __path__ = None
     """Path value being inspected"""
     __executables__ = []
@@ -33,6 +37,7 @@ class Executables(Collection):
     """List of active commands on path"""
 
     def __init__(self):
+        self.__platform_family__ = detect_platform_family()
         if Executables.__commands__ is None:
             Executables.__commands__ = Executables.__load__executables_on_path__(self)
 
@@ -60,15 +65,19 @@ class Executables(Collection):
         self.__path__ = os.environ.get('PATH', '')
         for path in self.__path__.split(os.pathsep):
             directory = Path(path)
+            print('validate directory', directory)
             if not directory.is_dir():
                 continue
             for filename in directory.iterdir():
                 command = directory.joinpath(filename)
                 try:
-                    if not command.is_file() or not os.access(command, os.EX_OK):
+                    if not command.is_file():
                         continue
+                    if self.__platform_family__ != 'windows':
+                        if not os.access(command, os.X_OK):
+                            continue
                 except OSError:
-                    pass
+                    continue
                 self.__executables__.append(command)
                 if filename.name not in commands:
                     commands[filename.name] = command

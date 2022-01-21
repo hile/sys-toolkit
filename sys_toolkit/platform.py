@@ -22,10 +22,13 @@ PLATFORM_PATTERNS = {
         r'^freebsd$',
         r'^freebsd\d+$',
     ),
-    'openbsd': {
+    'openbsd': (
         r'^openbsd$',
         r'^openbsd\d+$',
-    }
+    ),
+    'windows': (
+        r'^win32$',
+    ),
 }
 
 # Group OS by primary toolchain platform
@@ -42,6 +45,9 @@ TOOLCHAIN_FAMILY_PATTERNS = {
     'openbsd': (
         r'^openbsd$',
         r'^openbsd\d+$',
+    ),
+    'windows': (
+        r'^win32$',
     )
 }
 

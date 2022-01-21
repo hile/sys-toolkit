@@ -16,6 +16,7 @@ PLATFORM_TESTS = (
     ('linux2', 'linux'),
     ('openbsd6', 'openbsd'),
     ('openbsd', 'openbsd'),
+    ('win32', 'windows'),
 )
 TOOLCHAIN_TESTS = (
     ('darwin', 'bsd'),
@@ -25,6 +26,7 @@ TOOLCHAIN_TESTS = (
     ('linux2', 'gnu'),
     ('openbsd6', 'openbsd'),
     ('openbsd', 'openbsd'),
+    ('win32', 'windows'),
 )
 
 
