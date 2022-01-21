@@ -65,7 +65,6 @@ class Executables(Collection):
         self.__path__ = os.environ.get('PATH', '')
         for path in self.__path__.split(os.pathsep):
             directory = Path(path)
-            print('validate directory', directory)
             if not directory.is_dir():
                 continue
             for filename in directory.iterdir():

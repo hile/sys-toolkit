@@ -106,7 +106,6 @@ class ConfigurationItemContainer(LoggingBaseClass):
         """
         Load item with correct class
         """
-        print('set variable', attr, value)
         self.__validate_attribute__(attr)
 
         section = getattr(self, attr, None)
@@ -420,7 +419,6 @@ class ConfigurationSection(ConfigurationItemContainer):
         """
         attr, path = self.__split_attribute_path__(attr)
         if path:
-            print('set attribute via path', path, attr, value)
             self.__load_section__(attr, value, path)
             return
 
