@@ -7,7 +7,8 @@ common string output use cases.
 
 import os
 
-from subprocess import run, PIPE, CalledProcessError, TimeoutExpired
+from subprocess import run as run_real
+from subprocess import PIPE, CalledProcessError, TimeoutExpired
 
 from .exceptions import CommandError
 
@@ -17,6 +18,39 @@ DEFAULT_ENCODINGS = (
 DEFAULT_RETURN_CODES_OK = [0]
 
 
+def prepare_run_arguments(cwd, env, expected_return_codes):
+    """
+    Prepare environment and other arguments for various run_ commands
+    """
+    if cwd is not None and not os.path.isdir(cwd):
+        raise CommandError(f'No such directory: {cwd}')
+
+    if env is None:
+        env = os.environ.copy()
+    if expected_return_codes is None:
+        expected_return_codes = DEFAULT_RETURN_CODES_OK
+    return env, expected_return_codes
+
+
+def run(*args, cwd=None, expected_return_codes=None, env=None, timeout=None):
+    """
+    Run command as subprocess with subprocess.run and matching against a list of expected
+    return codes
+
+    This version returns nothing and raises CommandError in case of errors running the commmand
+    """
+    env, expected_return_codes = prepare_run_arguments(cwd, env, expected_return_codes)
+    try:
+        # pylint: disable=subprocess-run-check
+        res = run_real(args, check=False, cwd=cwd, env=env, timeout=timeout)
+        if res.returncode not in expected_return_codes:
+            raise CommandError(
+                f'Error running {" ".join(args)}: returns {res.returncode}: {res.stderr}'
+            )
+    except (CalledProcessError, FileNotFoundError, TimeoutExpired) as error:
+        raise CommandError(error) from error
+
+
 def run_command(*args, cwd=None, expected_return_codes=None, env=None, timeout=None):
     """
     Run command as subprocess, checking return code is 0 and returning stdout
@@ -24,14 +58,10 @@ def run_command(*args, cwd=None, expected_return_codes=None, env=None, timeout=N
 
     Optional timeout value can be set to cause command to abort after specified timeout
     """
-    if env is None:
-        env = os.environ.copy()
-    if expected_return_codes is None:
-        expected_return_codes = DEFAULT_RETURN_CODES_OK
-
+    env, expected_return_codes = prepare_run_arguments(cwd, env, expected_return_codes)
     try:
         # pylint: disable=subprocess-run-check
-        res = run(args, stdout=PIPE, stderr=PIPE, check=False, cwd=cwd, env=env, timeout=timeout)
+        res = run_real(args, stdout=PIPE, stderr=PIPE, check=False, cwd=cwd, env=env, timeout=timeout)
         if res.returncode not in expected_return_codes:
             raise CommandError(
                 f'Error running {" ".join(args)}: returns {res.returncode}: {res.stderr}'
