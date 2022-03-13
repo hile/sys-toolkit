@@ -306,7 +306,7 @@ class Logger:
         """
         if address is None:
             address = get_default_syslog_address()
-        if default_level not in SYSLOG_LEVEL_MAP.keys():
+        if default_level not in SYSLOG_LEVEL_MAP:
             raise LoggerError('Unsupported syslog level value')
 
         logger = self.groups[self.name].__register_syslog_handler__(

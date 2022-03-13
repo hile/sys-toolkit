@@ -85,6 +85,7 @@ def test_path_executables_load_posix(mock_system_path):
     assert len(executables) == MOCK_EXECUTABLE_COUNT_POSIX
     assert MOCK_COMMAND_AVAILABLE in executables
     assert isinstance(executables[MOCK_COMMAND_AVAILABLE], Path)
+    # pylint: disable=use-implicit-booleaness-not-comparison
     assert list(executables) != []
 
     other = Executables()

@@ -120,6 +120,7 @@ def test_cached_mutable_mapping():
     assert obj.__requires_reload__ is True
     for key in obj:
         del obj[key]
+    # pylint: disable=use-implicit-booleaness-not-comparison
     assert obj == {}
 
 

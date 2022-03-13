@@ -74,6 +74,7 @@ def test_process_list_load_freebsd(monkeypatch):
     monkeypatch.setattr('sys_toolkit.process.run_command_lineoutput', mock_data)
 
     processes = Processes()
+    # pylint: disable=use-implicit-booleaness-not-comparison
     assert processes.__items__ == []
     processes.update()
     assert len(processes.__items__) == MOCK_PROCESSES_COUNT_FREEBSD
@@ -89,6 +90,7 @@ def test_process_list_load_linux(monkeypatch):
     monkeypatch.setattr('sys_toolkit.process.run_command_lineoutput', mock_data)
 
     processes = Processes()
+    # pylint: disable=use-implicit-booleaness-not-comparison
     assert processes.__items__ == []
     processes.update()
     assert len(processes.__items__) == MOCK_PROCESSES_COUNT_LINUX
@@ -104,6 +106,7 @@ def test_process_list_load_macos(monkeypatch):
     monkeypatch.setattr('sys_toolkit.process.run_command_lineoutput', mock_data)
 
     processes = Processes()
+    # pylint: disable=use-implicit-booleaness-not-comparison
     assert processes.__items__ == []
     processes.update()
     assert len(processes.__items__) == MOCK_PROCESSES_COUNT_MACOS
