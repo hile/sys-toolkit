@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sys-toolkit"
-version = "2.0.3"
+version = "2.1.0"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
 license = "PSF"
@@ -35,6 +35,5 @@ tox = "3.24.4"
 sys_toolkit_fixtures = 'sys_toolkit.fixtures'
 
 [build-system]
-#requires = ["poetry-core>=1.0.0"]
-requires = ["poetry-core @ git+https://github.com/python-poetry/poetry-core.git@master"]
+requires = ["poetry-core>=1.0.8"]
 build-backend = "poetry.core.masonry.api"
