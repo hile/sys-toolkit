@@ -1,5 +1,5 @@
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-MODULE := $(shell basename ${ROOT_DIR})
+MODULE := $(shell basename ${ROOT_DIR} | tr - _)
 VERSION := $(shell awk '/^version =/ {print $$3}' pyproject.toml)
 
 VENV_DIR := ${HOME}/.venv/${MODULE}
@@ -40,14 +40,14 @@ doc: virtualenv
 	source ${VENV_BIN}/activate; sphinx-build ${SPHINX_FLAGS}
 
 unittest: virtualenv
-	source ${VENV_BIN}/activate; poetry run coverage run --source sys_toolkit --module py.test 
+	source ${VENV_BIN}/activate; poetry run coverage run --source "${MODULE}" --module py.test
 	source ${VENV_BIN}/activate; poetry run coverage html
 	source ${VENV_BIN}/activate; poetry run coverage report
 
 lint: virtualenv
 	source ${VENV_BIN}/activate; poetry run flake8
-	source ${VENV_BIN}/activate; poetry run pycodestyle sys_toolkit tests
-	source ${VENV_BIN}/activate; poetry run pylint sys_toolkit tests
+	source ${VENV_BIN}/activate; poetry run pycodestyle "${MODULE}" tests
+	source ${VENV_BIN}/activate; poetry run pylint "${MODULE}" tests
 
 publish: virtualenv clean build
 	source ${VENV_BIN}/activate; poetry publish
