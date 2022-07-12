@@ -9,7 +9,7 @@ PIP := ${VENV_DIR}/bin/pip
 SPHINX_FLAGS := -b html ./docs public
 SPHINX_WEBSITE_FLAGS := --port 8100 --host localhost --open-browser --watch ${MODULE}
 
-all: lint test
+all: lint unittest
 
 ${VENV_BIN}:
 	python3 -m venv ${VENV_DIR}
@@ -18,7 +18,6 @@ ${VENV_BIN}:
 virtualenv: ${VENV_BIN}
 
 clean:
-	@rm -rf "${VENV_DIR}"
 	@rm -rf build dist .DS_Store .pytest_cache .cache .eggs .coverage coverage.xml public
 	@find . -name '__pycache__' -print0 | xargs -0r rm -rf
 	@find . -name '*.egg-info' -print0 | xargs -0r rm -rf
@@ -40,17 +39,17 @@ doc: virtualenv
 	source ${VENV_BIN}/activate; sphinx-build ${SPHINX_FLAGS}
 
 unittest: virtualenv
-	source ${VENV_BIN}/activate; poetry run coverage run --source "${MODULE}" --module py.test
-	source ${VENV_BIN}/activate; poetry run coverage html
-	source ${VENV_BIN}/activate; poetry run coverage report
+	source ${VENV_BIN}/activate && poetry run coverage run --source "${MODULE}" --module py.test
+	source ${VENV_BIN}/activate && poetry run coverage html
+	source ${VENV_BIN}/activate && poetry run coverage report
 
 lint: virtualenv
-	source ${VENV_BIN}/activate; poetry run flake8
-	source ${VENV_BIN}/activate; poetry run pycodestyle "${MODULE}" tests
-	source ${VENV_BIN}/activate; poetry run pylint "${MODULE}" tests
+	source ${VENV_BIN}/activate && poetry run flake8
+	source ${VENV_BIN}/activate && poetry run pycodestyle "${MODULE}" tests
+	source ${VENV_BIN}/activate && poetry run pylint "${MODULE}" tests
 
 publish: virtualenv clean build
-	source ${VENV_BIN}/activate; poetry publish
+	source ${VENV_BIN}/activate && poetry publish
 
 tag-release:
 	git tag --annotate ${VERSION} --message "Publish release ${VERSION}"
