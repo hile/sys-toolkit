@@ -19,6 +19,7 @@ classifiers = [
 python = "^3.9"
 PyYAML = "^6.0"
 inflection = "^0.5"
+pylint = "<2.14"
 
 [tool.poetry.dev-dependencies]
 coverage = "^6.1"
