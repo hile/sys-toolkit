@@ -168,11 +168,26 @@ class ConfigurationList(ConfigurationItemContainer):
     def __getitem__(self, index):
         return self.__values__[index]
 
+    def __setitem__(self, index, value):
+        self.__values__.__setitem__(index, value)
+
     def __iter__(self):
         return iter(self.__values__)
 
     def __len__(self):
         return len(self.__values__)
+
+    def insert(self, index, value):
+        """
+        Insert value to configuration list
+        """
+        self.__values__.insert(index, value)
+
+    def append(self, value):
+        """
+        Append value to configuration list
+        """
+        self.__values__.append(value)
 
     def __load__(self, value):
         """
@@ -184,7 +199,7 @@ class ConfigurationList(ConfigurationItemContainer):
                 if isinstance(item, dict):
                     # pylint: disable=not-callable
                     item = self.__dict_loader__(item, parent=self)
-                self.__values__.append(item)
+                self.append(item)
 
     def set(self, attr, value):
         self.__load__(value)
