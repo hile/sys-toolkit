@@ -73,13 +73,32 @@ class MockCheckOutput(MockCalledMethod):
             return bytes(handle.read(), encoding=self.encoding)
 
 
-class MockRunCommandLineOutput(MockCalledMethod):
+class MockRun(MockCalledMethod):
+    """
+    Mock running a CLI command with return code, stdout and stderr
+    """
+    def __init__(self, encoding='utf-8', stdout=None, stderr=None, return_value=None):
+        super().__init__(return_value)
+        self.encoding = encoding
+        self.stdout = stdout if stdout else []
+        self.stderr = stderr if stderr else ''
+        self.returncode = return_value if isinstance(return_value, int) else 0
+
+    def __call__(self, *args, **kwargs):
+        """
+        Mock calling the run() method, returning 'self' as mostly compatible object
+        """
+        super().__call__(*args, **kwargs)
+        return self
+
+
+class MockRunCommandLineOutput(MockRun):
     """
     Mock calling sys_toolkit.subprocess.run_command_lineoutput and returning data
     read from a file instead
     """
-    def __init__(self, path=None, encoding='utf-8', stdout=None, stderr=None):
-        super().__init__()
+    def __init__(self, path=None, encoding='utf-8', stdout=None, stderr=None, return_value=None):
+        super().__init__(encoding, stdout, stderr, return_value)
         self.path = path
         self.encoding = encoding
         self.stdout = stdout if stdout else []
@@ -118,7 +137,6 @@ class MockException(MockCalledMethod):
         or mocked message if nothing was specified
         """
         super().__call__(*args, **kwargs)
-        print('raise exception', self.exception)
         if self.exception_kwargs:
             raise self.exception(**self.exception_kwargs)
         if self.default_message:

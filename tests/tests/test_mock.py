@@ -1,5 +1,5 @@
 """
-Test unit test mock classes
+Unit tests for sys_toolkit.tests.mock class
 """
 
 import pytest
@@ -7,12 +7,23 @@ import pytest
 from sys_toolkit.tests.mock import (
     MockCalledMethod,
     MockCheckOutput,
-    MockReturnEmptyList,
-    MockReturnFalse,
-    MockReturnTrue,
     MockException,
-    MOCK_ERROR_MESSAGE
+    MockRunCommandLineOutput,
+    MockReturnTrue,
+    MockReturnFalse,
+    MockReturnEmptyList,
+    MockRun,
+    MOCK_ERROR_MESSAGE,
 )
+
+from ..conftest import MOCK_DATA
+
+TEST_FILE = MOCK_DATA.joinpath('linefile_sorted')
+EXPECTED_LINE_COUNT = 6
+
+TEST_RETURN_VALUE = 'test'
+TEST_ERROR_VALUE = 'test error string'
+TEST_ARGS = (1, 2, 3)
 
 MOCK_KWARGS = {
     'demo': 'Demo arguments',
@@ -28,6 +39,105 @@ class MockError(Exception):
         super().__init__()
         self.call_args = args
         self.call_kwargs = kwargs
+
+
+def test_mocks_mock_called_method_no_args():
+    """
+    Test the generic MockCalledMethod class with no arguments
+    """
+    obj = MockCalledMethod()
+    assert callable(obj)
+    value = obj()
+    assert value is None
+    assert obj.call_count == 1
+    assert obj.args == [()]
+    assert obj.kwargs == [{}]
+
+
+def test_mocks_mock_called_method_args():
+    """
+    Test the generic MockCalledMethod class with list of arguments and return value
+    """
+    obj = MockCalledMethod(TEST_RETURN_VALUE)
+    assert callable(obj)
+    value = obj(*TEST_ARGS)
+    assert value == TEST_RETURN_VALUE
+    assert obj.call_count == 1
+    assert obj.args == [TEST_ARGS]
+    assert obj.kwargs == [{}]
+
+
+def test_mocks_mock_called_method_kwargs():
+    """
+    Test the generic MockCalledMethod class with kwargs and return value
+    """
+    obj = MockCalledMethod(TEST_RETURN_VALUE)
+    assert callable(obj)
+    value = obj(testcase=TEST_ARGS)
+    assert value == TEST_RETURN_VALUE
+    assert obj.call_count == 1
+    assert obj.args == [()]
+    assert obj.kwargs == [{'testcase': TEST_ARGS}]
+
+
+def test_mocks_mock_always_true():
+    """
+    Test method that returns always True
+    """
+    obj = MockReturnTrue()
+    assert obj() is True
+    assert obj(False) is True
+
+
+def test_mocks_mock_always_false():
+    """
+    Test method that returns always False
+    """
+    obj = MockReturnFalse()
+    assert obj() is False
+    assert obj(False) is False
+
+
+def test_mocks_mock_return_empty_list():
+    """
+    Test method that returns always an empty list
+    """
+    obj = MockReturnEmptyList()
+    assert obj() == []
+    assert obj(False) == []
+
+
+def test_mocks_mock_check_output():
+    """
+    Test the MockCheckOutput output used to simulate subprocess.check_output
+    """
+    obj = MockCheckOutput(TEST_FILE)
+    stdout = obj()
+    assert isinstance(stdout, bytes)
+    lines = str(stdout, encoding='utf-8').splitlines()
+    assert len(lines) == EXPECTED_LINE_COUNT
+
+
+def test_mocks_mock_run_command_line_ouptut():
+    """
+    Test the MockRunCommandLineOutput output
+    """
+    obj = MockRunCommandLineOutput(TEST_FILE)
+    stdout, stderr = obj()
+    assert isinstance(stdout, list)
+    assert isinstance(stderr, str)
+    assert len(stdout) == EXPECTED_LINE_COUNT
+
+
+def test_mocks_mock_run():
+    """
+    Test the MockCheckOutput output used to simulate subprocess.check_output
+    """
+    obj = MockRun(stdout=TEST_RETURN_VALUE, stderr=TEST_ERROR_VALUE, return_value=1)
+    value = obj()
+    assert value.stdout == TEST_RETURN_VALUE
+    assert value.stderr == TEST_ERROR_VALUE
+    assert value.returncode == 1
 
 
 def test_tests_mock_called_method_no_args():
@@ -154,7 +264,7 @@ def test_tests_mock_exception_custom_error_args():
     assert str(exception) == ''
 
 
-def test_tests_mock_return_method_valies_true():
+def test_tests_mock_return_method_values_true():
     """
     Unit test for mock method that always returns True
     """
@@ -165,7 +275,7 @@ def test_tests_mock_return_method_valies_true():
     assert method.call_count == limit
 
 
-def test_tests_mock_return_method_valies_false():
+def test_tests_mock_return_method_values_false():
     """
     Unit test for mock method that always returns False
     """
@@ -176,7 +286,7 @@ def test_tests_mock_return_method_valies_false():
     assert method.call_count == limit
 
 
-def test_tests_mock_return_method_valies_empty_list():
+def test_tests_mock_return_method_values_empty_list():
     """
     Unit test for mock method that always returns empty list
     """
