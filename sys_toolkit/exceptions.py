@@ -3,6 +3,12 @@ Exceptions raised by OS base classes
 """
 
 
+class ClipboardError(Exception):
+    """
+    Errors raised by clipbaord access
+    """
+
+
 class CommandError(Exception):
     """
     Exceptions raised by shell commands
