@@ -1,9 +1,9 @@
 """
 Unit tests for sys_toolkit.clipboard.darwin module
 """
-import pytest
-
 from subprocess import CalledProcessError
+
+import pytest
 
 from sys_toolkit.exceptions import ClipboardError
 from sys_toolkit.tests.mock import MockRun, MockException
