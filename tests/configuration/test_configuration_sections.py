@@ -9,6 +9,9 @@ import pytest
 from sys_toolkit.configuration.base import ConfigurationList, ConfigurationSection
 from sys_toolkit.exceptions import ConfigurationError
 
+CALLABLE_SECTION_NAME = 'callme'
+CALLABLE_SECTION_VALUE = 'test callable value'
+
 TEST_DEFAULT_DATA = {
     'test_key': 'test value',
     'nested_level_1': {
@@ -26,9 +29,15 @@ TEST_NESTED_LIST_DATA = {
             },
             'text list item'
         ]
-
     }
 }
+
+TEST_LIST_DATA_REPLACE = [
+    1234,
+    2234,
+    3334,
+    4444,
+]
 
 TEST_EMPTY_DATA = {
     'test_key_empty': '',
@@ -113,6 +122,35 @@ class NestedListConfigurationSection(ConfigurationSection):
     Nested configuration section default for list sections
     """
     __name__ = 'lists'
+
+
+class CallableSetConfigurationSection(ConfigurationSection):
+    """
+    Configuration section class with a callable set() method
+    """
+    __name__ = CALLABLE_SECTION_NAME
+
+    def __init__(self, data=dict, parent=None, debug_enabled=False, silent=False):
+        super().__init__(data, parent, debug_enabled, silent)
+        self.set_call_count = 0
+        self.set_call_args = []
+
+    def set(self, attr, value):
+        """
+        Store set() call arguments to the section
+        """
+        print(f'set {attr} value {value}')
+        self.set_call_count += 1
+        self.set_call_args.append((attr, value))
+
+
+class CallableBaseConfiguration(ConfigurationSection):
+    """
+    Configuratio section with a child section that has a callable set() method
+    """
+    __section_loaders__ = (
+        CallableSetConfigurationSection,
+    )
 
 
 class NestedRootConfigurationSection(ConfigurationSection):
@@ -268,7 +306,6 @@ def test_configuration_section_list_data():
     assert isinstance(list_value.__repr__(), str)
     assert isinstance(list_value, ConfigurationList)
     assert len(list_value) == 2
-
     assert list_value.__config_root__ == configuration
 
     assert isinstance(list_value[0], ConfigurationSection)
@@ -276,6 +313,18 @@ def test_configuration_section_list_data():
 
     for item in list_value:
         assert item is not None
+
+    list_value.insert(1, CALLABLE_SECTION_VALUE)
+    assert len(list_value) == 3
+
+    list_value.set(None, TEST_LIST_DATA_REPLACE)
+    assert len(list_value) == 4
+
+    list_value[1] = None
+    assert len(list_value) == 4
+
+    list_value.set(None, None)
+    assert len(list_value) == 0
 
 
 def test_configuration_section_default_with_data():
@@ -576,3 +625,16 @@ def test_configuration_section_field_validation_fail():
     """
     with pytest.raises(ConfigurationError):
         InvalidatedConfigurationSection(data=TEST_DEFAULT_DATA)
+
+
+def test_configuration_section_callable_set_method():
+    """
+    Test calling a callable set method in child section loader class
+    """
+    section = CallableBaseConfiguration()
+    assert hasattr(section, CALLABLE_SECTION_NAME)
+    called = getattr(section, CALLABLE_SECTION_NAME)
+    assert called.set_call_count == 0
+
+    section.set(CALLABLE_SECTION_NAME, CALLABLE_SECTION_VALUE)
+    assert called.set_call_count == 1

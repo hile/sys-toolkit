@@ -194,12 +194,13 @@ class ConfigurationList(ConfigurationItemContainer):
         Load list of values
         """
         self.__values__ = []
-        if value:
-            for item in value:
-                if isinstance(item, dict):
-                    # pylint: disable=not-callable
-                    item = self.__dict_loader__(item, parent=self)
-                self.append(item)
+        if not value:
+            return
+        for item in value:
+            if isinstance(item, dict):
+                # pylint: disable=not-callable
+                item = self.__dict_loader__(item, parent=self)
+            self.append(item)
 
     def set(self, attr, value):
         self.__load__(value)
