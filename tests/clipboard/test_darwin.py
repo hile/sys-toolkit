@@ -5,11 +5,27 @@ from subprocess import CalledProcessError
 
 import pytest
 
+from sys_toolkit.clipboard.darwin import DarwinClipboard, DarwinClipboardType
 from sys_toolkit.exceptions import ClipboardError
 from sys_toolkit.tests.mock import MockRun, MockException
-from sys_toolkit.clipboard.darwin import DarwinClipboard, DarwinClipboardType
 
 from .test_base import TEST_TEXT
+
+
+# pylint: disable=unused-argument
+def test_clipboard_darwin_not_available(mock_darwin_clipboard_executables_missing):
+    """
+    Test case when darwin clipboard commands are not available on system path
+    """
+    assert not DarwinClipboard().available
+
+
+# pylint: disable=unused-argument
+def test_clipboard_darwin_available(mock_darwin_clipboard_executables_available):
+    """
+    Test case when darwin clipboard commands are not available on system path
+    """
+    assert DarwinClipboard().available
 
 
 def test_clipboard_darwin_copy_error(monkeypatch):

@@ -26,8 +26,17 @@ class DarwinClipboard(ClipboardBaseClass):
     """
     Implementation of clipboard copy/paste base class for macOS darwin
     """
+    __required_commands__ = ('pbcopy', 'pbpaste')
+
     def __init__(self, board=DarwinClipboardType.GENERAL):
         self.board = board
+
+    @property
+    def available(self):
+        """
+        Check if pbcopy and pbpaste commands are available on command line
+        """
+        return self.__check_required_cli_commands__()
 
     @property
     def env(self):
