@@ -7,6 +7,7 @@ from sys_toolkit.path import Executables
 
 DUMMY_DISPLAY = ':0.0'
 
+
 @pytest.fixture
 def mock_clipboard_executables_missing():
     """
