@@ -19,6 +19,7 @@ class ClipboardBaseClass:
     Base class implementation of clipboard copy and paste functions
     """
     __required_commands__ = ()
+    __required_env__ = ()
     __required_modules__ = ()
 
     def __check_required_modules__(self):
@@ -28,6 +29,15 @@ class ClipboardBaseClass:
         Returns true if no required modules are defined in __required_modules__
         """
         return check_available_imports(*self.__required_modules__)
+
+    def __check_required_env__(self):
+        """
+        Check required environment variables are defined and have non-empty value
+        """
+        for var in self.__required_env__:
+            if not os.environ.get(var, None):
+                return False
+        return True
 
     def __check_required_cli_commands__(self):
         """

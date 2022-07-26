@@ -19,6 +19,7 @@ def test_clipboard_base_class_properties():
     assert obj.available is False
 
     assert obj.__check_required_modules__() is True
+    assert obj.__check_required_env__() is True
     assert obj.__check_required_cli_commands__() is False
 
     with pytest.raises(NotImplementedError):

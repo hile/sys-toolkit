@@ -5,6 +5,7 @@ import pytest
 
 from sys_toolkit.path import Executables
 
+DUMMY_DISPLAY = ':0.0'
 
 @pytest.fixture
 def mock_clipboard_executables_missing():
@@ -31,10 +32,13 @@ def mock_darwin_clipboard_executables_available():
 
 
 @pytest.fixture
-def mock_wayland_clipboard_executables_available():
+def mock_wayland_clipboard_executables_available(monkeypatch):
     """
     Mock path in Executables object to contain wl-copy and wl-paste
+
+    Also sets a dummy value for WAYLAND_DISPLAY variable
     """
+    monkeypatch.setenv('WAYLAND_DISPLAY', DUMMY_DISPLAY)
     Executables.__commands__ = {
         'sh': '/bin/sh',
         'wl-copy': '/usr/bin/wl-copy',
@@ -45,10 +49,11 @@ def mock_wayland_clipboard_executables_available():
 
 
 @pytest.fixture
-def mock_xclip_clipboard_executables_available():
+def mock_xclip_clipboard_executables_available(monkeypatch):
     """
     Mock path in Executables object to contain wl-copy and wl-paste
     """
+    monkeypatch.setenv('DISPLAY', DUMMY_DISPLAY)
     Executables.__commands__ = {
         'sh': '/bin/sh',
         'xclip': '/usr/bin/xclip',

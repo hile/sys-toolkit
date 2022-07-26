@@ -21,6 +21,7 @@ class XclipClipboard(ClipboardBaseClass):
     Clipboard copy / paste with wayland clipboard
     """
     __required_commands__ = ('xclip',)
+    __required_env__ = ('DISPLAY',)
 
     def __init__(self, selection=XclipClipboardSelectionType.PRIMARY):
         self.selection = selection
@@ -30,7 +31,7 @@ class XclipClipboard(ClipboardBaseClass):
         """
         Check if wl-copy and wl-paste commands are available on command line
         """
-        return self.__check_required_cli_commands__()
+        return self.__check_required_env__() and self.__check_required_cli_commands__()
 
     def copy(self, data):
         """
