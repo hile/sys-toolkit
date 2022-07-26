@@ -1,15 +1,8 @@
 """
 Darwin (macOS) secure temporary directory implementation
 """
-import os
-
 from enum import Enum
-from subprocess import run, PIPE, CalledProcessError
-
-from ..exceptions import ClipboardError
 from .base import ClipboardBaseClass
-
-CLIPBOARD_LOCALE = 'en_US.UTF-8'
 
 
 class DarwinClipboardType(Enum):
@@ -38,33 +31,14 @@ class DarwinClipboard(ClipboardBaseClass):
         """
         return self.__check_required_cli_commands__()
 
-    @property
-    def env(self):
-        """
-        Environment variables for commands
-        """
-        env = os.environ.copy()
-        env['LANG'] = CLIPBOARD_LOCALE
-        return env
-
     def copy(self, data):
         """
         Copy data to macOS clipboard
         """
-        command = ('pbcopy', '-pboard', self.board.value)
-        data = str(data).rstrip('\n')
-        try:
-            run(command, input=data.encode(), check=True, env=self.env)
-        except CalledProcessError as error:
-            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+        self.__copy_command_stdin__(data, *('pbcopy', '-pboard', self.board.value))
 
     def paste(self):
         """
         Paste data from macOS clipboard to variable
         """
-        command = ('pbpaste', '-pboard', self.board.value)
-        try:
-            res = run(command, stdout=PIPE, check=True, env=self.env)
-            return str(res.stdout, encoding='utf-8')
-        except CalledProcessError as error:
-            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+        return self.__paste_command_stdout__(*('pbpaste', '-pboard', self.board.value))

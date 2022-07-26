@@ -7,7 +7,7 @@ from sys_toolkit.path import Executables
 
 
 @pytest.fixture
-def mock_darwin_clipboard_executables_missing():
+def mock_clipboard_executables_missing():
     """
     Mock path in Executables object to not contain pbcopy and pbpaste
     """
@@ -25,6 +25,33 @@ def mock_darwin_clipboard_executables_available():
         'sh': '/bin/sh',
         'pbcopy': '/usr/bin/pbcopy',
         'pbpaste': '/usr/bin/pbpaste'
+    }
+    yield Executables
+    Executables.__commands__ = None
+
+
+@pytest.fixture
+def mock_wayland_clipboard_executables_available():
+    """
+    Mock path in Executables object to contain wl-copy and wl-paste
+    """
+    Executables.__commands__ = {
+        'sh': '/bin/sh',
+        'wl-copy': '/usr/bin/wl-copy',
+        'wl-paste': '/usr/bin/wl-paste',
+    }
+    yield Executables
+    Executables.__commands__ = None
+
+
+@pytest.fixture
+def mock_xclip_clipboard_executables_available():
+    """
+    Mock path in Executables object to contain wl-copy and wl-paste
+    """
+    Executables.__commands__ = {
+        'sh': '/bin/sh',
+        'xclip': '/usr/bin/xclip',
     }
     yield Executables
     Executables.__commands__ = None

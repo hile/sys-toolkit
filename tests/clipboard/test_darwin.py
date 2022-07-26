@@ -13,7 +13,7 @@ from .test_base import TEST_TEXT
 
 
 # pylint: disable=unused-argument
-def test_clipboard_darwin_not_available(mock_darwin_clipboard_executables_missing):
+def test_clipboard_darwin_not_available(mock_clipboard_executables_missing):
     """
     Test case when darwin clipboard commands are not available on system path
     """
@@ -33,7 +33,7 @@ def test_clipboard_darwin_copy_error(monkeypatch):
     Test copying text to darwin clipboard with command line error
     """
     mock_run_error = MockException(CalledProcessError, cmd='pbcopy', returncode=1)
-    monkeypatch.setattr('sys_toolkit.clipboard.darwin.run', mock_run_error)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_error)
     with pytest.raises(ClipboardError):
         DarwinClipboard().copy(TEST_TEXT)
 
@@ -43,7 +43,7 @@ def test_clipboard_darwin_paste_error(monkeypatch):
     Test copying text from darwin clipboard with command line error
     """
     mock_run_error = MockException(CalledProcessError, cmd='pbpaste', returncode=1)
-    monkeypatch.setattr('sys_toolkit.clipboard.darwin.run', mock_run_error)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_error)
     with pytest.raises(ClipboardError):
         DarwinClipboard().paste()
 
@@ -62,7 +62,7 @@ def test_clipboard_darwin_copy(monkeypatch):
     Test copying text to darwin clipboard
     """
     mock_run = MockRun()
-    monkeypatch.setattr('sys_toolkit.clipboard.darwin.run', mock_run)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
     DarwinClipboard().copy(TEST_TEXT)
     assert mock_run.call_count == 1
     args = mock_run.args[0]
@@ -74,7 +74,7 @@ def test_clipboard_darwin_paste(monkeypatch):
     Test copying text from darwin clipboard
     """
     mock_run = MockRun(stdout=bytes(TEST_TEXT, encoding='utf-8'))
-    monkeypatch.setattr('sys_toolkit.clipboard.darwin.run', mock_run)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
     value = DarwinClipboard().paste()
     assert mock_run.call_count == 1
     args = mock_run.args[0]

@@ -2,8 +2,16 @@
 Common base class for clipboards
 """
 
+import os
+
+from subprocess import run, CalledProcessError, PIPE
+
+from ..exceptions import ClipboardError
 from ..path import Executables
 from ..modules import check_available_imports
+
+CLIPBOARD_ENCODING = 'utf-8'
+CLIPBOARD_LOCALE = 'en_US.UTF-8'
 
 
 class ClipboardBaseClass:
@@ -29,9 +37,40 @@ class ClipboardBaseClass:
             return False
         executables = Executables()
         for command in self.__required_commands__:
+            print(f'verify command in executables {command}')
             if command not in executables:
                 return False
         return True
+
+    def __copy_command_stdin__(self, data, *command):
+        """
+        Generic implementation to copy data from clipboard with specified CLI commmand
+        and data from stdin to the command
+        """
+        data = str(data).rstrip('\n')
+        try:
+            run(command, input=data.encode(), check=True, env=self.env)
+        except CalledProcessError as error:
+            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+
+    def __paste_command_stdout__(self, *command):
+        """
+        Generic implementation to paste data from stdout of specified CLI command
+        """
+        try:
+            res = run(command, stdout=PIPE, check=True, env=self.env)
+            return str(res.stdout, encoding=CLIPBOARD_ENCODING)
+        except CalledProcessError as error:
+            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+
+    @property
+    def env(self):
+        """
+        Environment variables for commands
+        """
+        env = os.environ.copy()
+        env['LANG'] = CLIPBOARD_LOCALE
+        return env
 
     @property
     def available(self):
