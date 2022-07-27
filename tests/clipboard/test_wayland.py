@@ -13,6 +13,14 @@ from .test_base import TEST_TEXT
 
 
 # pylint: disable=unused-argument
+def test_clipboard_wayland_env_missing(mock_wayland_clipboard_executables_available, mock_clipboard_env_missing):
+    """
+    Test case when wayland clipboard env vars are not available
+    """
+    assert not WaylandClipboard().available
+
+
+# pylint: disable=unused-argument
 def test_clipboard_wayland_not_available(mock_clipboard_executables_missing):
     """
     Test case when wayland clipboard commands are not available on system path

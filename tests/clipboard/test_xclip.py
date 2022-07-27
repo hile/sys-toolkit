@@ -17,6 +17,14 @@ from .test_base import TEST_TEXT
 
 
 # pylint: disable=unused-argument
+def test_clipboard_xclip_env_missing(mock_xclip_clipboard_executables_available, mock_clipboard_env_missing):
+    """
+    Test case when xclip clipboard env vars are not available
+    """
+    assert not XclipClipboard().available
+
+
+# pylint: disable=unused-argument
 def test_clipboard_xclip_not_available(mock_clipboard_executables_missing):
     """
     Test case when xclip clipboard commands are not available on system path
