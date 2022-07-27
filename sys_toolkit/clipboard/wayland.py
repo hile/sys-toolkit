@@ -30,14 +30,20 @@ class WaylandClipboard(ClipboardBaseClass):
         """
         return self.__check_required_env__() and self.__check_required_cli_commands__()
 
+    def clear(self):
+        """
+        Clear wayland clipboard
+        """
+        self.__run_command__(('wl-copy', '--clear'),)
+
     def copy(self, data):
         """
         Copy data to macOS clipboard
         """
-        self.__copy_command_stdin__(data, *('wl-copy', f'--{self.selection.value}'))
+        self.__copy_command_stdin__(data, ('wl-copy', f'--{self.selection.value}'))
 
     def paste(self):
         """
         Paste data from macOS clipboard to variable
         """
-        return self.__paste_command_stdout__(*('wl-paste', '--no-newline', f'--{self.selection.value}'))
+        return self.__paste_command_stdout__(('wl-paste', '--no-newline', f'--{self.selection.value}'))

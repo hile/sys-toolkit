@@ -57,6 +57,18 @@ def test_clipboard_darwin_properties():
     assert obj.board == DarwinClipboardType.GENERAL
 
 
+def test_clipboard_darwin_clear(monkeypatch):
+    """
+    Test clearing text on darwin clipboard (by setting it to empty string)
+    """
+    mock_run = MockRun()
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
+    DarwinClipboard().clear()
+    assert mock_run.call_count == 1
+    args = mock_run.args[0]
+    assert 'pbcopy' in args[0]
+
+
 def test_clipboard_darwin_copy(monkeypatch):
     """
     Test copying text to darwin clipboard

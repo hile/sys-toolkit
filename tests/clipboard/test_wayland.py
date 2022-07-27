@@ -57,6 +57,18 @@ def test_clipboard_wayland_properties():
     assert obj.selection == WaylandClipboardSelectionType.PRIMARY
 
 
+def test_clipboard_wayland_clear(monkeypatch):
+    """
+    Test clearing wayland keyboard with 'wl-copy' command
+    """
+    mock_run = MockRun()
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
+    WaylandClipboard().clear()
+    assert mock_run.call_count == 1
+    args = mock_run.args[0]
+    assert args == (('wl-copy', '--clear'),)
+
+
 def test_clipboard_wayland_copy(monkeypatch):
     """
     Test copying text to wayland clipboard

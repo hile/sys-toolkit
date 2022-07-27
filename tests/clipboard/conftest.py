@@ -58,6 +58,7 @@ def mock_xclip_clipboard_executables_available(monkeypatch):
     Executables.__commands__ = {
         'sh': '/bin/sh',
         'xclip': '/usr/bin/xclip',
+        'xsel': '/usr/bin/xsel',
     }
     yield Executables
     Executables.__commands__ = None

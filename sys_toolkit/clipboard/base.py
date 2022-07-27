@@ -47,10 +47,19 @@ class ClipboardBaseClass:
             return False
         executables = Executables()
         for command in self.__required_commands__:
-            print(f'verify command in executables {command}')
             if command not in executables:
                 return False
         return True
+
+    def __run_command__(self, *command):
+        """
+        Run generic CLI commands without stdin
+        """
+        try:
+            run(*command, check=True, env=self.env)
+        except CalledProcessError as error:
+            cmd = ' '.join(command)
+            raise ClipboardError(f'Error running command "{cmd}": {error}') from error
 
     def __copy_command_stdin__(self, data, *command):
         """
@@ -59,19 +68,30 @@ class ClipboardBaseClass:
         """
         data = str(data).rstrip('\n')
         try:
-            run(command, input=data.encode(), check=True, env=self.env)
+            run(*command, input=data.encode(), check=True, env=self.env)
         except CalledProcessError as error:
-            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+            raise ClipboardError(f'Error copying text to clipboard: {error}') from error
 
     def __paste_command_stdout__(self, *command):
         """
         Generic implementation to paste data from stdout of specified CLI command
         """
         try:
-            res = run(command, stdout=PIPE, check=True, env=self.env)
-            return str(res.stdout, encoding=CLIPBOARD_ENCODING)
+            res = run(*command, stdout=PIPE, stderr=PIPE, check=False, env=self.env)
+            if res.returncode == 0:
+                return str(res.stdout, encoding=CLIPBOARD_ENCODING)
+            return self.__process_paste_error__(res)
         except CalledProcessError as error:
-            raise ClipboardError(f'Error copying text to clipboad: {error}') from error
+            raise ClipboardError(f'Error pasting text from clipboard: {error}') from error
+
+    # pylint: disable=no-self-use
+    def __process_paste_error__(self, response):
+        """
+        Process return value for paste command error
+
+        By default just raises Clipboard Error
+        """
+        raise ClipboardError(f'Error pasting text from clipboard: command returns code {response.returncode}')
 
     @property
     def env(self):
@@ -90,6 +110,12 @@ class ClipboardBaseClass:
         Override in parent class with actual test. By default returns False
         """
         return False
+
+    def clear(self):
+        """
+        Clear data on clipboard
+        """
+        raise NotImplementedError('Clipboard clear() must be implemented in child class')
 
     def copy(self, data):
         """

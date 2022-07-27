@@ -31,14 +31,20 @@ class DarwinClipboard(ClipboardBaseClass):
         """
         return self.__check_required_cli_commands__()
 
+    def clear(self):
+        """
+        Clear macOs clipboard by placing empty text into it
+        """
+        self.copy('')
+
     def copy(self, data):
         """
         Copy data to macOS clipboard
         """
-        self.__copy_command_stdin__(data, *('pbcopy', '-pboard', self.board.value))
+        self.__copy_command_stdin__(data, ('pbcopy', '-pboard', self.board.value))
 
     def paste(self):
         """
         Paste data from macOS clipboard to variable
         """
-        return self.__paste_command_stdout__(*('pbpaste', '-pboard', self.board.value))
+        return self.__paste_command_stdout__(('pbpaste', '-pboard', self.board.value))

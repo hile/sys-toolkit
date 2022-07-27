@@ -5,7 +5,11 @@ from subprocess import CalledProcessError
 
 import pytest
 
-from sys_toolkit.clipboard.xclip import XclipClipboard, XclipClipboardSelectionType
+from sys_toolkit.clipboard.xclip import (
+    XclipClipboard,
+    XclipClipboardSelectionType,
+    XCLIP_CLIPBOARD_EMPTY_ERROR,
+)
 from sys_toolkit.exceptions import ClipboardError
 from sys_toolkit.tests.mock import MockRun, MockException
 
@@ -38,14 +42,37 @@ def test_clipboard_xclip_copy_error(monkeypatch):
         XclipClipboard().copy(TEST_TEXT)
 
 
-def test_clipboard_xclip_paste_error(monkeypatch):
+def test_clipboard_xclip_paste_error_unknown_code(monkeypatch):
     """
-    Test copying text from xclip clipboard with command line error
+    Test copying text from xclip clipboard with command line error with unexpected error
+    code. This command reuses the empty error to confirm that both empty error and code 1
+    are required for 'None' response
     """
-    mock_run_error = MockException(CalledProcessError, cmd='pbpaste', returncode=1)
-    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_error)
+    mock_run_error_code = MockRun(stderr=XCLIP_CLIPBOARD_EMPTY_ERROR, returncode=2)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_error_code)
     with pytest.raises(ClipboardError):
         XclipClipboard().paste()
+
+
+def test_clipboard_xclip_paste_error_unknown_state(monkeypatch):
+    """
+    Test copying text from xclip clipboard with command line error with known error code but
+    missing the known error message, raising an exception
+    """
+    mock_run_error_code = MockRun(returncode=1)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_error_code)
+    with pytest.raises(ClipboardError):
+        XclipClipboard().paste()
+
+
+def test_clipboard_xclip_paste_no_data(monkeypatch):
+    """
+    Test copying text from xclip clipboard when clipboard is empty and xclip returns
+    known error string with returncode 1: this must return None without exception
+    """
+    mock_run_no_data = MockRun(stderr=XCLIP_CLIPBOARD_EMPTY_ERROR, returncode=1)
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run_no_data)
+    assert XclipClipboard().paste() is None
 
 
 def test_clipboard_xclip_properties():
@@ -55,6 +82,20 @@ def test_clipboard_xclip_properties():
     obj = XclipClipboard()
     assert isinstance(obj.selection, XclipClipboardSelectionType)
     assert obj.selection == XclipClipboardSelectionType.PRIMARY
+
+
+def test_clipboard_xclip_clear(monkeypatch):
+    """
+    Test clearing xclip keyboard with 'xsel' command
+    """
+    mock_run = MockRun()
+    monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
+    XclipClipboard().clear()
+    assert mock_run.call_count == 2
+    for args in mock_run.args:
+        command = args[0]
+        assert 'xsel' in command
+        assert '-c' in args or '-bc' in args
 
 
 def test_clipboard_xclip_copy(monkeypatch):
