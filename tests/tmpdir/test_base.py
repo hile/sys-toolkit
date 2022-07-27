@@ -1,13 +1,32 @@
 """
 Unit tests for sys_toolkit.tmpdir.base module
 """
-
-import pytest
+from pathlib import Path
 
 from sys_toolkit.tmpdir.base import SecureTemporaryDirectoryBaseClass
 
 TEST_DATA = 'test string'
 MOCK_VOLUME = '/dev/mock-dev'
+
+TEST_LINK = 'link.txt'
+TEST_FILES = (
+    'testfile.txt',
+    'test/testfile2.txt',
+    'subdir/nested/deeper/testfile3.txt',
+)
+
+
+def create_test_files(path):
+    """
+    Create test files and a link out of the directory to specified directory
+    """
+    path.joinpath(TEST_LINK).symlink_to(Path(__file__).resolve())
+    for testfile in TEST_FILES:
+        item = path.joinpath(testfile)
+        print(f'CREATE {item}')
+        if not item.parent.is_dir():
+            item.parent.mkdir(parents=True)
+        item.write_text(TEST_DATA, encoding='utf-8')
 
 
 class ImcompleteImplementation(SecureTemporaryDirectoryBaseClass):
@@ -45,9 +64,9 @@ def test_tmpdir_base_properties():
     obj = SecureTemporaryDirectoryBaseClass()
     assert obj.path is None
 
-    with pytest.raises(NotImplementedError):
-        with SecureTemporaryDirectoryBaseClass() as obj:
-            pass
+    with SecureTemporaryDirectoryBaseClass() as obj:
+        assert obj.__tmpdir__ is not None
+        assert isinstance(obj.path, Path)
 
 
 def test_tmpdir_base_incomplete_properties():
@@ -69,3 +88,21 @@ def test_tmpdir_base_incomplete_properties():
         obj.delete_storage_directory()
 
     assert not directory.is_dir()
+
+
+def test_tmpdir_base_files_list():
+    """
+    Test listing of files in the temporary directory, ignoring paths outside of the tmpdir
+    """
+    with SecureTemporaryDirectoryBaseClass() as obj:
+        create_test_files(obj.path)
+        assert len(obj.files) == 3
+
+
+def test_tmpdir_base_files_list_directory_missing():
+    """
+    Test listing of files in the temporary directory when directory is removed when in use
+    """
+    with SecureTemporaryDirectoryBaseClass() as obj:
+        obj.path.rmdir()
+        assert len(obj.files) == 0

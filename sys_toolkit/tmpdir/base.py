@@ -22,9 +22,16 @@ class SecureTemporaryDirectoryBaseClass:
         self.__tmpdir__ = None
         self.path = None
 
+    def __check_directory__(self):
+        """
+        Check target temporary directory is defined and the directory exists
+        """
+        return self.path and self.path.is_dir()
+
     def __enter__(self):
         """
-        Enter context
+        Enter context manager, creating the temporary directory, volume and attaching the volume
+        to the directory (by default volmes are skipped and temporary directory used as-is)
         """
         self.__tmpdir__ = mkdtemp(self.__suffix__, self.__prefix__, self.__parent_directory__)
         self.path = Path(self.__tmpdir__)
@@ -39,37 +46,63 @@ class SecureTemporaryDirectoryBaseClass:
         self.detach_storage_volume()
         self.delete_storage_directory()
 
+    @property
+    def files(self):
+        """
+        Find any files in the temporary directory
+
+        This method excludes symlinks to files outside of the directory
+        """
+        files = []
+        if not self.__check_directory__():
+            return files
+        for item in self.path.rglob('*'):
+            print('GLOB', item)
+            if not item.is_file():
+                continue
+            if item.is_symlink():
+                try:
+                    item.resolve().relative_to(self.path)
+                except ValueError:
+                    # Skip file link to outside of the directory being iterated
+                    continue
+            files.append(item)
+        return files
+
     def delete_storage_directory(self):
         """
         Method to destroy the created secure storage space directory in self.path
 
         This method is platform specific and by default raises NotImplementedError
         """
-        if self.path is not None and self.path.is_dir():
+        if self.__check_directory__():
             shutil.rmtree(self.path)
         self.__tmpdir__ = None
         self.path = None
 
+    # pylint: disable=no-self-use
     def create_storage_volume(self):
         """
         Method to create a secure storage space
 
-        This method is platform specific and by default raises NotImplementedError
+        This method is platform specific and by does nothing
         """
-        raise NotImplementedError('create_storage_volume() must be implemented in child class')
+        return
 
+    # pylint: disable=no-self-use
     def attach_storage_volume(self):
         """
         Method to attach created secure storage space to self.path
 
-        This method is platform specific and by default raises NotImplementedError
+        This method is platform specific and by does nothing
         """
-        raise NotImplementedError('attach_storage_volume() must be implemented in child class')
+        return
 
+    # pylint: disable=no-self-use
     def detach_storage_volume(self):
         """
         Method to detach created secure storage space from self.path
 
-        This method is platform specific and by default raises NotImplementedError
+        This method is platform specific and by does nothing
         """
-        raise NotImplementedError('detach_storage_volume() must be implemented in child class')
+        return
