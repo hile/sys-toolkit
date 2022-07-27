@@ -32,7 +32,7 @@ def prepare_run_arguments(cwd, env, expected_return_codes):
     return env, expected_return_codes
 
 
-def run(*args, cwd=None, expected_return_codes=None, env=None, timeout=None):
+def run(*args, cwd=None, expected_return_codes=None, stdout=None, stderr=None, env=None, timeout=None):
     """
     Run command as subprocess with subprocess.run and matching against a list of expected
     return codes
@@ -42,11 +42,12 @@ def run(*args, cwd=None, expected_return_codes=None, env=None, timeout=None):
     env, expected_return_codes = prepare_run_arguments(cwd, env, expected_return_codes)
     try:
         # pylint: disable=subprocess-run-check
-        res = run_real(args, check=False, cwd=cwd, env=env, timeout=timeout)
+        res = run_real(args, stdout=stdout, stderr=stderr, check=False, cwd=cwd, env=env, timeout=timeout)
         if res.returncode not in expected_return_codes:
             raise CommandError(
                 f'Error running {" ".join(args)}: returns {res.returncode}: {res.stderr}'
             )
+        return res
     except (CalledProcessError, FileNotFoundError, TimeoutExpired) as error:
         raise CommandError(error) from error
 
