@@ -25,6 +25,7 @@ TEST_RETURN_VALUE = 'test'
 TEST_ERROR_VALUE = 'test error string'
 TEST_ARGS = (1, 2, 3)
 
+MOCK_BYTES_STRING = bytes(TEST_ERROR_VALUE, encoding='utf-8')
 MOCK_KWARGS = {
     'demo': 'Demo arguments',
     'errortype': ValueError,
@@ -129,14 +130,25 @@ def test_mocks_mock_run_command_line_ouptut():
     assert len(stdout) == EXPECTED_LINE_COUNT
 
 
+def test_mocks_mock_run_bytes_args():
+    """
+    Test the MockRun output method with bytes as arguments for stdout and stderr
+    """
+    obj = MockRun(stdout=MOCK_BYTES_STRING, stderr=MOCK_BYTES_STRING, returncode=2)
+    value = obj()
+    assert value.returncode == 2
+    assert value.stdout == MOCK_BYTES_STRING
+    assert value.stderr == MOCK_BYTES_STRING
+
+
 def test_mocks_mock_run():
     """
-    Test the MockCheckOutput output used to simulate subprocess.check_output
+    Test the MockRun output method
     """
-    obj = MockRun(stdout=TEST_RETURN_VALUE, stderr=TEST_ERROR_VALUE, return_value=1)
+    obj = MockRun(stdout=TEST_RETURN_VALUE, stderr=TEST_ERROR_VALUE, returncode=1)
     value = obj()
-    assert value.stdout == TEST_RETURN_VALUE
-    assert value.stderr == TEST_ERROR_VALUE
+    assert value.stdout == bytes(TEST_RETURN_VALUE, encoding='utf-8')
+    assert value.stderr == bytes(TEST_ERROR_VALUE, encoding='utf-8')
     assert value.returncode == 1
 
 

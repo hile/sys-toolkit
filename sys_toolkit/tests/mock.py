@@ -77,12 +77,16 @@ class MockRun(MockCalledMethod):
     """
     Mock running a CLI command with return code, stdout and stderr
     """
-    def __init__(self, encoding='utf-8', stdout=None, stderr=None, return_value=None):
-        super().__init__(return_value)
+    def __init__(self, encoding='utf-8', stdout=None, stderr=None, returncode=None):
+        super().__init__(returncode)
         self.encoding = encoding
-        self.stdout = stdout if stdout else []
+        self.stdout = stdout if stdout else ''
         self.stderr = stderr if stderr else ''
-        self.returncode = return_value if isinstance(return_value, int) else 0
+        if isinstance(self.stdout, str):
+            self.stdout = bytes(self.stdout, encoding='utf-8')
+        if isinstance(self.stderr, str):
+            self.stderr = bytes(self.stderr, encoding='utf-8')
+        self.returncode = returncode if isinstance(returncode, int) else 0
 
     def __call__(self, *args, **kwargs):
         """
