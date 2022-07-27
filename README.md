@@ -1,3 +1,6 @@
+![Unit Tests](https://github.com/hile/sys-toolkit/actions/workflows/unittest.yml/badge.svg)
+![Style Checks](https://github.com/hile/sys-toolkit/actions/workflows/lint.yml/badge.svg)
+
 # Python system utility toolkit
 
 This module contains various small utility methods and common classes for working in python.
