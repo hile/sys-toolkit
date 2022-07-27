@@ -5,7 +5,6 @@ import os
 
 import pytest
 
-from sys_toolkit.tests.mock import MockReturnTrue
 from sys_toolkit.path import Executables
 
 CLIPBOARD_ENV_VARS = (
