@@ -31,3 +31,9 @@ class FileParserError(Exception):
     """
     Exceptions raised while parsing text files
     """
+
+
+class SecureTemporaryDirectoryError(Exception):
+    """
+    Exceptions raised while processing secure temporary directories
+    """
