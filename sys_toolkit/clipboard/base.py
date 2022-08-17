@@ -84,7 +84,6 @@ class ClipboardBaseClass:
         except CalledProcessError as error:
             raise ClipboardError(f'Error pasting text from clipboard: {error}') from error
 
-    # pylint: disable=no-self-use
     def __process_paste_error__(self, response):
         """
         Process return value for paste command error

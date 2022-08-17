@@ -51,7 +51,6 @@ class LineTextFile(list):
         """
         return line.startswith(self.comment_prefixes) or not line.strip()
 
-    # pylint: disable=no-self-use
     def parse_line(self, line):
         """
         Parse line from file

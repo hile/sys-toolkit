@@ -80,7 +80,6 @@ class SecureTemporaryDirectoryBaseClass:
         self.__tmpdir__ = None
         self.path = None
 
-    # pylint: disable=no-self-use
     def create_storage_volume(self):
         """
         Method to create a secure storage space
@@ -89,7 +88,6 @@ class SecureTemporaryDirectoryBaseClass:
         """
         return
 
-    # pylint: disable=no-self-use
     def attach_storage_volume(self):
         """
         Method to attach created secure storage space to self.path
@@ -98,7 +96,6 @@ class SecureTemporaryDirectoryBaseClass:
         """
         return
 
-    # pylint: disable=no-self-use
     def detach_storage_volume(self):
         """
         Method to detach created secure storage space from self.path
