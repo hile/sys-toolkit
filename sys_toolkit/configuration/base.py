@@ -29,13 +29,17 @@ class ConfigurationItemContainer(LoggingBaseClass):
     __path_settings__ = ()
     """Tuple of settings loaded as pathlib.Path"""
 
-    def __init__(self, parent=None, debug_enabled=False, silent=False, logger=DEFAULT_TARGET_NAME):
+    def __init__(self,
+                 parent: LoggingBaseClass = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False,
+                 logger: str = DEFAULT_TARGET_NAME) -> None:
         self.__attributes__ = []
         self.__parent__ = parent
         super().__init__(debug_enabled, silent, logger)
 
     @property
-    def __config_root__(self):
+    def __config_root__(self) -> LoggingBaseClass:
         """
         Return configuration root item via parent links
         """
@@ -47,7 +51,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
         return parent
 
     @property
-    def __dict_loader__(self):
+    def __dict_loader__(self) -> 'ConfigurationSection':
         """
         Return loader for dict items
         """
@@ -56,7 +60,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
         return ConfigurationSection
 
     @property
-    def __list_loader__(self):
+    def __list_loader__(self) -> 'ConfigurationList':
         """
         Return loader for list items
         """
@@ -65,7 +69,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
         return ConfigurationList
 
     @staticmethod
-    def default_formatter(value):
+    def default_formatter(value) -> str:
         """
         Default formatter for variables
 
@@ -78,7 +82,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
         return value
 
     @staticmethod
-    def __validate_attribute__(attr):
+    def __validate_attribute__(attr) -> None:
         """
         Validate attribute to be set
         """
@@ -89,7 +93,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
         if not RE_CONFIGURATIION_KEY.match(attr):
             raise ConfigurationError(f'Invalid attribute name: {attr}')
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         """
         Return VS code configuration section as dictionary
         """
@@ -162,7 +166,7 @@ class ConfigurationList(ConfigurationItemContainer):
         self.__setting__ = setting
         self.__load__(data)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__values__.__repr__()
 
     def __getitem__(self, index):
@@ -174,7 +178,7 @@ class ConfigurationList(ConfigurationItemContainer):
     def __iter__(self):
         return iter(self.__values__)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.__values__)
 
     def insert(self, index, value):
@@ -232,7 +236,12 @@ class ConfigurationSection(ConfigurationItemContainer):
     __key_attribute_map__ = {}
     """Map configuration keys to python compatible attributes"""
 
-    def __init__(self, data=dict, parent=None, debug_enabled=False, silent=False):
+    def __init__(self,
+                 data: dict = dict,
+                 parent: ConfigurationItemContainer = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False):
+
         if parent is not None and not isinstance(parent, ConfigurationItemContainer):
             raise TypeError('parent must be instance of ConfigurationItemContainer')
         super().__init__(
@@ -257,10 +266,10 @@ class ConfigurationSection(ConfigurationItemContainer):
         if parent is None:
             self.validate()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__name__ if self.__name__ is not None else ''
 
-    def __initialize_sub_sections__(self):
+    def __initialize_sub_sections__(self) -> None:
         """
         Initialize sub sections configured in __section_loaders__
         """
@@ -315,7 +324,7 @@ class ConfigurationSection(ConfigurationItemContainer):
                 attributes.append(attr)
         return sorted(set(attributes))
 
-    def __load_environment_variables__(self):
+    def __load_environment_variables__(self) -> None:
         """
         Load settings from environment variables
         """
@@ -358,7 +367,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             parent.__subsections__.append(item)
         return getattr(parent, name)
 
-    def __init_subsection_path__(self, section_name, path):
+    def __init_subsection_path__(self, section_name: str, path: Path):
         """
         Initialize subsections from config path
 
@@ -379,7 +388,7 @@ class ConfigurationSection(ConfigurationItemContainer):
                 )
         return subsection, field
 
-    def __load_section__(self, section, data, path=None):
+    def __load_section__(self, section: str, data, path=None):
         """
         Load configuration section from data
         """
@@ -400,7 +409,7 @@ class ConfigurationSection(ConfigurationItemContainer):
         else:
             raise ConfigurationError('not a dict')
 
-    def __load_dictionary__(self, data):
+    def __load_dictionary__(self, data: dict) -> None:
         """
         Load settings from dictionary
 
@@ -418,7 +427,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             else:
                 self.set(key, value)
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         """
         Return configuration section as dictionary
         """
@@ -441,7 +450,7 @@ class ConfigurationSection(ConfigurationItemContainer):
         self.__validate_attribute__(attr)
         super().set(attr, value)
 
-    def validate(self):
+    def validate(self) -> None:
         """
         Validate loaded configuration settings
 

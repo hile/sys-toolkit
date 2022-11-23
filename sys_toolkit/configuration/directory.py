@@ -28,7 +28,7 @@ class ConfigurationFileDirectory(ConfigurationSection):
         if self.__path__ is not None and self.__path__.exists():
             self.load(self.__path__)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.__path__.name) if self.__path__ is not None else ''
 
     @property
@@ -40,7 +40,7 @@ class ConfigurationFileDirectory(ConfigurationSection):
             raise ConfigurationError(f'__file_loader_class__ {self.__file_loader_class__} is not callable')
         return self.__file_loader_class__
 
-    def load(self, directory):
+    def load(self, directory) -> None:
         """
         Load all files in configuration file directory
         """

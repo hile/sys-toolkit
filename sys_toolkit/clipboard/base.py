@@ -22,7 +22,7 @@ class ClipboardBaseClass:
     __required_env__ = ()
     __required_modules__ = ()
 
-    def __check_required_modules__(self):
+    def __check_required_modules__(self) -> bool:
         """
         Check if required python modules are available
 
@@ -30,7 +30,7 @@ class ClipboardBaseClass:
         """
         return check_available_imports(*self.__required_modules__)
 
-    def __check_required_env__(self):
+    def __check_required_env__(self) -> bool:
         """
         Check required environment variables are defined and have non-empty value
         """
@@ -39,7 +39,7 @@ class ClipboardBaseClass:
                 return False
         return True
 
-    def __check_required_cli_commands__(self):
+    def __check_required_cli_commands__(self) -> bool:
         """
         Check if required CLI commands are available
         """
@@ -51,7 +51,7 @@ class ClipboardBaseClass:
                 return False
         return True
 
-    def __run_command__(self, *command):
+    def __run_command__(self, *command) -> None:
         """
         Run generic CLI commands without stdin
         """
@@ -61,7 +61,7 @@ class ClipboardBaseClass:
             cmd = ' '.join(command)
             raise ClipboardError(f'Error running command "{cmd}": {error}') from error
 
-    def __copy_command_stdin__(self, data, *command):
+    def __copy_command_stdin__(self, data, *command) -> None:
         """
         Generic implementation to copy data from clipboard with specified CLI commmand
         and data from stdin to the command
@@ -93,7 +93,7 @@ class ClipboardBaseClass:
         raise ClipboardError(f'Error pasting text from clipboard: command returns code {response.returncode}')
 
     @property
-    def env(self):
+    def env(self) -> dict:
         """
         Environment variables for commands
         """
@@ -102,7 +102,7 @@ class ClipboardBaseClass:
         return env
 
     @property
-    def available(self):
+    def available(self) -> bool:
         """
         Property to check if this type of clipboard is available
 
@@ -110,7 +110,7 @@ class ClipboardBaseClass:
         """
         return False
 
-    def clear(self):
+    def clear(self) -> None:
         """
         Clear data on clipboard
         """
