@@ -6,6 +6,7 @@ import os
 import re
 
 from pathlib import Path
+from typing import Any, Tuple
 
 from sys_toolkit.logger import DEFAULT_TARGET_NAME
 
@@ -21,12 +22,14 @@ class ConfigurationItemContainer(LoggingBaseClass):
     Base class for containers of settings
     """
     __dict_loader_class__ = None
+    """Loader class for dictionaries in configuration"""
     __list_loader_class__ = None
-    __float_settings__ = ()
+    """Loader class for lists in configuration"""
+    __float_settings__: Tuple[str] = ()
     """Tuple of settings loaded as floats"""
-    __integer_settings__ = ()
+    __integer_settings__: Tuple[str] = ()
     """Tuple of settings loaded as integers"""
-    __path_settings__ = ()
+    __path_settings__: Tuple[str] = ()
     """Tuple of settings loaded as pathlib.Path"""
 
     def __init__(self,
@@ -93,6 +96,18 @@ class ConfigurationItemContainer(LoggingBaseClass):
         if not RE_CONFIGURATIION_KEY.match(attr):
             raise ConfigurationError(f'Invalid attribute name: {attr}')
 
+    def __format_attribute_value__(self, attr: str, value: Any) -> Any:
+        """
+        Format an attribute's value by attribute name
+        """
+        if attr in self.__float_settings__:
+            return float(value)
+        if attr in self.__integer_settings__:
+            return int(value)
+        if attr in self.__path_settings__:
+            return Path(value).expanduser()
+        return value
+
     def as_dict(self) -> dict:
         """
         Return VS code configuration section as dictionary
@@ -130,12 +145,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
             return
 
         if value is not None:
-            if attr in self.__float_settings__:
-                value = float(value)
-            if attr in self.__integer_settings__:
-                value = int(value)
-            if attr in self.__path_settings__:
-                value = Path(value).expanduser()
+            value = self.__format_attribute_value__(attr, value)
 
         validator_callback = getattr(self, f'validate_{attr}', None)
         if callable(validator_callback):
