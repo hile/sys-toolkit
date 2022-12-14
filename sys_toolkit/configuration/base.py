@@ -106,6 +106,23 @@ class ConfigurationItemContainer(LoggingBaseClass):
             return int(value)
         if attr in self.__path_settings__:
             return Path(value).expanduser()
+
+        validator_callback = getattr(self, f'validate_{attr}', None)
+        if callable(validator_callback):
+            try:
+                value = validator_callback(value)  # pylint: disable=not-callable
+            except Exception as error:
+                raise ConfigurationError(f'Error validating setting {attr}: {error}') from error
+
+        formatter_callback = getattr(self, f'format_{attr}', None)
+        try:
+            if callable(formatter_callback):
+                value = formatter_callback(value)  # pylint: disable=not-callable
+            else:
+                value = self.default_formatter(value)
+        except Exception as error:
+            raise ConfigurationError(f'Error formatting setting {attr}: {error}') from error
+
         return value
 
     def as_dict(self) -> dict:
@@ -147,22 +164,6 @@ class ConfigurationItemContainer(LoggingBaseClass):
         if value is not None:
             value = self.__format_attribute_value__(attr, value)
 
-        validator_callback = getattr(self, f'validate_{attr}', None)
-        if callable(validator_callback):
-            try:
-                value = validator_callback(value)  # pylint: disable=not-callable
-            except Exception as error:
-                raise ConfigurationError(f'Error validating setting {attr}: {error}') from error
-
-        formatter_callback = getattr(self, f'format_{attr}', None)
-        try:
-            if callable(formatter_callback):
-                value = formatter_callback(value)  # pylint: disable=not-callable
-            else:
-                value = self.default_formatter(value)
-        except Exception as error:
-            raise ConfigurationError(f'Error formatting setting {attr}: {error}') from error
-
         setattr(self, attr, value)
         self.__attributes__.append(attr)
 
@@ -191,17 +192,25 @@ class ConfigurationList(ConfigurationItemContainer):
     def __len__(self) -> int:
         return len(self.__values__)
 
-    def insert(self, index, value):
+    def __format_item__(self, value: Any) -> Any:
         """
-        Insert value to configuration list
-        """
-        self.__values__.insert(index, value)
+        Format an item to be loaded to ConfigurationList
 
-    def append(self, value):
+        By default returns original value. Override in child class as required.
+        """
+        return value
+
+    def insert(self, index: int, value: Any) -> None:
+        """
+        Insert value to configuration list at specified index
+        """
+        self.__values__.insert(index, self.__format_item__(value))
+
+    def append(self, value: Any) -> None:
         """
         Append value to configuration list
         """
-        self.__values__.append(value)
+        self.__values__.append(self.__format_item__(value))
 
     def __load__(self, value):
         """

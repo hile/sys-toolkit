@@ -51,6 +51,17 @@ TEST_INVALID_VALUES = (
 )
 
 
+class FormattedConfigurationList(ConfigurationList):
+    """
+    Section loader with values formatted to integers
+    """
+    def __format_item__(self, value: str) -> int:
+        """
+        Format string items added to the object as integers
+        """
+        return int(value)
+
+
 class EnvDefaultsConfigurationSection(ConfigurationSection):
     """
     Configuration with default settings and environment
@@ -237,6 +248,17 @@ def validate_configuration_section(section, data, parent=None):
             )
         else:
             assert getattr(section, key) == value
+
+
+def test_configuration_list_formatting():
+    """
+    Test loading a configuration list that formats values to integers
+    """
+    obj = FormattedConfigurationList(data=['1', '2'])
+    obj.insert(1, '2')
+    assert len(obj) == 3
+    for value in obj:
+        assert isinstance(value, int)
 
 
 def test_configuration_section_default_empty():
