@@ -172,8 +172,13 @@ class ConfigurationList(ConfigurationItemContainer):
     """
     List of settings in configuration section
     """
-    def __init__(self, setting=None, data=None, parent=None):
-        super().__init__(parent=parent)
+    def __init__(self,
+                 setting=None,
+                 data=None,
+                 parent=None,
+                 debug_enabled: bool = False,
+                 silent: bool = False):
+        super().__init__(parent=parent, debug_enabled=debug_enabled, silent=silent)
         self.__setting__ = setting
         self.__load__(data)
 
@@ -293,7 +298,12 @@ class ConfigurationSection(ConfigurationItemContainer):
         Initialize sub sections configured in __section_loaders__
         """
         for loader in self.__section_loaders__:
-            subsection = loader(data=None, parent=self)
+            subsection = loader(
+                data=None,
+                parent=self,
+                debug_enabled=self.__debug_enabled__,
+                silent=self.__silent__
+            )
             name = self.__attribute_from_key__(subsection.__name__)
             if name is None:
                 raise ConfigurationError(f'Subsection class defines no name: {loader}')
@@ -380,7 +390,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             parent = self
         if not hasattr(parent, name):
             loader = parent.__get_section_loader__(name)
-            item = loader({}, parent=parent)
+            item = loader({}, parent=parent, debug_enabled=self.__debug_enabled__, silent=self.__silent__)
             item.__name__ = name
             setattr(parent, name, item)
             parent.__subsections__.append(item)
