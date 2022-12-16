@@ -3,6 +3,7 @@ Configuration file directory
 """
 
 from pathlib import Path
+from typing import Any, Optional
 
 from ..exceptions import ConfigurationError
 from .base import ConfigurationSection
@@ -21,7 +22,11 @@ class ConfigurationFileDirectory(ConfigurationSection):
     __file_loader_class__ = None
     __extensions__ = ()
 
-    def __init__(self, path=None, parent=None, debug_enabled=False, silent=False):
+    def __init__(self,
+                 path: Optional[str] = None,
+                 parent: Optional[ConfigurationSection] = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False):
         self.__path__ = Path(path).expanduser() if path is not None else None
         self.__files__ = []
         super().__init__(parent=parent, debug_enabled=debug_enabled, silent=silent)
@@ -32,13 +37,24 @@ class ConfigurationFileDirectory(ConfigurationSection):
         return str(self.__path__.name) if self.__path__ is not None else ''
 
     @property
-    def file_loader_class(self):
+    def file_loader_class(self) -> Any:
         """
         Return file loader class for loading the detected files
         """
         if self.__file_loader_class__ is None:
             raise ConfigurationError(f'__file_loader_class__ {self.__file_loader_class__} is not callable')
         return self.__file_loader_class__
+
+    # pylint: disable=unused-argument
+    def get_file_loader_class(self, path: Path) -> Any:
+        """
+        get file loader class for the configuration file directory laoder
+
+        By default returns self.file_loader_class property.
+
+        If the selected class depends on file override this method in child class.
+        """
+        return self.file_loader_class
 
     def load(self, directory) -> None:
         """
@@ -52,15 +68,16 @@ class ConfigurationFileDirectory(ConfigurationSection):
         for path in directory.iterdir():
             self.load_file(path)
 
-    def load_file(self, path):
+    def load_file(self, path: Path) -> Any:
         """
         Load specified file path
         """
         if not path.is_file() or path.suffix not in self.__extensions__:
             return None
 
+        file_loader_class = self.get_file_loader_class(path)
         # pylint: disable=not-callable
-        item = self.file_loader_class(
+        item = file_loader_class(
             path,
             parent=self,
             debug_enabled=self.__debug_enabled__,
