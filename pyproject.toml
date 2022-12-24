@@ -24,7 +24,7 @@ python = "^3.9"
 PyYAML = "^6.0"
 inflection = "^0.5"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 coverage = "^7"
 flake8 = "^6"
 flake8-bugbear = "^22"
