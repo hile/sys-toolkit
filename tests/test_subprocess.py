@@ -12,9 +12,7 @@ from sys_toolkit.subprocess import run, run_command, run_command_lineoutput
 from sys_toolkit.exceptions import CommandError
 
 MIXED__ENCODINGS_FILE = Path(__file__).parent.joinpath('data/linefile_mixed_encodings')
-VALID_COMMAND = (
-    'uname',
-)
+VALID_COMMAND = 'uname'
 INVALID_ARGS = (VALID_COMMAND, '--foobar')
 
 
