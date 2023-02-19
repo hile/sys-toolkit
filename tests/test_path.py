@@ -54,16 +54,16 @@ def mock_system_path(monkeypatch, tmpdir):
         root.joinpath(path).mkdir(parents=True)
     for path in MOCK_PATH_EXECUTABLES:
         filename = root.joinpath(path)
-        filename.open('wb')
-        assert filename.exists()
-        print(filename, filename.lstat())
+        with filename.open('wb') as handle:
+            handle.flush()
+            assert filename.exists()
         filename.chmod(MOCK_PERM_EXECUTABLE)
     for path in MOCK_PATH_NON_EXECUTABLES:
         filename = root.joinpath(path)
-        filename.open('wb')
-        assert filename.exists()
+        with filename.open('wb') as handle:
+            handle.flush()
+            assert filename.exists()
         filename.chmod(MOCK_PERM_NON_EXECUTABLE)
-        print(filename, filename.lstat())
         assert not os.access(str(filename), os.X_OK)
 
     monkeypatch.setenv('PATH', os.pathsep.join(dirs))

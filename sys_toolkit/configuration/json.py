@@ -31,9 +31,8 @@ class JsonConfiguration(ConfigurationFile):
         """
         path = self.__check_file_access__(path)
         try:
-            self.parse_data(
-                json.loads(path.open('r', encoding=self.encoding).read(), **self.__loader_args__)
-            )
+            with path.open('r', encoding=self.encoding) as handle:
+                self.parse_data(json.loads(handle.read(), **self.__loader_args__))
         except Exception as error:
             raise ConfigurationError(f'Error loading {path}: {error}') from error
 

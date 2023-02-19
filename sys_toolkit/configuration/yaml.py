@@ -27,9 +27,8 @@ class YamlConfiguration(ConfigurationFile):
         path = self.__check_file_access__(path)
 
         try:
-            self.parse_data(
-                yaml.safe_load(path.open('r', encoding='utf-8'))
-            )
+            with path.open('r', encoding='utf-8') as handle:
+                self.parse_data(yaml.safe_load(handle))
         except Exception as error:
             raise ConfigurationError(f'Error loading {path}: {error}') from error
 
