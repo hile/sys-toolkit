@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sys-too4kit"
+name = "sys-toolkit"
 version = "2.4.4"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
