@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sys-toolkit"
-version = "2.4.4"
+version = "2.4.5"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
 readme = "README.md"
