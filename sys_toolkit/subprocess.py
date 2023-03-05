@@ -4,21 +4,25 @@ Execute shell commands and return output
 Wraps subprocess.run, linking error handling to ScriptError and handling
 common string output use cases.
 """
-
 import os
 
 from subprocess import run as run_real
-from subprocess import PIPE, CalledProcessError, TimeoutExpired
+from subprocess import PIPE, CalledProcessError, TimeoutExpired, CompletedProcess
+from typing import Any, Dict, List, Optional, Tuple
 
+from .constants import DEFAULT_ENCODING
 from .exceptions import CommandError
 
 DEFAULT_ENCODINGS = (
-    'utf-8',
+    DEFAULT_ENCODING,
 )
 DEFAULT_RETURN_CODES_OK = [0]
 
 
-def prepare_run_arguments(cwd, env, expected_return_codes):
+def prepare_run_arguments(
+        cwd: str,
+        env: Optional[Dict] = None,
+        expected_return_codes: Optional[List[int]] = None) -> Tuple[Dict, List[int]]:
     """
     Prepare environment and other arguments for various run_ commands
     """
@@ -32,7 +36,14 @@ def prepare_run_arguments(cwd, env, expected_return_codes):
     return env, expected_return_codes
 
 
-def run(*args, cwd=None, expected_return_codes=None, stdout=None, stderr=None, env=None, timeout=None):
+def run(
+        *args: List[str],
+        cwd: Optional[str] = None,
+        expected_return_codes: Optional[List[int]] = None,
+        stdout: Any = None,
+        stderr: Any = None,
+        env: Optional[Dict] = None,
+        timeout: Optional[float] = None) -> CompletedProcess:
     """
     Run command as subprocess with subprocess.run and matching against a list of expected
     return codes
@@ -52,7 +63,12 @@ def run(*args, cwd=None, expected_return_codes=None, stdout=None, stderr=None, e
         raise CommandError(error) from error
 
 
-def run_command(*args, cwd=None, expected_return_codes=None, env=None, timeout=None):
+def run_command(
+        *args: List[str],
+        cwd: Optional[str] = None,
+        expected_return_codes: Optional[List[int]] = None,
+        env: Optional[Dict] = None,
+        timeout: Optional[float] = None) -> Tuple[bytes, bytes]:
     """
     Run command as subprocess, checking return code is 0 and returning stdout
     and stderr as bytes
@@ -73,8 +89,13 @@ def run_command(*args, cwd=None, expected_return_codes=None, env=None, timeout=N
     return res.stdout, res.stderr
 
 
-def run_command_lineoutput(*args, cwd=None, expected_return_codes=None, env=None,
-                           timeout=None, encodings=DEFAULT_ENCODINGS):
+def run_command_lineoutput(
+        *args: List[str],
+        cwd: Optional[str] = None,
+        expected_return_codes: Optional[List[int]] = None,
+        timeout: Optional[float] = None,
+        env: Optional[Dict] = None,
+        encodings: List[str] = DEFAULT_ENCODINGS) -> Tuple[List[str], List[str]]:
     """
     Run command as subprocess, checking return code is 0 and returning stdout
     and stderr as split to lines

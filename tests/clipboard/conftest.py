@@ -2,6 +2,7 @@
 Python test fixtures for sys_toolkit.clipboard module
 """
 import os
+from typing import Iterator
 
 import pytest
 
@@ -15,7 +16,7 @@ DUMMY_DISPLAY = ':0.0'
 
 
 @pytest.fixture
-def mock_clipboard_executables_missing():
+def mock_clipboard_executables_missing() -> None:
     """
     Mock path in Executables object to not contain pbcopy and pbpaste
     """
@@ -25,7 +26,7 @@ def mock_clipboard_executables_missing():
 
 
 @pytest.fixture
-def mock_clipboard_env_missing(monkeypatch):
+def mock_clipboard_env_missing(monkeypatch) -> Iterator[dict]:
     """
     Mock environment variables to ensure
     """
@@ -36,7 +37,7 @@ def mock_clipboard_env_missing(monkeypatch):
 
 
 @pytest.fixture
-def mock_darwin_clipboard_executables_available():
+def mock_darwin_clipboard_executables_available() -> Iterator[Executables]:
     """
     Mock path in Executables object to contain pbcopy and pbpaste
     """
@@ -50,7 +51,7 @@ def mock_darwin_clipboard_executables_available():
 
 
 @pytest.fixture
-def mock_wayland_clipboard_executables_available(monkeypatch):
+def mock_wayland_clipboard_executables_available(monkeypatch) -> Iterator[Executables]:
     """
     Mock path in Executables object to contain wl-copy and wl-paste
 
@@ -67,7 +68,7 @@ def mock_wayland_clipboard_executables_available(monkeypatch):
 
 
 @pytest.fixture
-def mock_xclip_clipboard_executables_available(monkeypatch):
+def mock_xclip_clipboard_executables_available(monkeypatch) -> Iterator[Executables]:
     """
     Mock path in Executables object to contain wl-copy and wl-paste
     """

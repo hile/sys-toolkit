@@ -1,9 +1,10 @@
 """
 Common base class for scripts with configurable logging
 """
-
 import os
 import sys
+
+from typing import Any, Dict, List, Optional
 
 from sys_toolkit.logger import Logger
 
@@ -12,12 +13,17 @@ class LoggingBaseClass:
     """
     Common base class with logging method using Logger objects
     """
-    __env_vars__ = {
+    __debug_enabled__: bool
+    __silent__: bool
+    __env_vars__: Dict = {
         'debug_enabled': 'DEBUG',
         'silent': 'SILENT',
     }
 
-    def __init__(self, debug_enabled=False, silent=False, logger=None):
+    def __init__(self,
+                 debug_enabled: bool = False,
+                 silent: bool = False,
+                 logger: Optional[str] = None):
         self.__debug_enabled__ = debug_enabled or os.environ.get(self.__env_vars__['debug_enabled'], False)
         self.__silent__ = silent or os.environ.get(self.__env_vars__['silent'], False)
 
@@ -25,28 +31,28 @@ class LoggingBaseClass:
         self.logger = Logger(logger)
 
     @property
-    def __is_debug_enabled__(self):
+    def __is_debug_enabled__(self) -> bool:
         """
         Check if debugging is enabled
         """
         return self.__debug_enabled__
 
     @property
-    def __is_silent__(self):
+    def __is_silent__(self) -> bool:
         """
         Check if silent mode is enabled
         """
         return self.__silent__
 
     @staticmethod
-    def __parse_string_args__(*args):
+    def __parse_string_args__(*args: List[Any]) -> str:
         """
         Parse list of values as stripped string concatenated by space
         """
         args = [str(arg).rstrip() for arg in args]
         return ' '.join(args)
 
-    def debug(self, *args):
+    def debug(self, *args: List[Any]) -> None:
         """
         Send debug message to stderr if debug mode is enabled
         """
@@ -54,14 +60,14 @@ class LoggingBaseClass:
             return
         self.error(*args)
 
-    def error(self, *args):
+    def error(self, *args: List[Any]) -> None:
         """
         Send error message to stderr
         """
         sys.stderr.write(f'{self.__parse_string_args__(*args)}\n')
         sys.stderr.flush()
 
-    def message(self, *args):
+    def message(self, *args: List[Any]) -> None:
         """
         Show message to stdout unless silent flag is set
         """

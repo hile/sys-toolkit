@@ -1,10 +1,10 @@
 """
 Abstract base class extensions for cached collections
 """
-
 import time
 
 from collections.abc import MutableSequence, MutableMapping
+from typing import Any, Dict, Iterator, List, Optional
 
 
 # pylint: disable=too-few-public-methods
@@ -12,27 +12,27 @@ class ExpiringObjectCache:
     """
     Cache of objects with cache timeout
     """
-    __loaded__ = None
-    """Timestamp when cache was last refreshed"""
-    __loading__ = False
+    __loading__: bool = False
     """Boolean to store cache is being loaded """
-    __load_duration__ = None
+    __loaded__: Optional[float] = None
+    """Timestamp when cache was last refreshed"""
+    __load_duration__: Optional[float] = None
     """Stores duration of data processing in update()"""
-    __load_start__ = None
+    __load_start__: Optional[float] = None
     """Start time for loading data"""
-    __max_age_seconds__ = None
+    __max_age_seconds__: Optional[float] = None
     """Age limit for cached items in seconds"""
 
-    def __reset__(self):
+    def __reset__(self) -> None:
         """
         Reset state. This needs to be called when load errors are handled
         """
-        self.__loaded__ = None
         self.__loading__ = False
+        self.__loaded__ = None
         self.__load_duration__ = None
         self.__load_start__ = None
 
-    def __start_update__(self):
+    def __start_update__(self) -> None:
         """
         Start updating cached data. This marks cache as loading and sets load time
         to current date
@@ -41,7 +41,7 @@ class ExpiringObjectCache:
         self.__loaded__ = False
         self.__load_start__ = time.time()
 
-    def __finish_update__(self):
+    def __finish_update__(self) -> None:
         """
         Set current timestamp to __loaded__ attribute. Also resets __loading__ to False
         """
@@ -53,7 +53,7 @@ class ExpiringObjectCache:
         self.__loading__ = False
 
     @property
-    def __requires_reload__(self):
+    def __requires_reload__(self) -> bool:
         """
         Check if cached data is not yet loaded or requires reloading
         """
@@ -65,7 +65,7 @@ class ExpiringObjectCache:
             return time.time() > self.__loaded__ + self.__max_age_seconds__
         return False
 
-    def update(self):
+    def update(self) -> None:
         """
         Update items in object cache
         """
@@ -76,21 +76,21 @@ class CachedMutableMapping(MutableMapping, ExpiringObjectCache):
     """
     Cached mutable mapping object with maximum lifetime
     """
-    __items__ = {}
+    __items__: Dict = {}
 
-    def __delitem__(self, index):
+    def __delitem__(self, index: Any) -> None:
         """
         Delete specified item from cache
         """
         self.__items__.__delitem__(index)
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: Any, value: Any) -> None:
         """
         Set specified value to given index
         """
         self.__items__.__setitem__(index, value)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: Any) -> Any:
         """
         Get specified item from cache
         """
@@ -98,7 +98,7 @@ class CachedMutableMapping(MutableMapping, ExpiringObjectCache):
             self.update()
         return self.__items__.__getitem__(index)
 
-    def __len__(self):
+    def __len__(self) -> int:
         """
         Return size of collection
         """
@@ -106,7 +106,7 @@ class CachedMutableMapping(MutableMapping, ExpiringObjectCache):
             self.update()
         return len(self.__items__)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         """
         Set specified value to given index
         """
@@ -114,7 +114,8 @@ class CachedMutableMapping(MutableMapping, ExpiringObjectCache):
             self.update()
         return iter(list(self.__items__))
 
-    def update(self, other=(), /, **kwds):
+    # pylint: disable=arguments-differ
+    def update(self, **kwargs):
         """
         Update items in object cache
 
@@ -128,28 +129,28 @@ class CachedMutableSequence(MutableSequence, ExpiringObjectCache):
     """
     Cached mutable sequence with maximum lifetime
     """
-    __items__ = []
+    __items__: List[Any] = []
     """List of cached items"""
 
-    def __delitem__(self, index):
+    def __delitem__(self, index: int) -> None:
         """
         Delete specified item from cache
         """
         self.__items__.__delitem__(index)
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: int, value: Any) -> None:
         """
         Set specified value to given index
         """
         self.__items__.__setitem__(index, value)
 
-    def insert(self, index, value):
+    def insert(self, index: int, value: Any) -> None:
         """
         insert item to specific
         """
         self.__items__.insert(index, value)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Any:
         """
         Get specified item from cache
         """
@@ -157,7 +158,7 @@ class CachedMutableSequence(MutableSequence, ExpiringObjectCache):
             self.update()
         return self.__items__.__getitem__(index)
 
-    def __len__(self):
+    def __len__(self) -> int:
         """
         Return size of collection
         """
@@ -165,14 +166,14 @@ class CachedMutableSequence(MutableSequence, ExpiringObjectCache):
             self.update()
         return len(self.__items__)
 
-    def clear(self):
+    def clear(self) -> None:
         """
         Clear cached data
         """
         self.__items__ = []
         self.__reset__()
 
-    def update(self):
+    def update(self) -> None:
         """
         Update items in object cache
 

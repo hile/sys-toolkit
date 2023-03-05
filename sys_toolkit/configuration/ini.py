@@ -1,10 +1,13 @@
 """
 Loader for configuration files in .ini format
 """
-
 import configparser
 
+from pathlib import Path
+from typing import Optional, Union
+
 from ..exceptions import ConfigurationError
+from .base import LoggingBaseClass
 from .directory import ConfigurationFileDirectory
 from .file import ConfigurationFile
 
@@ -20,11 +23,16 @@ class IniConfiguration(ConfigurationFile):
     You can pass arguments to configparser.ConfigParser with
     loader_args
     """
-    def __init__(self, path=None, parent=None, debug_enabled=False, silent=False, **loader_args):
+    def __init__(self,
+                 path: Union[str, Path] = None,
+                 parent: Optional[LoggingBaseClass] = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False,
+                 **loader_args) -> None:
         self.__loader_args__ = loader_args
         super().__init__(path, parent=parent, debug_enabled=debug_enabled, silent=silent)
 
-    def load(self, path):
+    def load(self, path: Union[str, Path]) -> None:
         """
         Load specified INI configuration file
         """

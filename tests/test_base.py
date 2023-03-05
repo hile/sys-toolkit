@@ -1,11 +1,10 @@
 """
 Unit tests for sys_toolkit.base module
 """
-
 from sys_toolkit.base import LoggingBaseClass
 
 
-def test_logging_base_class_defaults(capsys):
+def test_logging_base_class_defaults(capsys) -> None:
     """
     Test attributes of LoggingBaseClass
     """
@@ -25,7 +24,7 @@ def test_logging_base_class_defaults(capsys):
     assert captured.out.splitlines() == [message]
 
 
-def test_logging_base_class_silent_debug(capsys):
+def test_logging_base_class_silent_debug(capsys) -> None:
     """
     Test LoggingBaseClass with silent and debug flags set
     """

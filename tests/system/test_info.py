@@ -1,7 +1,6 @@
 """
 Unit tests for sys_toolkit.system.info module
 """
-
 import pytest
 
 from sys_toolkit.system.info import SystemInfo
@@ -29,7 +28,7 @@ ENVIRONMENTS = {
 }
 
 
-def validate_environment(obj, environment):
+def validate_environment(obj: SystemInfo, environment: dict) -> None:
     """
     Validate SystemInfo environment
     """
@@ -43,7 +42,7 @@ def validate_environment(obj, environment):
     assert obj.toolchain_family == obj.toolchain_family
 
 
-def test_system_info_object_attributes():
+def test_system_info_object_attributes() -> None:
     """
     Test attributes of uninitialized SystemInfo object
     """
@@ -53,7 +52,8 @@ def test_system_info_object_attributes():
 
 
 # pylint: disable=unused-argument
-def test_system_info_object_darwin_unknown(mock_unsupported_win32_platform):
+def test_system_info_object_darwin_unknown(
+        mock_unsupported_win32_platform) -> None:
     """
     Test SystemInfo object with known OS platform and toolchain
     """
@@ -62,7 +62,8 @@ def test_system_info_object_darwin_unknown(mock_unsupported_win32_platform):
 
 
 # pylint: disable=unused-argument
-def test_system_info_object_darwin_macos_hostname_command_error(mock_bsd_error_hostname_empty_output):
+def test_system_info_object_darwin_macos_hostname_command_error(
+        mock_bsd_error_hostname_empty_output) -> None:
     """
     Test SystemInfo object with darwin macos platform and BSD toolchain, but error
     running hostname command that returns empty string
@@ -74,7 +75,7 @@ def test_system_info_object_darwin_macos_hostname_command_error(mock_bsd_error_h
 
 
 # pylint: disable=unused-argument
-def test_system_info_object_darwin_macos(mock_darwin_platform):
+def test_system_info_object_darwin_macos(mock_darwin_platform) -> None:
     """
     Test SystemInfo object with darwin macos platform and BSD toolchain
     """
@@ -83,7 +84,7 @@ def test_system_info_object_darwin_macos(mock_darwin_platform):
 
 
 # pylint: disable=unused-argument
-def test_system_info_object_freebsd(mock_freebsd_platform):
+def test_system_info_object_freebsd(mock_freebsd_platform) -> None:
     """
     Test SystemInfo object with FreeBSD platform and BSD toolchain
     """
@@ -92,7 +93,7 @@ def test_system_info_object_freebsd(mock_freebsd_platform):
 
 
 # pylint: disable=unused-argument
-def test_system_info_object_linux_gnu(mock_gnu_linux_platform):
+def test_system_info_object_linux_gnu(mock_gnu_linux_platform) -> None:
     """
     Test SystemInfo object with linux platform and GNU toolchain
     """

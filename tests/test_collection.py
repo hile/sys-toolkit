@@ -1,8 +1,9 @@
 """
 Unit tests for sys_toolkit.collection module
 """
-
 import time
+
+from typing import Any, Dict
 
 from sys_toolkit.collection import (
     CachedMutableMapping,
@@ -33,7 +34,7 @@ class MockCachedMutableSequence(CachedMutableSequence):
     """
     __max_age_seconds__ = 0.2
 
-    def update(self):
+    def update(self) -> None:
         """
         Mock update call
         """
@@ -49,7 +50,8 @@ class MockCachedMutableMapping(CachedMutableMapping):
     """
     __max_age_seconds__ = 0.2
 
-    def update(self, other=(), /, **kwds):
+    # pylint: disable=unused-argument
+    def update(self, **kwargs: Dict[Any, Any]) -> None:
         """
         Mock update call
         """
@@ -60,7 +62,7 @@ class MockCachedMutableMapping(CachedMutableMapping):
         self.__finish_update__()
 
 
-def test_expiring_object_cache():
+def test_expiring_object_cache() -> None:
     """
     Test ExpiringObjectCache minimal base class without actual data
     """
@@ -95,7 +97,7 @@ def test_expiring_object_cache():
     assert obj.__requires_reload__ is False
 
 
-def test_cached_mutable_mapping():
+def test_cached_mutable_mapping() -> None:
     """
     Test minimal child class of CachedMutableMapping
     """
@@ -124,7 +126,7 @@ def test_cached_mutable_mapping():
     assert obj == {}
 
 
-def test_cached_mutable_sequence():
+def test_cached_mutable_sequence() -> None:
     """
     Test minimal child class of CachedMutableSequence
     """

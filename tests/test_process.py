@@ -21,7 +21,7 @@ INVALID_DATETIMES = (
 )
 
 
-def validate_process_attributes(process):
+def validate_process_attributes(process) -> None:
     """
     Validate some attributes received from process list
     """
@@ -32,7 +32,7 @@ def validate_process_attributes(process):
     assert process.username is not None
 
 
-def test_process_list_parse_date_invalid_formats():
+def test_process_list_parse_date_invalid_formats() -> None:
     """
     Test various cases of invalid formats passed to 'parse_date' method and returned
     error value (always None, not raising ValueError)
@@ -41,7 +41,7 @@ def test_process_list_parse_date_invalid_formats():
         assert parse_datetime(testcase) is None
 
 
-def test_process_validate_no_process_attributes():
+def test_process_validate_no_process_attributes() -> None:
     """
     Test loading a process entry from empty string and there are no process list
     attributes
@@ -54,7 +54,7 @@ def test_process_validate_no_process_attributes():
     assert process.username is None
 
 
-def test_process_validate_missing_fields():
+def test_process_validate_missing_fields() -> None:
     """
     Test loading a process entry from empty string and there are no process list
     attributes
@@ -66,7 +66,7 @@ def test_process_validate_missing_fields():
     assert process.username is None
 
 
-def test_process_list_load_freebsd(monkeypatch):
+def test_process_list_load_freebsd(monkeypatch) -> None:
     """
     Test loading a process list when operating system is FreeBSD
     """
@@ -82,7 +82,7 @@ def test_process_list_load_freebsd(monkeypatch):
         validate_process_attributes(process)
 
 
-def test_process_list_load_linux(monkeypatch):
+def test_process_list_load_linux(monkeypatch) -> None:
     """
     Test loading a process list when operating system is linux
     """
@@ -98,7 +98,7 @@ def test_process_list_load_linux(monkeypatch):
         validate_process_attributes(process)
 
 
-def test_process_list_load_macos(monkeypatch):
+def test_process_list_load_macos(monkeypatch) -> None:
     """
     Test loading a process list when operating system is MacOS
     """
@@ -114,7 +114,7 @@ def test_process_list_load_macos(monkeypatch):
         validate_process_attributes(process)
 
 
-def test_process_list_filter(monkeypatch):
+def test_process_list_filter(monkeypatch) -> None:
     """
     Test filtering process list
     """
@@ -127,7 +127,7 @@ def test_process_list_filter(monkeypatch):
     assert len(filtered) == 333
 
 
-def test_process_list_filter_invalid_filter(monkeypatch):
+def test_process_list_filter_invalid_filter(monkeypatch) -> None:
     """
     Test filtering process list
     """
@@ -142,7 +142,7 @@ def test_process_list_filter_invalid_filter(monkeypatch):
         processes.filter(invalid='invalid attribute')
 
 
-def test_process_list_errors(monkeypatch):
+def test_process_list_errors(monkeypatch) -> None:
     """
     Test processes with errors received during listing of processes
     """

@@ -1,9 +1,10 @@
 """
 Parsers for text files with comments
 """
-
 from pathlib import Path
+from typing import Union
 
+from .constants import DEFAULT_ENCODING
 from .exceptions import FileParserError
 
 
@@ -16,10 +17,13 @@ class LineTextFile(list):
     """
     comment_prefixes = '#'
     """Characters in start of line used to detect comments"""
-    encoding = 'utf-8'
+    encoding = DEFAULT_ENCODING
     """Default encoding of file"""
 
-    def __init__(self, path, comment_prefixes=None, encoding='utf-8'):
+    def __init__(self,
+                 path: Union[str, Path],
+                 comment_prefixes: str = None,
+                 encoding: str = DEFAULT_ENCODING) -> None:
         super().__init__()
         if isinstance(comment_prefixes, str):
             self.comment_prefixes = comment_prefixes
@@ -27,7 +31,7 @@ class LineTextFile(list):
         self.path = Path(path)
         self.load()
 
-    def load(self):
+    def load(self) -> None:
         """
         Load lines in file as list
         """
@@ -42,7 +46,7 @@ class LineTextFile(list):
                 if item is not None:
                     self.append(item)
 
-    def skip_line(self, line):
+    def skip_line(self, line: str) -> bool:
         """
         Check if line should be skipped
 
@@ -51,7 +55,7 @@ class LineTextFile(list):
         """
         return line.startswith(self.comment_prefixes) or not line.strip()
 
-    def parse_line(self, line):
+    def parse_line(self, line: str) -> str:
         """
         Parse line from file
 
@@ -66,6 +70,6 @@ class SortedLineTextFile(LineTextFile):
 
     Extends LineTextFile by sorting loaded lines after loading
     """
-    def __init__(self, path):
+    def __init__(self, path: Union[str, Path]) -> None:
         super().__init__(path)
         self.sort()

@@ -1,11 +1,11 @@
 """
 Unit tests for sys_toolkit.configuration.directory module
 """
-
 from pathlib import Path
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.configuration.directory import ConfigurationFileDirectory
 from sys_toolkit.configuration.file import ConfigurationFile
 from sys_toolkit.exceptions import ConfigurationError
@@ -17,16 +17,16 @@ MOCK_EXTENSIONS = (
 )
 
 
-def create_mock_files(directory):
+def create_mock_files(directory) -> None:
     """
     Create mocked test files to given directotry
     """
-    with Path(directory, 'test-no-extension').open('w', encoding='utf-8') as filedescriptor:
+    with Path(directory, 'test-no-extension').open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
         filedescriptor.write('test\n')
     for extension in MOCK_EXTENSIONS:
         path = Path(directory).joinpath(f'test{extension}')
         print(f'create mock file: {path}')
-        with path.open('w', encoding='utf-8') as filedescriptor:
+        with path.open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
             filedescriptor.write('test\n')
 
 
@@ -48,7 +48,7 @@ class MockConfigurationFileDirectory(ConfigurationFileDirectory):
     __extensions__ = MOCK_EXTENSIONS
 
 
-def test_configuration_file_directory_no_path():
+def test_configuration_file_directory_no_path() -> None:
     """
     Test basic attributes of a ConfigurationFileDirectory object when directory
     does not exist
@@ -65,7 +65,7 @@ def test_configuration_file_directory_no_path():
         obj.load('test')
 
 
-def test_configuration_file_directory_empty_directory(tmpdir):
+def test_configuration_file_directory_empty_directory(tmpdir) -> None:
     """
     Test basic attributes of a ConfigurationFileDirectory object with empty directory
     """
@@ -75,7 +75,7 @@ def test_configuration_file_directory_empty_directory(tmpdir):
     assert obj.__path__.exists()
 
 
-def test_configuration_file_directory_missing_directory(tmpdir):
+def test_configuration_file_directory_missing_directory(tmpdir) -> None:
     """
     Test basic attributes of a ConfigurationFileDirectory object with missing directory
     """
@@ -85,7 +85,7 @@ def test_configuration_file_directory_missing_directory(tmpdir):
     assert isinstance(obj.__repr__(), str)
 
 
-def test_configuration_file_directory_not_a_directory():
+def test_configuration_file_directory_not_a_directory() -> None:
     """
     Test basic attributes of a ConfigurationFileDirectory object with file passed as directory
     """
@@ -93,7 +93,7 @@ def test_configuration_file_directory_not_a_directory():
         ConfigurationFileDirectory(Path(__file__))
 
 
-def test_configuration_file_directory_load(tmpdir):
+def test_configuration_file_directory_load(tmpdir) -> None:
     """
     Test loading mocked configuration files from test directory
     """

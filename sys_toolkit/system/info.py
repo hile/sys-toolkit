@@ -1,6 +1,7 @@
 """
 Information for local system
 """
+from typing import Optional
 
 from ..platform import detect_platform_family, detect_toolchain_family
 from ..subprocess import run_command_lineoutput
@@ -14,7 +15,7 @@ class SystemInfo:
     __toolchain_family__ = None
     __hostname__ = None
 
-    def __get_hostname__(self):
+    def __get_hostname__(self) -> Optional[str]:
         """
         Get hostname using platform toolchain specific command line command
         """
@@ -26,7 +27,7 @@ class SystemInfo:
         return None
 
     @property
-    def platform_family(self):
+    def platform_family(self) -> str:
         """
         Return hostname
         """
@@ -35,7 +36,7 @@ class SystemInfo:
         return self.__platform_fomily__
 
     @property
-    def toolchain_family(self):
+    def toolchain_family(self) -> str:
         """
         Return hostname
         """
@@ -44,7 +45,7 @@ class SystemInfo:
         return self.__toolchain_family__
 
     @property
-    def hostname(self):
+    def hostname(self) -> str:
         """
         Return hostname
         """

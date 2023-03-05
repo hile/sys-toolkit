@@ -13,11 +13,11 @@ class SoftwareVersion:
     """
     __data__ = {}
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.product_name} {self.product_version} {self.build_version}'
 
     @staticmethod
-    def __get_sw_vers_data__():
+    def __get_sw_vers_data__() -> dict:
         """
         Run sw_vers and output it's data
         """
@@ -29,7 +29,7 @@ class SoftwareVersion:
         return data
 
     @property
-    def product_name(self):
+    def product_name(self) -> str:
         """
         Return MacOS product name
         """
@@ -38,7 +38,7 @@ class SoftwareVersion:
         return self.__data__['product_name']
 
     @property
-    def product_version(self):
+    def product_version(self) -> str:
         """
         Return MacOS product version
         """
@@ -47,7 +47,7 @@ class SoftwareVersion:
         return self.__data__['product_version']
 
     @property
-    def build_version(self):
+    def build_version(self) -> str:
         """
         Return MacOS build version
         """

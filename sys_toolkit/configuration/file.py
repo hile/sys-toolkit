@@ -1,13 +1,13 @@
 """
 Configuration file parser base classes
 """
-
 import os
 
 from pathlib import Path
+from typing import Any, Optional, Union
 
 from ..exceptions import ConfigurationError
-from .base import ConfigurationSection
+from .base import ConfigurationSection, LoggingBaseClass
 
 
 class ConfigurationFile(ConfigurationSection):
@@ -16,7 +16,11 @@ class ConfigurationFile(ConfigurationSection):
     """
     __default_paths__ = []
 
-    def __init__(self, path=None, parent=None, debug_enabled=False, silent=False):
+    def __init__(self,
+                 path: Union[str, Path] = None,
+                 parent: Optional[LoggingBaseClass] = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False) -> None:
         self.__path__ = Path(path).expanduser() if path is not None else None
         super().__init__(parent=parent, debug_enabled=debug_enabled, silent=silent)
 
@@ -30,11 +34,11 @@ class ConfigurationFile(ConfigurationSection):
         if self.__path__ is not None and self.__path__.exists():
             self.load(self.__path__)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.__path__.name) if self.__path__ is not None else ''
 
     @staticmethod
-    def __check_file_access__(path):
+    def __check_file_access__(path: Union[str, Path]) -> Path:
         """
         Check access to specified path as file
 
@@ -47,7 +51,7 @@ class ConfigurationFile(ConfigurationSection):
             raise ConfigurationError(f'Permission denied: {path}')
         return path
 
-    def load(self, path):
+    def load(self, path: Union[str, Path]) -> None:
         """
         Load specified configuration file
 
@@ -55,7 +59,7 @@ class ConfigurationFile(ConfigurationSection):
         """
         raise NotImplementedError('File loading must be implemented in child class')
 
-    def parse_data(self, data):
+    def parse_data(self, data: Any) -> None:
         """
         Parse data read from configuration file
 

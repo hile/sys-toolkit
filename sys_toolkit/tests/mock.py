@@ -1,6 +1,10 @@
 """
 Utility classes to use with pytest unit tests and mocked methods
 """
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+from ..constants import DEFAULT_ENCODING
 
 MOCK_ERROR_MESSAGE = 'Mocked exception was raised'
 
@@ -12,13 +16,18 @@ class MockCalledMethod:
 
     Monkeypatch instance of this class to the place and store call variables
     """
-    def __init__(self, return_value=None):
+    call_count: 0
+    args: List
+    kwargs: Dict[Any, Any]
+    return_value: Optional[Any]
+
+    def __init__(self, return_value: Optional[Any] = None) -> None:
         self.call_count = 0
         self.args = []
         self.kwargs = []
         self.return_value = return_value
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: List[Any], **kwargs: List[Any]) -> Optional[Any]:
         """
         Increment call count, store method arguments and return stored value
         """
@@ -33,7 +42,7 @@ class MockReturnTrue(MockCalledMethod):
     """
     Mock a method to always return True
     """
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(return_value=True)
 
 
@@ -42,7 +51,7 @@ class MockReturnFalse(MockCalledMethod):
     """
     Mock a method to always return False
     """
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(return_value=False)
 
 
@@ -51,7 +60,7 @@ class MockReturnEmptyList(MockCalledMethod):
     """
     Mock a method to always return None
     """
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(return_value=[])
 
 
@@ -59,12 +68,15 @@ class MockCheckOutput(MockCalledMethod):
     """
     Mock calling subprocess.check_output and returning data read from a file instead
     """
-    def __init__(self, path, encoding='utf-8'):
+    path: str
+    encoding: str
+
+    def __init__(self, path: Union[str, Path], encoding: str = DEFAULT_ENCODING) -> None:
         super().__init__()
         self.path = path
         self.encoding = encoding
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> bytes:
         """
         Call mocked check_output, storing call argument and returning data from self.path file
         """
@@ -77,18 +89,27 @@ class MockRun(MockCalledMethod):
     """
     Mock running a CLI command with return code, stdout and stderr
     """
-    def __init__(self, encoding='utf-8', stdout=None, stderr=None, returncode=None):
+    encoding: str
+    stdout: Optional[bytes]
+    stderr: Optional[bytes]
+    returncode: Optional[int]
+
+    def __init__(self,
+                 encoding: str = DEFAULT_ENCODING,
+                 stdout: Optional[bytes] = None,
+                 stderr: Optional[bytes] = None,
+                 returncode: Optional[int] = None) -> None:
         super().__init__(returncode)
         self.encoding = encoding
         self.stdout = stdout if stdout else ''
         self.stderr = stderr if stderr else ''
         if isinstance(self.stdout, str):
-            self.stdout = bytes(self.stdout, encoding='utf-8')
+            self.stdout = bytes(self.stdout, encoding=encoding)
         if isinstance(self.stderr, str):
-            self.stderr = bytes(self.stderr, encoding='utf-8')
+            self.stderr = bytes(self.stderr, encoding=encoding)
         self.returncode = returncode if isinstance(returncode, int) else 0
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> Any:
         """
         Mock calling the run() method, returning 'self' as mostly compatible object
         """
@@ -101,14 +122,25 @@ class MockRunCommandLineOutput(MockRun):
     Mock calling sys_toolkit.subprocess.run_command_lineoutput and returning data
     read from a file instead
     """
-    def __init__(self, path=None, encoding='utf-8', stdout=None, stderr=None, return_value=None):
-        super().__init__(encoding, stdout, stderr, return_value)
+    path: Union[str, Path]
+    encoding: str = DEFAULT_ENCODING
+    stdout: Optional[bytes]
+    stderr: Optional[bytes]
+    returncode: Optional[int] = None
+
+    def __init__(self,
+                 path: Union[str, Path] = None,
+                 encoding: str = DEFAULT_ENCODING,
+                 stdout: Optional[bytes] = None,
+                 stderr: Optional[bytes] = None,
+                 returncode: Optional[int] = None) -> None:
+        super().__init__(encoding, stdout, stderr, returncode)
         self.path = path
         self.encoding = encoding
         self.stdout = stdout if stdout else []
         self.stderr = stderr if stderr else ''
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> Tuple[bytes, bytes]:
         """
         Call mocked check_output, storing call argument and returning data from self.path file
         """
@@ -129,13 +161,20 @@ class MockException(MockCalledMethod):
     arguments are passed exception and default_message is True, exception is raised with
     string MOCK_ERROR_MESSAGE, otherwise it's raised with on arguments
     """
-    def __init__(self, exception=Exception, default_message=True, **exception_kwargs):
+    exception: Exception
+    default_message: bool
+    exception_kwargs: Dict[Any, Any]
+
+    def __init__(self,
+                 exception: Exception = Exception,
+                 default_message: bool = True,
+                 **exception_kwargs: Dict[Any, Any]) -> None:
         super().__init__()
         self.exception = exception
         self.default_message = default_message
         self.exception_kwargs = exception_kwargs if exception_kwargs else {}
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> Any:
         """
         Store call arguments and raise specified exception with specified arguments
         or mocked message if nothing was specified

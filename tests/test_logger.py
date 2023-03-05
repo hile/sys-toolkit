@@ -19,7 +19,7 @@ from sys_toolkit.logger import (
 DEFAULT_LOG_LEVEL = logging.WARN
 
 
-def test_logger_defaults():
+def test_logger_defaults() -> None:
     """
     Test initializing default logger
     """
@@ -34,7 +34,7 @@ def test_logger_defaults():
     assert default.level == logger.level
 
 
-def test_logger_default_set_level():
+def test_logger_default_set_level() -> None:
     """
     Test setting default logger level
     """
@@ -59,7 +59,7 @@ def test_logger_default_set_level():
     logger.level = DEFAULT_LOG_LEVEL
 
 
-def test_logger_multiple_init():
+def test_logger_multiple_init() -> None:
     """
     Test initializing default logger more than once, returning same logger instances
     """
@@ -82,7 +82,7 @@ def test_logger_multiple_init():
     assert different.__hash__() != default.__hash__()
 
 
-def test_logger_register_stream_handler():
+def test_logger_register_stream_handler() -> None:
     """
     Test registering additional stream handler to logger
     """
@@ -105,7 +105,7 @@ def test_logger_register_stream_handler():
     assert test != testing
 
 
-def test_logger_register_syslog_handler():
+def test_logger_register_syslog_handler() -> None:
     """
     Test registering additional syslog handler to logger
     """
@@ -133,7 +133,7 @@ def test_logger_register_syslog_handler():
     assert test.__hash__() == reregister.__hash__()
 
 
-def test_logger_register_http_handler():
+def test_logger_register_http_handler() -> None:
     """
     Test registering additional HTTP handler to logger
     """
@@ -162,7 +162,7 @@ def test_logger_register_http_handler():
     assert test.__hash__() == reregister.__hash__()
 
 
-def test_logger_register_file_handler(tmpdir):
+def test_logger_register_file_handler(tmpdir) -> None:
     """
     Test registering additional file handler to logger
     """
@@ -202,7 +202,7 @@ def test_logger_register_file_handler(tmpdir):
     assert test.__hash__() == reregister.__hash__()
 
 
-def test_logger_register_syslog_handler_invalid_level():
+def test_logger_register_syslog_handler_invalid_level() -> None:
     """
     Test registering additional HTTP handler to logger with invalid URL
     """
@@ -211,7 +211,7 @@ def test_logger_register_syslog_handler_invalid_level():
         logger.register_syslog_handler('test', default_level='pimpelipom')
 
 
-def test_logger_register_http_handler_invalid_url():
+def test_logger_register_http_handler_invalid_url() -> None:
     """
     Test registering additional HTTP handler to logger with invalid URL
     """
@@ -223,7 +223,9 @@ def test_logger_register_http_handler_invalid_url():
 
 
 # pylint: disable=unused-argument
-def test_logger_register_fil_handler_os_error(mock_path_mkdir_permission_denied, mock_permission_denied):
+def test_logger_register_fil_handler_os_error(
+        mock_path_mkdir_permission_denied,
+        mock_permission_denied) -> None:
     """
     Test registering additional HTTP handler to logger with invalid URL
     """
@@ -232,7 +234,7 @@ def test_logger_register_fil_handler_os_error(mock_path_mkdir_permission_denied,
         logger.register_file_handler('test', '/92977BB4-C1A5-4E6D-A731-1E4BF2328ACC')
 
 
-def test_logger_mock_platform_darwin(monkeypatch):
+def test_logger_mock_platform_darwin(monkeypatch) -> None:
     """
     Test mocked logger loading with darwin platform
     """
@@ -241,7 +243,7 @@ def test_logger_mock_platform_darwin(monkeypatch):
     assert isinstance(get_default_syslog_address(), str)
 
 
-def test_logger_mock_platform_linux(monkeypatch):
+def test_logger_mock_platform_linux(monkeypatch) -> None:
     """
     Test mocked logger loading with linux platform
     """
@@ -250,7 +252,7 @@ def test_logger_mock_platform_linux(monkeypatch):
     assert isinstance(get_default_syslog_address(), str)
 
 
-def test_logger_mock_platform_freebsd(monkeypatch):
+def test_logger_mock_platform_freebsd(monkeypatch) -> None:
     """
     Test mocked logger loading with freebsd platform
     """
@@ -259,7 +261,7 @@ def test_logger_mock_platform_freebsd(monkeypatch):
     assert isinstance(get_default_syslog_address(), str)
 
 
-def test_logger_mock_platform_windows(monkeypatch):
+def test_logger_mock_platform_windows(monkeypatch) -> None:
     """
     Test mocked logger loading with windows platform
     """

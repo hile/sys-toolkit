@@ -1,11 +1,11 @@
 """
 Unit tests for JSON format configuration files
 """
-
 from pathlib import Path
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.configuration.base import ConfigurationSection
 from sys_toolkit.exceptions import ConfigurationError
 from sys_toolkit.configuration import JsonConfiguration
@@ -30,7 +30,7 @@ class DefaultsPathsConfiguration(JsonConfiguration):
     __default_paths__ = [TEST_VALID, NONEXISTING_FILE]
 
 
-def test_configuration_json_default_no_file():
+def test_configuration_json_default_no_file() -> None:
     """
     Test loading default JSON class without file
     """
@@ -39,7 +39,7 @@ def test_configuration_json_default_no_file():
     assert configuration.__path__ is None
 
 
-def test_configuration_json_nonexisting_file():
+def test_configuration_json_nonexisting_file() -> None:
     """
     Test loading default JSON class with nonexisting file
     """
@@ -48,7 +48,7 @@ def test_configuration_json_nonexisting_file():
     assert configuration.__path__ == NONEXISTING_FILE
 
 
-def test_configuration_json_empty_file():
+def test_configuration_json_empty_file() -> None:
     """
     Test loading empty (but valid) JSON file
     """
@@ -57,7 +57,7 @@ def test_configuration_json_empty_file():
     assert configuration.__repr__() == TEST_EMPTY.name
 
 
-def test_configuration_json_load_directory():
+def test_configuration_json_load_directory() -> None:
     """
     Test loading default JSON class with directory as path
     """
@@ -66,30 +66,30 @@ def test_configuration_json_load_directory():
 
 
 # pylint: disable=unused-argument
-def test_configuration_ini_load_inaccessible(tmpdir, mock_path_not_file):
+def test_configuration_ini_load_inaccessible(mock_path_not_file, tmpdir) -> None:
     """
     Test loading default JSON class with inaccessible file
     """
     path = Path(tmpdir).joinpath('test.json')
-    with path.open('w', encoding='utf-8') as filedescriptor:
+    with path.open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
         filedescriptor.write('{ "test": "value"}\n')
     with pytest.raises(ConfigurationError):
         JsonConfiguration(path)
 
 
 # pylint: disable=unused-argument
-def test_configuration_ini_load_permission_denied(tmpdir, mock_permission_denied):
+def test_configuration_ini_load_permission_denied(mock_permission_denied, tmpdir) -> None:
     """
     Test loading default JSON class with no permissions to file
     """
     path = Path(tmpdir).joinpath('test.json')
-    with path.open('w', encoding='utf-8') as filedescriptor:
+    with path.open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
         filedescriptor.write('{ "test": "value"}\n')
     with pytest.raises(ConfigurationError):
         JsonConfiguration(path)
 
 
-def test_configuration_yml_invalid_file():
+def test_configuration_yml_invalid_file() -> None:
     """
     Test loading invalid JSON file
     """
@@ -97,7 +97,7 @@ def test_configuration_yml_invalid_file():
         JsonConfiguration(TEST_INVALID)
 
 
-def test_configuration_json_valid_file():
+def test_configuration_json_valid_file() -> None:
     """
     Test loading valid JSON file
     """
@@ -106,7 +106,7 @@ def test_configuration_json_valid_file():
     validate_configuration_section(configuration, TEST_DEFAULT_DATA)
 
 
-def test_configuration_json_default_paths():
+def test_configuration_json_default_paths() -> None:
     """
     Test loading JSON configuration with default paths
     """

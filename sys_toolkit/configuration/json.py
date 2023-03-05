@@ -1,10 +1,14 @@
 """
 Loader for configuration files in json format
 """
-
 import json
 
+from pathlib import Path
+from typing import Optional, Union
+
+from ..constants import DEFAULT_ENCODING
 from ..exceptions import ConfigurationError
+from .base import LoggingBaseClass
 from .directory import ConfigurationFileDirectory
 from .file import ConfigurationFile
 
@@ -19,13 +23,18 @@ class JsonConfiguration(ConfigurationFile):
 
     You can pass arguments to json.loads with loader_args
     """
-    encoding = 'utf-8'
+    encoding = DEFAULT_ENCODING
 
-    def __init__(self, path=None, parent=None, debug_enabled=False, silent=False, **loader_args):
+    def __init__(self,
+                 path: Union[str, Path] = None,
+                 parent: Optional[LoggingBaseClass] = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False,
+                 **loader_args):
         self.__loader_args__ = loader_args
         super().__init__(path, parent=parent, debug_enabled=debug_enabled, silent=silent)
 
-    def load(self, path):
+    def load(self, path: Union[str, Path]) -> None:
         """
         Load specified JSON configuration file
         """

@@ -20,7 +20,7 @@ class UnsortedLinesFile(LineTextFile):
     Base class to test text files
     """
 
-    def parse_line(self, line):
+    def parse_line(self, line: str) -> str:
         """
         Dummy method to parse test list
         """
@@ -33,8 +33,7 @@ class SortedTestLinesFile(SortedLineTextFile):
     """
     Base class to test sorted text files
     """
-
-    def parse_line(self, line):
+    def parse_line(self, line: str) -> str:
         """
         Dummy method to parse test list
         """
@@ -43,7 +42,7 @@ class SortedTestLinesFile(SortedLineTextFile):
         return super().parse_line(line)
 
 
-def validate_test_file(datafile, path, line_count):
+def validate_test_file(datafile, path: Path, line_count: int) -> None:
     """
     Validate test file common properties
     """
@@ -51,7 +50,7 @@ def validate_test_file(datafile, path, line_count):
     assert len(datafile) == line_count
 
 
-def test_file_lines_parsing():
+def test_file_lines_parsing() -> None:
     """
     Test parsing trivial line based files
     """
@@ -59,7 +58,7 @@ def test_file_lines_parsing():
     validate_test_file(datafile, TEST_FILE, line_count=3)
 
 
-def test_file_custom_comments_parsing():
+def test_file_custom_comments_parsing() -> None:
     """
     Test parsing trivial line based files
     """
@@ -68,7 +67,7 @@ def test_file_custom_comments_parsing():
     validate_test_file(datafile, TEST_FILE, line_count=3)
 
 
-def test_file_lines_sorted_parsing():
+def test_file_lines_sorted_parsing() -> None:
     """
     Test parsing trivial line based files with sorting
     """
@@ -76,7 +75,7 @@ def test_file_lines_sorted_parsing():
     validate_test_file(datafile, TEST_FILE_SORTED, line_count=4)
 
 
-def test_file_lines_loading_path_is_directory():
+def test_file_lines_loading_path_is_directory() -> None:
     """
     Test loading of directory as file
     """
@@ -87,7 +86,7 @@ def test_file_lines_loading_path_is_directory():
         SortedTestLinesFile(path)
 
 
-def test_file_invalid_file_path():
+def test_file_invalid_file_path() -> None:
     """
     Test loading non-existing path
     """

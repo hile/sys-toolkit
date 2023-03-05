@@ -1,20 +1,11 @@
 """
-User PATH command lookup cache
-
->>> from cli_toolkit.path import Executables
->>> items = Executables()
->>> item['bash']
-PosixPath('/bin/bash')
->>> item.get('bash')
-PosixPath('/bin/bash')
->>> env.paths('python')
-[PosixPath('/Users/hile/.venv/dev/bin/python'), PosixPath('/usr/bin/python')]
+Cached lookup for executable commands in user PATH
 """
-
 import os
 
 from collections.abc import Collection
 from pathlib import Path
+from typing import Dict, Iterator, List, Optional, Union
 
 from .platform import detect_platform_family
 
@@ -27,13 +18,13 @@ class Executables(Collection):
 
     Cache can be looked up by command name or with .get() method
     """
-    __platform_family__ = None
+    __platform_family__: str = None
     """OS Platform family"""
-    __path__ = None
+    __path__: str = None
     """Path value being inspected"""
-    __executables__ = []
+    __executables__: List[Path] = []
     """List of all executables detected on path, including duplicate commands"""
-    __commands__ = None
+    __commands__: Dict = None
     """List of active commands on path"""
 
     def __init__(self):
@@ -41,22 +32,22 @@ class Executables(Collection):
         if Executables.__commands__ is None:
             Executables.__commands__ = Executables.__load__executables_on_path__(self)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__path__
 
-    def __contains__(self, item):
+    def __contains__(self, item: Union[str, Path]) -> bool:
         return item in self.__executables__ or item in self.__commands__
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self.__commands__.values())
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(list(self.__commands__.keys()))
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: str) -> str:
         return self.__commands__[index]
 
-    def __load__executables_on_path__(self):
+    def __load__executables_on_path__(self) -> List[Path]:
         """
         Load executables available on user path
         """
@@ -82,7 +73,7 @@ class Executables(Collection):
                     commands[filename.name] = command
         return commands
 
-    def paths(self, name):
+    def paths(self, name: str) -> List[Path]:
         """
         Return all detected paths for command with specific name
         """
@@ -92,7 +83,7 @@ class Executables(Collection):
             if item.name == name
         ]
 
-    def get(self, name):
+    def get(self, name: str) -> Optional[Path]:
         """
         Get path to command by name
 

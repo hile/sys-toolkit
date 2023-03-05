@@ -1,7 +1,6 @@
 """
 Unit tests for sys_toolkit.configuration.file module
 """
-
 from pathlib import Path
 
 from sys_toolkit.configuration.file import ConfigurationFile

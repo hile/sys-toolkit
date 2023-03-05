@@ -5,6 +5,7 @@ from subprocess import CalledProcessError
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.clipboard.darwin import DarwinClipboard, DarwinClipboardType
 from sys_toolkit.exceptions import ClipboardError
 from sys_toolkit.tests.mock import MockRun, MockException
@@ -13,7 +14,7 @@ from .test_base import TEST_TEXT
 
 
 # pylint: disable=unused-argument
-def test_clipboard_darwin_not_available(mock_clipboard_executables_missing):
+def test_clipboard_darwin_not_available(mock_clipboard_executables_missing) -> None:
     """
     Test case when darwin clipboard commands are not available on system path
     """
@@ -21,14 +22,14 @@ def test_clipboard_darwin_not_available(mock_clipboard_executables_missing):
 
 
 # pylint: disable=unused-argument
-def test_clipboard_darwin_available(mock_darwin_clipboard_executables_available):
+def test_clipboard_darwin_available(mock_darwin_clipboard_executables_available) -> None:
     """
     Test case when darwin clipboard commands are not available on system path
     """
     assert DarwinClipboard().available
 
 
-def test_clipboard_darwin_copy_error(monkeypatch):
+def test_clipboard_darwin_copy_error(monkeypatch) -> None:
     """
     Test copying text to darwin clipboard with command line error
     """
@@ -38,7 +39,7 @@ def test_clipboard_darwin_copy_error(monkeypatch):
         DarwinClipboard().copy(TEST_TEXT)
 
 
-def test_clipboard_darwin_paste_error(monkeypatch):
+def test_clipboard_darwin_paste_error(monkeypatch) -> None:
     """
     Test copying text from darwin clipboard with command line error
     """
@@ -48,7 +49,7 @@ def test_clipboard_darwin_paste_error(monkeypatch):
         DarwinClipboard().paste()
 
 
-def test_clipboard_darwin_properties():
+def test_clipboard_darwin_properties() -> None:
     """
     Test basic properties of darwin clipboard object
     """
@@ -57,7 +58,7 @@ def test_clipboard_darwin_properties():
     assert obj.board == DarwinClipboardType.GENERAL
 
 
-def test_clipboard_darwin_clear(monkeypatch):
+def test_clipboard_darwin_clear(monkeypatch) -> None:
     """
     Test clearing text on darwin clipboard (by setting it to empty string)
     """
@@ -69,7 +70,7 @@ def test_clipboard_darwin_clear(monkeypatch):
     assert 'pbcopy' in args[0]
 
 
-def test_clipboard_darwin_copy(monkeypatch):
+def test_clipboard_darwin_copy(monkeypatch) -> None:
     """
     Test copying text to darwin clipboard
     """
@@ -81,11 +82,11 @@ def test_clipboard_darwin_copy(monkeypatch):
     assert 'pbcopy' in args[0]
 
 
-def test_clipboard_darwin_paste(monkeypatch):
+def test_clipboard_darwin_paste(monkeypatch) -> None:
     """
     Test copying text from darwin clipboard
     """
-    mock_run = MockRun(stdout=bytes(TEST_TEXT, encoding='utf-8'))
+    mock_run = MockRun(stdout=bytes(TEST_TEXT, encoding=DEFAULT_ENCODING))
     monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
     value = DarwinClipboard().paste()
     assert mock_run.call_count == 1

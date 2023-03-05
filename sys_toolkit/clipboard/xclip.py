@@ -1,10 +1,12 @@
 """
 Clipboard access for X11 with xclip CLI command clipboard
 """
-
+from subprocess import CompletedProcess
 from enum import Enum
+from typing import Tuple
 
-from .base import ClipboardBaseClass, CLIPBOARD_ENCODING
+from sys_toolkit.constants import DEFAULT_ENCODING
+from .base import ClipboardBaseClass
 
 XCLIP_CLIPBOARD_EMPTY_ERROR = 'Error: target STRING not available'
 
@@ -22,20 +24,23 @@ class XclipClipboard(ClipboardBaseClass):
     """
     Clipboard copy / paste with wayland clipboard
     """
-    __required_commands__ = ('xclip', 'xsel',)
-    __required_env__ = ('DISPLAY',)
+    selection: XclipClipboardSelectionType
+    __required_commands__: Tuple[str] = ('xclip', 'xsel',)
+    __required_env__: Tuple[str] = ('DISPLAY',)
 
-    def __init__(self, selection=XclipClipboardSelectionType.PRIMARY):
+    def __init__(
+            self,
+            selection: XclipClipboardSelectionType = XclipClipboardSelectionType.PRIMARY) -> None:
         self.selection = selection
 
-    def __process_paste_error__(self, response):
+    def __process_paste_error__(self, response: CompletedProcess) -> None:
         """
         Process return value for paste command error specific to xclip
 
         Xclip returns an error string with code 1 when clipboard is empty
         """
         if response.returncode == 1:
-            error = str(response.stderr, encoding=CLIPBOARD_ENCODING).strip()
+            error = str(response.stderr, encoding=DEFAULT_ENCODING).strip()
             if error == XCLIP_CLIPBOARD_EMPTY_ERROR:
                 return None
         return super().__process_paste_error__(response)

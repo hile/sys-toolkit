@@ -15,14 +15,14 @@ AVAILABLE_MODULES_LIST = (
 )
 
 
-def test_modules_check_available_imports_not_found():
+def test_modules_check_available_imports_not_found() -> None:
     """
     Test checking for available import s with random, not found modules
     """
     assert check_available_imports(*MISSING_MODULES_LIST) is False
 
 
-def test_modules_check_available_imports_found():
+def test_modules_check_available_imports_found() -> None:
     """
     Test checking for available import s with random, not found modules
     """

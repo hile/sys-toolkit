@@ -1,11 +1,11 @@
 """
 Unit tests for INI format configuration files
 """
-
 from pathlib import Path
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.configuration.base import ConfigurationSection
 from sys_toolkit.exceptions import ConfigurationError
 from sys_toolkit.configuration import IniConfiguration
@@ -35,7 +35,7 @@ class DefaultsPathsConfiguration(IniConfiguration):
     __default_paths__ = [TEST_VALID, NONEXISTING_FILE]
 
 
-def test_configuration_ini_default_no_file():
+def test_configuration_ini_default_no_file() -> None:
     """
     Test loading default ini class without file
     """
@@ -44,7 +44,7 @@ def test_configuration_ini_default_no_file():
     assert configuration.__path__ is None
 
 
-def test_configuration_ini_nonexisting_file():
+def test_configuration_ini_nonexisting_file() -> None:
     """
     Test loading default ini class with nonexisting file
     """
@@ -53,7 +53,7 @@ def test_configuration_ini_nonexisting_file():
     assert configuration.__path__ == NONEXISTING_FILE
 
 
-def test_configuration_ini_load_directory():
+def test_configuration_ini_load_directory() -> None:
     """
     Test loading default ini class with directory as path
     """
@@ -62,30 +62,30 @@ def test_configuration_ini_load_directory():
 
 
 # pylint: disable=unused-argument
-def test_configuration_ini_load_inaccessible(tmpdir, mock_path_not_file):
+def test_configuration_ini_load_inaccessible(tmpdir, mock_path_not_file) -> None:
     """
     Test loading default ini class with inaccessible file
     """
     path = Path(tmpdir).joinpath('test.ini')
-    with path.open('w', encoding='utf-8') as filedescriptor:
+    with path.open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
         filedescriptor.write('[defaults]\ntest = value\n')
     with pytest.raises(ConfigurationError):
         IniConfiguration(path)
 
 
 # pylint: disable=unused-argument
-def test_configuration_ini_load_permission_denied(tmpdir, mock_permission_denied):
+def test_configuration_ini_load_permission_denied(mock_permission_denied, tmpdir) -> None:
     """
     Test loading default ini class with no permissions to file
     """
     path = Path(tmpdir).joinpath('test.ini')
-    with path.open('w', encoding='utf-8') as filedescriptor:
+    with path.open('w', encoding=DEFAULT_ENCODING) as filedescriptor:
         filedescriptor.write('[defaults]\ntest = value\n')
     with pytest.raises(ConfigurationError):
         IniConfiguration(path)
 
 
-def test_configuration_ini_empty_file():
+def test_configuration_ini_empty_file() -> None:
     """
     Test loading empty ini file
     """
@@ -97,7 +97,7 @@ def test_configuration_ini_empty_file():
         configuration.parse_data([])
 
 
-def test_configuration_ini_invalid_file():
+def test_configuration_ini_invalid_file() -> None:
     """
     Test loading invalid YAML file
     """
@@ -105,7 +105,7 @@ def test_configuration_ini_invalid_file():
         IniConfiguration(TEST_INVALID)
 
 
-def test_configuration_ini_valid_file():
+def test_configuration_ini_valid_file() -> None:
     """
     Test loading valid ini file
     """
@@ -114,7 +114,7 @@ def test_configuration_ini_valid_file():
     validate_configuration_section(configuration, TEST_DEFAULT_DATA)
 
 
-def test_configuration_ini_default_paths():
+def test_configuration_ini_default_paths() -> None:
     """
     Test loading ini configuration with default paths
     """

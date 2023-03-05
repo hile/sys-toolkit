@@ -5,6 +5,7 @@ from subprocess import CalledProcessError
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.clipboard.xclip import (
     XclipClipboard,
     XclipClipboardSelectionType,
@@ -17,7 +18,9 @@ from .test_base import TEST_TEXT
 
 
 # pylint: disable=unused-argument
-def test_clipboard_xclip_env_missing(mock_xclip_clipboard_executables_available, mock_clipboard_env_missing):
+def test_clipboard_xclip_env_missing(
+        mock_xclip_clipboard_executables_available,
+        mock_clipboard_env_missing) -> None:
     """
     Test case when xclip clipboard env vars are not available
     """
@@ -25,7 +28,7 @@ def test_clipboard_xclip_env_missing(mock_xclip_clipboard_executables_available,
 
 
 # pylint: disable=unused-argument
-def test_clipboard_xclip_not_available(mock_clipboard_executables_missing):
+def test_clipboard_xclip_not_available(mock_clipboard_executables_missing) -> None:
     """
     Test case when xclip clipboard commands are not available on system path
     """
@@ -33,14 +36,14 @@ def test_clipboard_xclip_not_available(mock_clipboard_executables_missing):
 
 
 # pylint: disable=unused-argument
-def test_clipboard_xclip_available(mock_xclip_clipboard_executables_available):
+def test_clipboard_xclip_available(mock_xclip_clipboard_executables_available) -> None:
     """
     Test case when xclip clipboard commands are not available on system path
     """
     assert XclipClipboard().available
 
 
-def test_clipboard_xclip_copy_error(monkeypatch):
+def test_clipboard_xclip_copy_error(monkeypatch) -> None:
     """
     Test copying text to xclip clipboard with command line error
     """
@@ -50,7 +53,7 @@ def test_clipboard_xclip_copy_error(monkeypatch):
         XclipClipboard().copy(TEST_TEXT)
 
 
-def test_clipboard_xclip_paste_error_unknown_code(monkeypatch):
+def test_clipboard_xclip_paste_error_unknown_code(monkeypatch) -> None:
     """
     Test copying text from xclip clipboard with command line error with unexpected error
     code. This command reuses the empty error to confirm that both empty error and code 1
@@ -62,7 +65,7 @@ def test_clipboard_xclip_paste_error_unknown_code(monkeypatch):
         XclipClipboard().paste()
 
 
-def test_clipboard_xclip_paste_error_unknown_state(monkeypatch):
+def test_clipboard_xclip_paste_error_unknown_state(monkeypatch) -> None:
     """
     Test copying text from xclip clipboard with command line error with known error code but
     missing the known error message, raising an exception
@@ -73,7 +76,7 @@ def test_clipboard_xclip_paste_error_unknown_state(monkeypatch):
         XclipClipboard().paste()
 
 
-def test_clipboard_xclip_paste_no_data(monkeypatch):
+def test_clipboard_xclip_paste_no_data(monkeypatch) -> None:
     """
     Test copying text from xclip clipboard when clipboard is empty and xclip returns
     known error string with returncode 1: this must return None without exception
@@ -83,7 +86,7 @@ def test_clipboard_xclip_paste_no_data(monkeypatch):
     assert XclipClipboard().paste() is None
 
 
-def test_clipboard_xclip_properties():
+def test_clipboard_xclip_properties() -> None:
     """
     Test basic properties of xclip clipboard object
     """
@@ -92,7 +95,7 @@ def test_clipboard_xclip_properties():
     assert obj.selection == XclipClipboardSelectionType.PRIMARY
 
 
-def test_clipboard_xclip_clear(monkeypatch):
+def test_clipboard_xclip_clear(monkeypatch) -> None:
     """
     Test clearing xclip keyboard with 'xsel' command
     """
@@ -106,7 +109,7 @@ def test_clipboard_xclip_clear(monkeypatch):
         assert '-c' in args or '-bc' in args
 
 
-def test_clipboard_xclip_copy(monkeypatch):
+def test_clipboard_xclip_copy(monkeypatch) -> None:
     """
     Test copying text to xclip clipboard
     """
@@ -120,11 +123,11 @@ def test_clipboard_xclip_copy(monkeypatch):
     assert '-in' in command
 
 
-def test_clipboard_xclip_paste(monkeypatch):
+def test_clipboard_xclip_paste(monkeypatch) -> None:
     """
     Test copying text from xclip clipboard
     """
-    mock_run = MockRun(stdout=bytes(TEST_TEXT, encoding='utf-8'))
+    mock_run = MockRun(stdout=bytes(TEST_TEXT, encoding=DEFAULT_ENCODING))
     monkeypatch.setattr('sys_toolkit.clipboard.base.run', mock_run)
     value = XclipClipboard().paste()
     assert mock_run.call_count == 1

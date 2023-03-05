@@ -4,7 +4,9 @@ Secure temporary directory with ramdisk for macOS
 
 from pathlib import Path
 from subprocess import PIPE
+from typing import Optional, Union
 
+from ..constants import DEFAULT_ENCODING
 from ..exceptions import SecureTemporaryDirectoryError
 from ..subprocess import run, CommandError
 
@@ -18,12 +20,16 @@ class DarwinSecureTemporaryDirectory(SecureTemporaryDirectoryBaseClass):
     """
     Secure temporary directory for macOS darwin ramdisk
     """
-    def __init__(self, suffix=None, prefix=None, parent_directory=None, size=DEFAULT_SIZE_BLOCKS):
+    def __init__(self,
+                 suffix: Optional[str] = None,
+                 prefix: Optional[str] = None,
+                 parent_directory: Optional[Union[str, Path]] = None,
+                 size: int = DEFAULT_SIZE_BLOCKS) -> None:
         super().__init__(suffix, prefix, parent_directory)
         self.size = size
         self.__device__ = None
 
-    def __check_ramdisk_device__(self):
+    def __check_ramdisk_device__(self) -> None:
         """
         Check ramdisk device
         """
@@ -32,7 +38,7 @@ class DarwinSecureTemporaryDirectory(SecureTemporaryDirectoryBaseClass):
         if not self.__device__.exists():
             raise SecureTemporaryDirectoryError(f'No such ramdisk device: {self.__device__}')
 
-    def create_storage_volume(self):
+    def create_storage_volume(self) -> None:
         """
         Create a secure ramdisk storage volume
         """
@@ -41,7 +47,7 @@ class DarwinSecureTemporaryDirectory(SecureTemporaryDirectoryBaseClass):
             res = run(*command, stdout=PIPE, stderr=PIPE)
             if res.returncode != 0:
                 raise CommandError(res.stderr)
-            self.__device__ = Path(str(res.stdout, encoding='utf-8').rstrip())
+            self.__device__ = Path(str(res.stdout, encoding=DEFAULT_ENCODING).rstrip())
         except CommandError as error:
             raise SecureTemporaryDirectoryError(f'Error creating ramdisk: {error}') from error
 
@@ -56,7 +62,7 @@ class DarwinSecureTemporaryDirectory(SecureTemporaryDirectoryBaseClass):
                 'Error creating filesystem on ramdisk device {self.__device__}: {error'
             ) from error
 
-    def attach_storage_volume(self):
+    def attach_storage_volume(self) -> None:
         """
         Attach created secure ramdisk storage volume
         """
@@ -80,7 +86,7 @@ class DarwinSecureTemporaryDirectory(SecureTemporaryDirectoryBaseClass):
                 f'Error mounting {self.__device__} to {self.path}: {error}'
             ) from error
 
-    def detach_storage_volume(self):
+    def detach_storage_volume(self) -> None:
         """
         Detach created secure ramdisk storage volume
         """

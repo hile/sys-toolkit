@@ -1,15 +1,15 @@
 """
 Encoders for data
 """
-
 import json
 
 from datetime import datetime, date, time, timedelta, timezone
+from typing import Any, Union
 
 import yaml
 
 
-def format_timedelta(value, with_prefix=True):
+def format_timedelta(value: Union[timedelta, float], with_prefix: bool = True) -> str:
     """
     Format python datetime timedelta value as ISO format time string
     (HH:MM:SS.MS) with +- prefix.
@@ -44,7 +44,7 @@ class DateTimeEncoder(json.JSONEncoder):
     JSON encoder with datetime formatting as UTC
     """
 
-    def default(self, o):
+    def default(self, o: Any) -> Any:
         """
         Encode datetime, date and time as UTC
         """
@@ -72,7 +72,7 @@ def yaml_dump(data):
         Yaml data dumper implementation with parameters overridden for
         forced indentation
         """
-        def increase_indent(self, flow=False, indentless=False):
+        def increase_indent(self, flow: bool = False, indentless: bool = False) -> Any:
             """
             AIgnore 'indentless' flag and always indent dumped data
             """

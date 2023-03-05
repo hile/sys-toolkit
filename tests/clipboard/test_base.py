@@ -14,7 +14,7 @@ FINAL_LINE = 'Final line'
 TEST_TEXT = '\n'.join([PASS_LINE, MIDDLE_LINE, FINAL_LINE])
 
 
-def test_clipboard_base_class_properties():
+def test_clipboard_base_class_properties() -> None:
     """
     Test properties of clipboard base class
     """
@@ -31,7 +31,7 @@ def test_clipboard_base_class_properties():
         obj.paste()
 
 
-def test_clipboard_base_class_paste_error_handler():
+def test_clipboard_base_class_paste_error_handler() -> None:
     """
     Test clipboard base class error handling for paste errors with mocked response
     """
@@ -41,7 +41,7 @@ def test_clipboard_base_class_paste_error_handler():
         obj.__process_paste_error__(response)
 
 
-def test_clipboard_base_class_paste_error(monkeypatch):
+def test_clipboard_base_class_paste_error(monkeypatch) -> None:
     """
     Test clipboard base class error handling for paste errors from subcommand
     """
@@ -52,7 +52,7 @@ def test_clipboard_base_class_paste_error(monkeypatch):
     assert mock_run.call_count == 1
 
 
-def test_clipboard_base_class_run_command_fail():
+def test_clipboard_base_class_run_command_fail() -> None:
     """
     Test private method __run_command__ of base class with successful command
     """
@@ -61,7 +61,7 @@ def test_clipboard_base_class_run_command_fail():
         obj.__run_command__('false')
 
 
-def test_clipboard_base_class_run_command_success():
+def test_clipboard_base_class_run_command_success() -> None:
     """
     Test private method __run_command__ of base class with successful command
     """

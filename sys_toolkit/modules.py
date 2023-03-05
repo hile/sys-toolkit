@@ -1,11 +1,11 @@
 """
 Utility classes for python module use
 """
-
 from importlib.util import find_spec
+from typing import List
 
 
-def check_available_imports(*modules):
+def check_available_imports(*modules: List[str]):
     """
     Check named modules are available as imports for python
 

@@ -12,6 +12,7 @@ import logging.handlers
 import sys
 
 from pathlib import Path
+from typing import Dict, Optional, Tuple, Union
 from urllib.parse import urlparse
 
 from .exceptions import LoggerError
@@ -39,7 +40,7 @@ SYSLOG_LEVEL_MAP = {
 }
 
 
-def get_default_syslog_address():
+def get_default_syslog_address() -> Union[str, Tuple[str, int]]:
     """
     Return platform specific default address for syslog handler
     """
@@ -64,18 +65,17 @@ class Logger:
     :type name: str
     """
 
-    groups = {}
+    groups: Dict = {}
     """LoggerGroup objects by group name"""
-    name = None
+    name: Optional[str] = None
     """Name of this logger group"""
 
     def __init__(self,
-                 name=None,
-                 logformat=DEFAULT_LOGFORMAT,
-                 timeformat=DEFAULT_LOG_TIME_FORMAT):
+                 name: Optional[str] = None,
+                 logformat: str = DEFAULT_LOGFORMAT,
+                 timeformat: str = DEFAULT_LOG_TIME_FORMAT) -> None:
 
         name = name if name is not None else DEFAULT_TARGET_NAME
-
         self.__dict__['_Loggergroups'] = Logger.groups
         self.name = name
 
@@ -98,7 +98,7 @@ class Logger:
         """
         Singleton implementation of logging configuration for named logging group
         """
-        def __init__(self, name, logformat, timeformat):
+        def __init__(self, name: str, logformat: str, timeformat: str) -> logging.Logger:
             super().__init__()
             self.name = name
             self.__register_stream_handler__(name, logformat, timeformat)
@@ -159,7 +159,10 @@ class Logger:
 
             return False
 
-        def __register_stream_handler__(self, name, logformat, timeformat):
+        def __register_stream_handler__(self,
+                                        name: str,
+                                        logformat: str,
+                                        timeformat: str) -> logging.Logger:
             """
             Register stream handler to singleton instance
             """
@@ -172,7 +175,13 @@ class Logger:
 
             return logger
 
-        def __register_syslog_handler__(self, name, address, facility, default_level, socktype, logformat):
+        def __register_syslog_handler__(self,
+                                        name: str,
+                                        address: Tuple[str, int],
+                                        facility: int,
+                                        default_level: int,
+                                        socktype,
+                                        logformat: str) -> logging.Logger:
             """
             Register syslog handler to singleton instance
             """
@@ -187,7 +196,10 @@ class Logger:
 
             return logger
 
-        def __register_http_handler__(self, name, url, method):
+        def __register_http_handler__(self,
+                                      name: str,
+                                      url: str,
+                                      method: str) -> logging.Logger:
             """
             Register HTTP handler to singleton instance
             """
@@ -205,8 +217,14 @@ class Logger:
 
             return logger
 
-        def __register_file_handler__(self, name, directory, filename, logformat,
-                                      timeformat, max_bytes, backup_count):
+        def __register_file_handler__(self,
+                                      name: str,
+                                      directory: Union[str, Path],
+                                      filename: str,
+                                      logformat: str,
+                                      timeformat: str,
+                                      max_bytes: int,
+                                      backup_count: int) -> logging.Logger:
             """
             Register log file based logging handler to singleton instance
             """
@@ -237,14 +255,14 @@ class Logger:
             return logger
 
         @property
-        def level(self):
+        def level(self) -> int:
             """
             Get log level
             """
             return self.__level__
 
         @level.setter
-        def level(self, value):
+        def level(self, value: int) -> None:
             """
             Set log level
             """
@@ -261,27 +279,27 @@ class Logger:
                 logger.setLevel(value)
             self.__level__ = value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.name)
 
     @property
-    def level(self):
+    def level(self) -> int:
         """
         Get or set logging level for all log handlers
         """
         return self.groups[self.name].level
 
     @level.setter
-    def level(self, value):
+    def level(self, value: int) -> None:
         """
         Setter for logging level for all log handlers
         """
         self.groups[self.name].level = value
 
     def register_stream_handler(self,
-                                name,
-                                logformat=DEFAULT_LOGFORMAT,
-                                timeformat=DEFAULT_LOG_TIME_FORMAT):
+                                name: str,
+                                logformat: str = DEFAULT_LOGFORMAT,
+                                timeformat: str = DEFAULT_LOG_TIME_FORMAT) -> logging.Logger:
         """
         Register a common log stream handler
         """
@@ -294,13 +312,12 @@ class Logger:
         return logger
 
     def register_syslog_handler(self,
-                                name,
-                                address=None,
-                                facility=DEFAULT_SYSLOG_FACILITY,
-                                default_level=DEFAULT_SYSLOG_LEVEL,
-                                socktype=None,
-                                logformat=DEFAULT_SYSLOG_FORMAT):
-
+                                name: str,
+                                address: Optional[Tuple[str, int]] = None,
+                                facility: int = DEFAULT_SYSLOG_FACILITY,
+                                default_level: int = DEFAULT_SYSLOG_LEVEL,
+                                socktype: Optional[int] = None,
+                                logformat: str = DEFAULT_SYSLOG_FORMAT) -> logging.Logger:
         """
         Register handler for syslog messages
         """
@@ -321,28 +338,24 @@ class Logger:
         return logger
 
     def register_http_handler(self,
-                              name,
-                              url,
-                              method='POST'):
+                              name: str,
+                              url: str,
+                              method: str = 'POST') -> logging.Logger:
         """
         Register a HTTP POST logging handler
         """
-        logger = self.groups[self.name].__register_http_handler__(
-            name,
-            url,
-            method
-        )
+        logger = self.groups[self.name].__register_http_handler__(name, url, method)
         setattr(self, logger.name, logger)
         return logger
 
     def register_file_handler(self,
-                              name,
-                              directory,
-                              filename=None,
-                              logformat=DEFAULT_LOGFILE_FORMAT,
-                              timeformat=DEFAULT_LOG_TIME_FORMAT,
-                              max_bytes=DEFAULT_LOGFILE_SIZE_LIMIT,
-                              backup_count=DEFAULT_LOGFILE_BACKUP_COUNT):
+                              name: str,
+                              directory: Union[str, Path],
+                              filename: Optional[str] = None,
+                              logformat: str = DEFAULT_LOGFILE_FORMAT,
+                              timeformat: str = DEFAULT_LOG_TIME_FORMAT,
+                              max_bytes: int = DEFAULT_LOGFILE_SIZE_LIMIT,
+                              backup_count: int = DEFAULT_LOGFILE_BACKUP_COUNT) -> logging.Logger:
 
         """
         Register a common log file handler for rotating file based logs

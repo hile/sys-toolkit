@@ -1,9 +1,10 @@
 """
 Unit tests for sys_toolkit.tests.mock class
 """
-
+from typing import Any, Dict, List
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.tests.mock import (
     MockCalledMethod,
     MockCheckOutput,
@@ -25,7 +26,7 @@ TEST_RETURN_VALUE = 'test'
 TEST_ERROR_VALUE = 'test error string'
 TEST_ARGS = (1, 2, 3)
 
-MOCK_BYTES_STRING = bytes(TEST_ERROR_VALUE, encoding='utf-8')
+MOCK_BYTES_STRING = bytes(TEST_ERROR_VALUE, encoding=DEFAULT_ENCODING)
 MOCK_KWARGS = {
     'demo': 'Demo arguments',
     'errortype': ValueError,
@@ -36,13 +37,13 @@ class MockError(Exception):
     """
     Test raising custom exception with custom argument processing
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: List[Any], **kwargs: Dict) -> None:
         super().__init__()
         self.call_args = args
         self.call_kwargs = kwargs
 
 
-def test_mocks_mock_called_method_no_args():
+def test_mocks_mock_called_method_no_args() -> None:
     """
     Test the generic MockCalledMethod class with no arguments
     """
@@ -55,7 +56,7 @@ def test_mocks_mock_called_method_no_args():
     assert obj.kwargs == [{}]
 
 
-def test_mocks_mock_called_method_args():
+def test_mocks_mock_called_method_args() -> None:
     """
     Test the generic MockCalledMethod class with list of arguments and return value
     """
@@ -68,7 +69,7 @@ def test_mocks_mock_called_method_args():
     assert obj.kwargs == [{}]
 
 
-def test_mocks_mock_called_method_kwargs():
+def test_mocks_mock_called_method_kwargs() -> None:
     """
     Test the generic MockCalledMethod class with kwargs and return value
     """
@@ -81,7 +82,7 @@ def test_mocks_mock_called_method_kwargs():
     assert obj.kwargs == [{'testcase': TEST_ARGS}]
 
 
-def test_mocks_mock_always_true():
+def test_mocks_mock_always_true() -> None:
     """
     Test method that returns always True
     """
@@ -90,7 +91,7 @@ def test_mocks_mock_always_true():
     assert obj(False) is True
 
 
-def test_mocks_mock_always_false():
+def test_mocks_mock_always_false() -> None:
     """
     Test method that returns always False
     """
@@ -99,7 +100,7 @@ def test_mocks_mock_always_false():
     assert obj(False) is False
 
 
-def test_mocks_mock_return_empty_list():
+def test_mocks_mock_return_empty_list() -> None:
     """
     Test method that returns always an empty list
     """
@@ -108,18 +109,18 @@ def test_mocks_mock_return_empty_list():
     assert obj(False) == []
 
 
-def test_mocks_mock_check_output():
+def test_mocks_mock_check_output() -> None:
     """
     Test the MockCheckOutput output used to simulate subprocess.check_output
     """
     obj = MockCheckOutput(TEST_FILE)
     stdout = obj()
     assert isinstance(stdout, bytes)
-    lines = str(stdout, encoding='utf-8').splitlines()
+    lines = str(stdout, encoding=DEFAULT_ENCODING).splitlines()
     assert len(lines) == EXPECTED_LINE_COUNT
 
 
-def test_mocks_mock_run_command_line_ouptut():
+def test_mocks_mock_run_command_line_ouptut() -> None:
     """
     Test the MockRunCommandLineOutput output
     """
@@ -130,7 +131,7 @@ def test_mocks_mock_run_command_line_ouptut():
     assert len(stdout) == EXPECTED_LINE_COUNT
 
 
-def test_mocks_mock_run_bytes_args():
+def test_mocks_mock_run_bytes_args() -> None:
     """
     Test the MockRun output method with bytes as arguments for stdout and stderr
     """
@@ -141,18 +142,18 @@ def test_mocks_mock_run_bytes_args():
     assert value.stderr == MOCK_BYTES_STRING
 
 
-def test_mocks_mock_run():
+def test_mocks_mock_run() -> None:
     """
     Test the MockRun output method
     """
     obj = MockRun(stdout=TEST_RETURN_VALUE, stderr=TEST_ERROR_VALUE, returncode=1)
     value = obj()
-    assert value.stdout == bytes(TEST_RETURN_VALUE, encoding='utf-8')
-    assert value.stderr == bytes(TEST_ERROR_VALUE, encoding='utf-8')
+    assert value.stdout == bytes(TEST_RETURN_VALUE, encoding=DEFAULT_ENCODING)
+    assert value.stderr == bytes(TEST_ERROR_VALUE, encoding=DEFAULT_ENCODING)
     assert value.returncode == 1
 
 
-def test_tests_mock_called_method_no_args():
+def test_tests_mock_called_method_no_args() -> None:
     """
     Test initializing and calling MockCalledMethod with no arguments
     """
@@ -169,7 +170,7 @@ def test_tests_mock_called_method_no_args():
     assert mock_method.kwargs == [{}, {}]
 
 
-def test_tests_mock_called_method_args_and_value():
+def test_tests_mock_called_method_args_and_value() -> None:
     """
     Test using MockCalledMethod to mock calls
     """
@@ -193,7 +194,7 @@ def test_tests_mock_called_method_args_and_value():
     assert mock_method.kwargs == [{}, {}, {'called': mock_method}]
 
 
-def test_tests_mock_exception_no_args():
+def test_tests_mock_exception_no_args() -> None:
     """
     Mock raising generic exception without specifying any arguments
     """
@@ -208,7 +209,7 @@ def test_tests_mock_exception_no_args():
     assert str(exception) == MOCK_ERROR_MESSAGE
 
 
-def test_tests_mock_check_output():
+def test_tests_mock_check_output() -> None:
     """
     Test utility callback to mock subprocess.check_output. Look for this known
     line (this function's signature) from output
@@ -218,11 +219,11 @@ def test_tests_mock_check_output():
     assert mock_check_output.call_count == 1
     assert isinstance(stdout, bytes)
 
-    line = 'def test_tests_mock_check_output():'
-    assert line in str(stdout, 'utf-8').splitlines()
+    line = 'def test_tests_mock_check_output() -> None:'
+    assert line in str(stdout, DEFAULT_ENCODING).splitlines()
 
 
-def test_tests_mock_exception_no_args_no_default_message():
+def test_tests_mock_exception_no_args_no_default_message() -> None:
     """
     Mock raising generic exception without default error message
     """
@@ -237,7 +238,7 @@ def test_tests_mock_exception_no_args_no_default_message():
     assert str(exception) != MOCK_ERROR_MESSAGE
 
 
-def test_tests_mock_exception_value_error():
+def test_tests_mock_exception_value_error() -> None:
     """
     Mock raising ValueError without specifying any arguments
     """
@@ -253,7 +254,7 @@ def test_tests_mock_exception_value_error():
     assert str(exception) == MOCK_ERROR_MESSAGE
 
 
-def test_tests_mock_exception_custom_error_args():
+def test_tests_mock_exception_custom_error_args() -> None:
     """
     Mock raising custom exception with specific arguments
     """
@@ -276,7 +277,7 @@ def test_tests_mock_exception_custom_error_args():
     assert str(exception) == ''
 
 
-def test_tests_mock_return_method_values_true():
+def test_tests_mock_return_method_values_true() -> None:
     """
     Unit test for mock method that always returns True
     """
@@ -287,7 +288,7 @@ def test_tests_mock_return_method_values_true():
     assert method.call_count == limit
 
 
-def test_tests_mock_return_method_values_false():
+def test_tests_mock_return_method_values_false() -> None:
     """
     Unit test for mock method that always returns False
     """
@@ -298,7 +299,7 @@ def test_tests_mock_return_method_values_false():
     assert method.call_count == limit
 
 
-def test_tests_mock_return_method_values_empty_list():
+def test_tests_mock_return_method_values_empty_list() -> None:
     """
     Unit test for mock method that always returns empty list
     """

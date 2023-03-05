@@ -30,7 +30,7 @@ TOOLCHAIN_TESTS = (
 )
 
 
-def test_unsupported_platform_family(monkeypatch):
+def test_unsupported_platform_family(monkeypatch) -> None:
     """
     Test detection of OS families with invalid platform
     """
@@ -39,7 +39,7 @@ def test_unsupported_platform_family(monkeypatch):
         detect_platform_family()
 
 
-def test_unsupported_platform_toolchain(monkeypatch):
+def test_unsupported_platform_toolchain(monkeypatch) -> None:
     """
     Test detection of OS toolchain with invalid platform
     """
@@ -48,7 +48,7 @@ def test_unsupported_platform_toolchain(monkeypatch):
         detect_toolchain_family()
 
 
-def test_platform_family_detection(monkeypatch):
+def test_platform_family_detection(monkeypatch) -> None:
     """
     Test detection of OS families from sys.platform strings
     """
@@ -59,7 +59,7 @@ def test_platform_family_detection(monkeypatch):
         assert expected_family == detect_platform_family()
 
 
-def test_platform_toolchain_detection(monkeypatch):
+def test_platform_toolchain_detection(monkeypatch) -> None:
     """
     Test detection of OS toolchains from sys.platform strings
     """

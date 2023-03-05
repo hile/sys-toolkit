@@ -39,7 +39,7 @@ MOCK_COMMAND_NOT_AVAILABLE = 'jvodsav'
 
 
 @pytest.fixture
-def mock_system_path(monkeypatch, tmpdir):
+def mock_system_path(monkeypatch, tmpdir) -> Path:
     """
     Set a mocked environment for system path with some imaginary commands and
     non-commands included
@@ -71,7 +71,7 @@ def mock_system_path(monkeypatch, tmpdir):
 
 
 # pylint: disable=redefined-outer-name, unused-argument
-def test_path_executables_load_posix(mock_system_path):
+def test_path_executables_load_posix(mock_system_path) -> None:
     """
     Test loading instance of path executables object in non-windows posix environments
     """
@@ -102,7 +102,7 @@ def test_path_executables_load_posix(mock_system_path):
 
 
 # pylint: disable=redefined-outer-name, unused-argument
-def test_path_executables_load_windows(mock_system_path, monkeypatch):
+def test_path_executables_load_windows(mock_system_path, monkeypatch) -> None:
     """
     test loading of executables in mocked windows environment
     """
@@ -115,7 +115,7 @@ def test_path_executables_load_windows(mock_system_path, monkeypatch):
 
 
 # pylint: disable=redefined-outer-name, unused-argument
-def test_path_executables_load_os_error(mock_system_path, monkeypatch):
+def test_path_executables_load_os_error(mock_system_path, monkeypatch) -> None:
     """
     Test loading instance of path executables object when file access causes OSError
     """
@@ -125,7 +125,7 @@ def test_path_executables_load_os_error(mock_system_path, monkeypatch):
     assert len(executables) == 0
 
 
-def test_path_executables_invalid_directories(monkeypatch, tmpdir):
+def test_path_executables_invalid_directories(monkeypatch, tmpdir) -> None:
     """
     Test loading of path with invalid directory
     """

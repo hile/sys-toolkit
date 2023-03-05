@@ -1,7 +1,6 @@
 """
 Unit tests for sys_toolkit.encoders functions
 """
-
 import json
 
 from datetime import datetime, timedelta
@@ -42,7 +41,7 @@ TIMEDELTA_INVALID = (
 )
 
 
-def test_encoders_error():
+def test_encoders_error() -> None:
     """
     Test encoding value which is not supported
     """
@@ -51,7 +50,7 @@ def test_encoders_error():
         json.dumps(testdata, cls=DateTimeEncoder)
 
 
-def test_format_timedelta_valid():
+def test_format_timedelta_valid() -> None:
     """
     Test format_timedelta with various valid values
     """
@@ -63,7 +62,7 @@ def test_format_timedelta_valid():
             assert format_timedelta(value, with_prefix=False) == noprefix
 
 
-def test_format_timedelta_negative():
+def test_format_timedelta_negative() -> None:
     """
     Test parsing negative time delta values
     """
@@ -74,7 +73,7 @@ def test_format_timedelta_negative():
     assert format_timedelta(testcase) == expected
 
 
-def test_format_timedelta_errors():
+def test_format_timedelta_errors() -> None:
     """
     Test format_timedelta with various invalid values
     """
@@ -83,8 +82,7 @@ def test_format_timedelta_errors():
             format_timedelta(testcase)
 
 
-# pylint: disable=unused-argument
-def test_encoders_datetime_naive():
+def test_encoders_datetime_naive() -> None:
     """
     Test encoding naive datetime
     """
@@ -95,7 +93,7 @@ def test_encoders_datetime_naive():
     assert value == expected
 
 
-def test_encoders_datetime_with_timezone():
+def test_encoders_datetime_with_timezone() -> None:
     """
     Test encoding datetime with different timezone values
     """
@@ -111,7 +109,7 @@ def test_encoders_datetime_with_timezone():
     assert result == expected
 
 
-def test_encoders_datetime_date():
+def test_encoders_datetime_date() -> None:
     """
     Test encoding date value
     """
@@ -121,7 +119,7 @@ def test_encoders_datetime_date():
     assert value == '{"date": "2020-01-02"}'
 
 
-def test_encoders_datetime_time():
+def test_encoders_datetime_time() -> None:
     """
     Test encoding time value
     """
@@ -131,7 +129,7 @@ def test_encoders_datetime_time():
     assert value == '{"time": "01:02:03"}'
 
 
-def test_encoders_datetime_timedelta():
+def test_encoders_datetime_timedelta() -> None:
     """
     Test encoding timedelta
     """
@@ -141,7 +139,7 @@ def test_encoders_datetime_timedelta():
     assert value == '{"delta": "10:00:00"}'
 
 
-def test_encoders_yaml_dump():
+def test_encoders_yaml_dump() -> None:
     """
     Test yaml_dump method returns expected document
     """

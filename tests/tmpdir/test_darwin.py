@@ -12,7 +12,7 @@ from .conftest import MOCK_DEVICE
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_properties(mock_tmpdir_darwin_success):
+def test_tmpdir_darwin_properties(mock_tmpdir_darwin_success) -> None:
     """
     Test properties of a darwin secure temporary directory object that has not been initialized
     as a context manager
@@ -26,7 +26,7 @@ def test_tmpdir_darwin_properties(mock_tmpdir_darwin_success):
         tmpdir.__check_ramdisk_device__()
 
 
-def test_tmpdir_darwin_missing_ramdisk_device():
+def test_tmpdir_darwin_missing_ramdisk_device() -> None:
     """
     Test darwin temporary directory object check for ramdisk device when device is defined but missing
     """
@@ -37,7 +37,8 @@ def test_tmpdir_darwin_missing_ramdisk_device():
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_attach_storage_volume_uninitialized(mock_tmpdir_darwin_success):
+def test_tmpdir_darwin_attach_storage_volume_uninitialized(
+        mock_tmpdir_darwin_success) -> None:
     """
     Ensure attaching storage volume to uninitialized temporary volume fails early
     """
@@ -46,7 +47,8 @@ def test_tmpdir_darwin_attach_storage_volume_uninitialized(mock_tmpdir_darwin_su
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_detach_storage_volume_uninitialized(mock_tmpdir_darwin_success):
+def test_tmpdir_darwin_detach_storage_volume_uninitialized(
+        mock_tmpdir_darwin_success) -> None:
     """
     Ensure detaching storage volume from uninitialized temporary volume fails early
     """
@@ -55,7 +57,7 @@ def test_tmpdir_darwin_detach_storage_volume_uninitialized(mock_tmpdir_darwin_su
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_create_storage_volume(mock_tmpdir_darwin_success):
+def test_tmpdir_darwin_create_storage_volume(mock_tmpdir_darwin_success) -> None:
     """
     Test running create_storage_volume method directly for uninitialized darwin volumes
     """
@@ -66,7 +68,8 @@ def test_tmpdir_darwin_create_storage_volume(mock_tmpdir_darwin_success):
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_context_manager_create_error(mock_tmpdir_darwin_create_fail):
+def test_tmpdir_darwin_context_manager_create_error(
+        mock_tmpdir_darwin_create_fail) -> None:
     """
     Test initializing a darwin secure temporary directory when ramdisk creation fails
     """
@@ -76,7 +79,8 @@ def test_tmpdir_darwin_context_manager_create_error(mock_tmpdir_darwin_create_fa
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_context_manager_newfs_error(mock_tmpdir_darwin_newfs_fail):
+def test_tmpdir_darwin_context_manager_newfs_error(
+        mock_tmpdir_darwin_newfs_fail) -> None:
     """
     Test initializing a darwin secure temporary directory when filesystem creation fails
     """
@@ -86,7 +90,8 @@ def test_tmpdir_darwin_context_manager_newfs_error(mock_tmpdir_darwin_newfs_fail
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_context_manager_mount_error(mock_tmpdir_darwin_mount_fail):
+def test_tmpdir_darwin_context_manager_mount_error(
+        mock_tmpdir_darwin_mount_fail) -> None:
     """
     Test initializing a darwin secure temporary directory when filesystem mounting fails
     """
@@ -96,7 +101,8 @@ def test_tmpdir_darwin_context_manager_mount_error(mock_tmpdir_darwin_mount_fail
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_context_manager_detach_error(mock_tmpdir_darwin_diskutil_fail):
+def test_tmpdir_darwin_context_manager_detach_error(
+        mock_tmpdir_darwin_diskutil_fail) -> None:
     """
     Test initializing a darwin secure temporary directory when filesystem detaching fails
     """
@@ -106,7 +112,8 @@ def test_tmpdir_darwin_context_manager_detach_error(mock_tmpdir_darwin_diskutil_
 
 
 # pylint: disable=unused-argument
-def test_tmpdir_darwin_context_manager_ok(mock_tmpdir_darwin_success):
+def test_tmpdir_darwin_context_manager_ok(
+        mock_tmpdir_darwin_success) -> None:
     """
     Test initializing a darwin secure temporary directory context manager successfully
     with mocked environment

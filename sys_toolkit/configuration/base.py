@@ -1,12 +1,11 @@
 """
 Loaders for ini, json and yaml format configuration files
 """
-
 import os
 import re
 
 from pathlib import Path
-from typing import Any, Tuple
+from typing import Any, Iterator, List, Optional, Tuple
 
 from sys_toolkit.logger import DEFAULT_TARGET_NAME
 
@@ -33,7 +32,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
     """Tuple of settings loaded as pathlib.Path"""
 
     def __init__(self,
-                 parent: LoggingBaseClass = None,
+                 parent: Optional[LoggingBaseClass] = None,
                  debug_enabled: bool = False,
                  silent: bool = False,
                  logger: str = DEFAULT_TARGET_NAME) -> None:
@@ -138,7 +137,7 @@ class ConfigurationItemContainer(LoggingBaseClass):
                 data[attribute] = item
         return data
 
-    def set(self, attr, value):
+    def set(self, attr: str, value: Any) -> None:
         """
         Load item with correct class
         """
@@ -173,11 +172,11 @@ class ConfigurationList(ConfigurationItemContainer):
     List of settings in configuration section
     """
     def __init__(self,
-                 setting=None,
-                 data=None,
-                 parent=None,
+                 setting: Optional[Any] = None,
+                 data: Optional[Any] = None,
+                 parent: Optional[LoggingBaseClass] = None,
                  debug_enabled: bool = False,
-                 silent: bool = False):
+                 silent: bool = False) -> None:
         super().__init__(parent=parent, debug_enabled=debug_enabled, silent=silent)
         self.__setting__ = setting
         self.__load__(data)
@@ -185,13 +184,13 @@ class ConfigurationList(ConfigurationItemContainer):
     def __repr__(self) -> str:
         return self.__values__.__repr__()
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Any:
         return self.__values__[index]
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: int, value: Any) -> None:
         self.__values__.__setitem__(index, value)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         return iter(self.__values__)
 
     def __len__(self) -> int:
@@ -217,7 +216,7 @@ class ConfigurationList(ConfigurationItemContainer):
         """
         self.__values__.append(self.__format_item__(value))
 
-    def __load__(self, value):
+    def __load__(self, value: Any) -> None:
         """
         Load list of values
         """
@@ -230,7 +229,10 @@ class ConfigurationList(ConfigurationItemContainer):
                 item = self.__dict_loader__(item, parent=self)
             self.append(item)
 
-    def set(self, attr, value):
+    def set(self, attr: str, value: Any) -> None:
+        """
+        Load value to list. Attribute is ignored in lists
+        """
         self.__load__(value)
 
 
@@ -244,28 +246,27 @@ class ConfigurationSection(ConfigurationItemContainer):
 
     Any data given in data dictionary are inserted as settings.
     """
-    __name__ = None
+    __name__: str = None
     """Name of configuration section, used in linking custom classes"""
-    __default_settings__ = {}
+    __default_settings__: dict = {}
     """Dictionary of default settings configuration"""
-    __required_settings__ = ()
+    __required_settings__: Tuple[str] = ()
     """Tuple of settings required for valid configuration"""
-    __environment_variables__ = {}
+    __environment_variables__: dict = {}
     """Mapping from environment variables read to settings"""
-    __environment_variable_prefix__ = None
+    __environment_variable_prefix__: Optional[str] = None
     """Prefix for reading settings from environment variables"""
 
-    __section_loaders__ = ()
+    __section_loaders__: Tuple[Any] = ()
     """Classes used for subsection parsers"""
-    __key_attribute_map__ = {}
+    __key_attribute_map__: dict = {}
     """Map configuration keys to python compatible attributes"""
 
     def __init__(self,
                  data: dict = dict,
                  parent: ConfigurationItemContainer = None,
                  debug_enabled: bool = False,
-                 silent: bool = False):
-
+                 silent: bool = False) -> None:
         if parent is not None and not isinstance(parent, ConfigurationItemContainer):
             raise TypeError('parent must be instance of ConfigurationItemContainer')
         super().__init__(
@@ -310,13 +311,13 @@ class ConfigurationSection(ConfigurationItemContainer):
             setattr(self, name, subsection)
             self.__attributes__.append(name)
 
-    def __attribute_from_key__(self, key):
+    def __attribute_from_key__(self, key: str) -> Any:
         """
         Map settings key to python attribute
         """
         return self.__key_attribute_map__.get(key, key)
 
-    def __key_from_attribute__(self, attr):
+    def __key_from_attribute__(self, attr: str) -> Any:
         """
         Map settings file key from attribute
         """
@@ -325,7 +326,7 @@ class ConfigurationSection(ConfigurationItemContainer):
                 return key
         return attr
 
-    def __split_attribute_path__(self, key):
+    def __split_attribute_path__(self, key: str) -> Tuple[str, List[str]]:
         """
         Return section attribute from key
         """
@@ -335,7 +336,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             return parts[0], '.'.join(parts[1:])
         return key, []
 
-    def __detect_valid_settings__(self):
+    def __detect_valid_settings__(self) -> List[str]:
         """
         Detect all known settings, return list of keys
         """
@@ -369,7 +370,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             if value is not None:
                 self.set(attr, value)
 
-    def __get_section_loader__(self, section_name):
+    def __get_section_loader__(self, section_name: str) -> Any:
         """
         Find configuration section loader by name
 
@@ -385,7 +386,10 @@ class ConfigurationSection(ConfigurationItemContainer):
                 return loader
         return self.__dict_loader__
 
-    def __get_or_create_subsection__(self, name, parent=None):
+    def __get_or_create_subsection__(
+            self,
+            name: str,
+            parent: Optional[LoggingBaseClass] = None) -> Any:
         if parent is None:
             parent = self
         if not hasattr(parent, name):
@@ -396,7 +400,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             parent.__subsections__.append(item)
         return getattr(parent, name)
 
-    def __init_subsection_path__(self, section_name: str, path: Path):
+    def __init_subsection_path__(self, section_name: str, path: Path) -> Tuple[Any, str]:
         """
         Initialize subsections from config path
 
@@ -417,7 +421,7 @@ class ConfigurationSection(ConfigurationItemContainer):
                 )
         return subsection, field
 
-    def __load_section__(self, section: str, data, path=None):
+    def __load_section__(self, section: str, data: Any, path: Optional[str] = None) -> None:
         """
         Load configuration section from data
         """
@@ -465,7 +469,7 @@ class ConfigurationSection(ConfigurationItemContainer):
             data[subsection.__name__] = subsection.as_dict()
         return data
 
-    def set(self, attr, value):
+    def set(self, attr: str, value: Any) -> None:
         """
         Set configuration setting value as attribute of the object
 

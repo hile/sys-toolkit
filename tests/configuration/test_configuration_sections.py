@@ -1,8 +1,8 @@
 """
 Unit tests for configuration sections
 """
-
 from pathlib import Path
+from typing import Any, Dict, Optional
 
 import pytest
 
@@ -141,12 +141,16 @@ class CallableSetConfigurationSection(ConfigurationSection):
     """
     __name__ = CALLABLE_SECTION_NAME
 
-    def __init__(self, data=dict, parent=None, debug_enabled=False, silent=False):
+    def __init__(self,
+                 data: Dict = dict,
+                 parent: ConfigurationSection = None,
+                 debug_enabled: bool = False,
+                 silent: bool = False):
         super().__init__(data, parent, debug_enabled, silent)
         self.set_call_count = 0
         self.set_call_args = []
 
-    def set(self, attr, value):
+    def set(self, attr: str, value: Any) -> None:
         """
         Store set() call arguments to the section
         """
@@ -201,7 +205,7 @@ class FormattedConfigurationSection(ConfigurationSection):
     Configuration with formatter callback
     """
     @staticmethod
-    def format_test_key(value):
+    def format_test_key(value: str) -> str:
         """
         Format expected test key value
         """
@@ -213,7 +217,7 @@ class ValidatedConfigurationSection(ConfigurationSection):
     Configuration with validator callback
     """
     @staticmethod
-    def validate_test_key(value):
+    def validate_test_key(value: str) -> str:
         """
         Validate expected test key value
         """
@@ -225,14 +229,17 @@ class InvalidatedConfigurationSection(ConfigurationSection):
     Configuration with validator callback raising error
     """
     @staticmethod
-    def validate_test_key(value):
+    def validate_test_key(value: str) -> None:
         """
         Validate expected test key value
         """
         raise ValueError('Invalid value')
 
 
-def validate_configuration_section(section, data, parent=None):
+def validate_configuration_section(
+        section: ConfigurationSection,
+        data: Dict,
+        parent: Optional[ConfigurationSection] = None) -> None:
     """
     Validate configuration section details
     """
@@ -250,7 +257,7 @@ def validate_configuration_section(section, data, parent=None):
             assert getattr(section, key) == value
 
 
-def test_configuration_list_formatting():
+def test_configuration_list_formatting() -> None:
     """
     Test loading a configuration list that formats values to integers
     """
@@ -261,7 +268,7 @@ def test_configuration_list_formatting():
         assert isinstance(value, int)
 
 
-def test_configuration_section_default_empty():
+def test_configuration_section_default_empty() -> None:
     """
     Test loading empty configuration section without data
     """
@@ -271,7 +278,7 @@ def test_configuration_section_default_empty():
     assert isinstance(section.__required_settings__, (tuple, list))
 
 
-def test_configuration_section_invalid_parent():
+def test_configuration_section_invalid_parent() -> None:
     """
     Test initializing configuration section with invalid parent
     """
@@ -279,7 +286,7 @@ def test_configuration_section_invalid_parent():
         ConfigurationSection(parent={})
 
 
-def test_configuration_section_attribute_name():
+def test_configuration_section_attribute_name() -> None:
     """
     Test validation of attribute names for configuration secrion
     """
@@ -292,7 +299,7 @@ def test_configuration_section_attribute_name():
         configuration.__validate_attribute__('hähää')
 
 
-def test_configuration_section_empty_data():
+def test_configuration_section_empty_data() -> None:
     """
     Test loading configuration section with empty values in data
     """
@@ -314,7 +321,7 @@ def test_configuration_section_empty_data():
     assert configuration.__key_from_attribute__('other') == 'other'
 
 
-def test_configuration_section_list_data():
+def test_configuration_section_list_data() -> None:
     """
     Test loading configuration section with list of mixed content
     """
@@ -349,7 +356,7 @@ def test_configuration_section_list_data():
     assert len(list_value) == 0
 
 
-def test_configuration_section_default_with_data():
+def test_configuration_section_default_with_data() -> None:
     """
     Test loading default configuration section with test data
     """
@@ -357,7 +364,7 @@ def test_configuration_section_default_with_data():
     validate_configuration_section(section, TEST_DEFAULT_DATA)
 
 
-def test_configuration_section_empty_set_invalid_values():
+def test_configuration_section_empty_set_invalid_values() -> None:
     """
     Test loading default configuration section with test data
     """
@@ -374,7 +381,7 @@ def test_configuration_section_empty_set_invalid_values():
             section.__load_section__('test', invalid_value)
 
 
-def test_configuration_section_load_section_explicit():
+def test_configuration_section_load_section_explicit() -> None:
     """
     Load new section explicitly
     """
@@ -387,7 +394,7 @@ def test_configuration_section_load_section_explicit():
     assert configuration.test.test_key == 'test value'
 
 
-def test_configuration_section_load_section_nomatch_path():
+def test_configuration_section_load_section_nomatch_path() -> None:
     """
     Load new section with complex path
     """
@@ -411,7 +418,7 @@ def test_configuration_section_load_section_nomatch_path():
     assert configuration.test.other.sub.test_key == 'test value'
 
 
-def test_configuration_section_defaults():
+def test_configuration_section_defaults() -> None:
     """
     Test configuration section with default settings
     """
@@ -419,7 +426,7 @@ def test_configuration_section_defaults():
     assert len(configuration.__valid_settings__) == 1
 
 
-def test_configuration_section_env(monkeypatch):
+def test_configuration_section_env(monkeypatch) -> None:
     """
     Test configuration section with environment settings
     """
@@ -442,7 +449,7 @@ def test_configuration_section_env(monkeypatch):
         assert configuration.test_key == value
 
 
-def test_configuration_section_env_defaults():
+def test_configuration_section_env_defaults() -> None:
     """
     Test configuration section with default and environment settings
     """
@@ -452,7 +459,7 @@ def test_configuration_section_env_defaults():
     assert configuration.test_key == 'test value'
 
 
-def test_configuration_section_invalid_defaults():
+def test_configuration_section_invalid_defaults() -> None:
     """
     Test configuration section with invalid default settings
     """
@@ -460,7 +467,7 @@ def test_configuration_section_invalid_defaults():
         InvalidDefaultConfigurationSection()
 
 
-def test_configuration_section_invalid_env():
+def test_configuration_section_invalid_env() -> None:
     """
     Test configuration section with invalid environment settings
     """
@@ -468,7 +475,7 @@ def test_configuration_section_invalid_env():
         InvalidEnvConfigurationSection()
 
 
-def test_configuration_section_nested_loader_unknown():
+def test_configuration_section_nested_loader_unknown() -> None:
     """
     Test configuration sections with nested classes
     """
@@ -484,7 +491,7 @@ def test_configuration_section_nested_loader_unknown():
     assert isinstance(dict_output, dict)
 
 
-def test_configuration_section_nested_classes():
+def test_configuration_section_nested_classes() -> None:
     """
     Test configuration sections with nested classes
     """
@@ -510,7 +517,7 @@ def test_configuration_section_nested_classes():
     assert section.test_key == 'test value'
 
 
-def test_configuration_register_subsection_fail():
+def test_configuration_register_subsection_fail() -> None:
     """
     Test failure registering subsection without name
     """
@@ -518,7 +525,7 @@ def test_configuration_register_subsection_fail():
         InvalidRootConfigurationSection()
 
 
-def test_configuration_section_required_settings():
+def test_configuration_section_required_settings() -> None:
     """
     Test loading configuration section with required settings
     """
@@ -534,7 +541,7 @@ def test_configuration_section_required_settings():
         RequiredSettingsConfigurationSection()
 
 
-def test_configuration_section_paths():
+def test_configuration_section_paths() -> None:
     """
     Test loading configuration section with subsection paths
     """
@@ -560,7 +567,7 @@ def test_configuration_section_paths():
     assert configuration.sub.inner.test == 'value'
 
 
-def test_configuration_section_load_dictionary():
+def test_configuration_section_load_dictionary() -> None:
     """
     Test loading dictionaries with __load_dictionary__ method using some more funky formats
     """
@@ -581,7 +588,7 @@ def test_configuration_section_load_dictionary():
     assert isinstance(dict_output, dict)
 
 
-def test_configuration_section_set():
+def test_configuration_section_set() -> None:
     """
     Test set() method of configuration section
     """
@@ -594,7 +601,7 @@ def test_configuration_section_set():
     assert configuration.foo.bar == 'baz'
 
 
-def test_configuration_section_set_formatters():
+def test_configuration_section_set_formatters() -> None:
     """
     Test configuration section with number attribute formatters
     """
@@ -621,7 +628,7 @@ def test_configuration_section_set_formatters():
     assert isinstance(configuration.root, Path)
 
 
-def test_configuration_section_field_formatter_pass():
+def test_configuration_section_field_formatter_pass() -> None:
     """
     Test configuration section with custom formatter passing
     """
@@ -633,7 +640,7 @@ def test_configuration_section_field_formatter_pass():
         FormattedConfigurationSection(data={'test_key': 123})
 
 
-def test_configuration_section_field_validation_pass():
+def test_configuration_section_field_validation_pass() -> None:
     """
     Test configuration section with custom validation passing
     """
@@ -641,7 +648,7 @@ def test_configuration_section_field_validation_pass():
     validate_configuration_section(section, TEST_DEFAULT_DATA)
 
 
-def test_configuration_section_field_validation_fail():
+def test_configuration_section_field_validation_fail() -> None:
     """
     Test configuration section with custom validation fails
     """
@@ -649,7 +656,7 @@ def test_configuration_section_field_validation_fail():
         InvalidatedConfigurationSection(data=TEST_DEFAULT_DATA)
 
 
-def test_configuration_section_callable_set_method():
+def test_configuration_section_callable_set_method() -> None:
     """
     Test calling a callable set method in child section loader class
     """

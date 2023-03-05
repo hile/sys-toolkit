@@ -76,7 +76,7 @@ TOOLCHAIN_FAMILY_PATTERNS = {
 }
 
 
-def detect_platform_family():
+def detect_platform_family() -> str:
     """
     Detect OS platform family from sys.platform, grouping similar operating systems to single
     label based on PLATFORM_PATTERNS
@@ -88,7 +88,7 @@ def detect_platform_family():
     raise ValueError(f'Error detecting OS platform family from {sys.platform}')
 
 
-def detect_toolchain_family():
+def detect_toolchain_family() -> str:
     """
     Detect CLI toolchain family from sys.platform, grouping similar operating system to singel
     label based on TOOLCHAIN_FAMILY_PATTERNS

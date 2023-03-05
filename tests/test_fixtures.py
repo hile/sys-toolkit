@@ -1,14 +1,13 @@
 """
 Test shared  pytest mock fixtures
 """
-
 import os
 
 from pathlib import Path
 
 
 # pylint: disable=unused-argument
-def test_fixtures_mock_path_not_exists(mock_path_not_exists):
+def test_fixtures_mock_path_not_exists(mock_path_not_exists) -> None:
     """
     Test pathlib.Path.exists() returns always false
     """
@@ -16,7 +15,7 @@ def test_fixtures_mock_path_not_exists(mock_path_not_exists):
 
 
 # pylint: disable=unused-argument
-def test_fixtures_mock_path_not_is_file(mock_path_not_file):
+def test_fixtures_mock_path_not_is_file(mock_path_not_file) -> None:
     """
     Test pathlib.Path.is_file() returns always false
     """
@@ -24,7 +23,7 @@ def test_fixtures_mock_path_not_is_file(mock_path_not_file):
 
 
 # pylint: disable=unused-argument
-def test_fixtures_mock_permission_denied(mock_permission_denied):
+def test_fixtures_mock_permission_denied(mock_permission_denied) -> None:
     """
     Test pathlib.Path.is_file() returns always false
     """

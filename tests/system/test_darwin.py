@@ -1,7 +1,6 @@
 """
 Unit tests for sys_toolkit.system.darwin module
 """
-
 from sys_toolkit.tests.mock import MockRunCommandLineOutput
 from sys_toolkit.system.darwin import SoftwareVersion
 
@@ -21,7 +20,7 @@ SW_VERS_PRODUCT_NAMES = {
 }
 
 
-def validate_software_version(obj):
+def validate_software_version(obj: SoftwareVersion) -> None:
     """
     Validate software version object that has not yet been lazy loaded
     """
@@ -36,7 +35,7 @@ def validate_software_version(obj):
     assert isinstance(obj.__repr__(), str)
 
 
-def test_darwin_software_version_high_sierra(monkeypatch):
+def test_darwin_software_version_high_sierra(monkeypatch) -> None:
     """
     Test loading software version data for MacOS 10.13 High Sierra
     """
@@ -47,7 +46,7 @@ def test_darwin_software_version_high_sierra(monkeypatch):
     assert obj.product_name == SW_VERS_PRODUCT_NAMES['high_sierra']
 
 
-def test_darwin_software_version_big_sur(monkeypatch):
+def test_darwin_software_version_big_sur(monkeypatch) -> None:
     """
     Test loading software version data for MacOS 11 Big Sur
     """
@@ -58,7 +57,7 @@ def test_darwin_software_version_big_sur(monkeypatch):
     assert obj.product_name == SW_VERS_PRODUCT_NAMES['big_sur']
 
 
-def test_darwin_software_version_monterey(monkeypatch):
+def test_darwin_software_version_monterey(monkeypatch) -> None:
     """
     Test loading software version data for MacOS 12 Monterey
     """

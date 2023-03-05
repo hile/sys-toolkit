@@ -2,6 +2,7 @@
 Clipboard access for wayland display server clipboard
 """
 from enum import Enum
+from typing import Tuple
 
 from .base import ClipboardBaseClass
 
@@ -17,32 +18,35 @@ class WaylandClipboard(ClipboardBaseClass):
     """
     Clipboard copy / paste with wayland clipboard
     """
-    __required_commands__ = ('wl-copy', 'wl-paste')
-    __required_env__ = ('WAYLAND_DISPLAY',)
+    selection: WaylandClipboardSelectionType
+    __required_commands__: Tuple[str] = ('wl-copy', 'wl-paste')
+    __required_env__: Tuple[str] = ('WAYLAND_DISPLAY',)
 
-    def __init__(self, selection=WaylandClipboardSelectionType.PRIMARY):
+    def __init__(
+            self,
+            selection: WaylandClipboardSelectionType = WaylandClipboardSelectionType.PRIMARY) -> None:
         self.selection = selection
 
     @property
-    def available(self):
+    def available(self) -> bool:
         """
         Check if wl-copy and wl-paste commands are available on command line
         """
         return self.__check_required_env__() and self.__check_required_cli_commands__()
 
-    def clear(self):
+    def clear(self) -> None:
         """
         Clear wayland clipboard
         """
         self.__run_command__(('wl-copy', '--clear'),)
 
-    def copy(self, data):
+    def copy(self, data: str) -> None:
         """
         Copy data to macOS clipboard
         """
         self.__copy_command_stdin__(data, ('wl-copy', f'--{self.selection.value}'))
 
-    def paste(self):
+    def paste(self) -> str:
         """
         Paste data from macOS clipboard to variable
         """

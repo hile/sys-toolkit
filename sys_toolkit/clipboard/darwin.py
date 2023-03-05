@@ -2,6 +2,8 @@
 Darwin (macOS) secure temporary directory implementation
 """
 from enum import Enum
+from typing import Tuple
+
 from .base import ClipboardBaseClass
 
 
@@ -19,31 +21,32 @@ class DarwinClipboard(ClipboardBaseClass):
     """
     Implementation of clipboard copy/paste base class for macOS darwin
     """
-    __required_commands__ = ('pbcopy', 'pbpaste')
+    board: DarwinClipboardType
+    __required_commands__: Tuple = ('pbcopy', 'pbpaste')
 
-    def __init__(self, board=DarwinClipboardType.GENERAL):
+    def __init__(self, board: DarwinClipboardType = DarwinClipboardType.GENERAL) -> None:
         self.board = board
 
     @property
-    def available(self):
+    def available(self) -> bool:
         """
         Check if pbcopy and pbpaste commands are available on command line
         """
         return self.__check_required_cli_commands__()
 
-    def clear(self):
+    def clear(self) -> None:
         """
         Clear macOs clipboard by placing empty text into it
         """
         self.copy('')
 
-    def copy(self, data):
+    def copy(self, data: str) -> None:
         """
         Copy data to macOS clipboard
         """
         self.__copy_command_stdin__(data, ('pbcopy', '-pboard', self.board.value))
 
-    def paste(self):
+    def paste(self) -> str:
         """
         Paste data from macOS clipboard to variable
         """

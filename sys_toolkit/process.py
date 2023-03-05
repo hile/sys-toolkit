@@ -1,10 +1,10 @@
 """
 List and manipulate OS processes
 """
-
 import re
 
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
 from .collection import CachedMutableSequence
 from .exceptions import CommandError
@@ -51,7 +51,7 @@ USERNAME_FIELDS = (
 )
 
 
-def parse_datetime(value):
+def parse_datetime(value: str) -> Optional[datetime]:
     """
     Parse a datetime value matching time formats
     """
@@ -71,14 +71,14 @@ class Process:
     command = None
     started = None
 
-    def __init__(self, processes, line):
+    def __init__(self, processes: 'Processes', line: str) -> None:
         self.__processes__ = processes
         self.__parse_line__(line)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.username} {self.pid} {self.command}'
 
-    def __parse_started__(self, line):
+    def __parse_started__(self, line: str) -> str:
         """
         Parse 'started' (lstart) timestamp from line
         """
@@ -94,7 +94,7 @@ class Process:
         # Trim date data out of parsed values
         return values[:date_start] + values[date_end:]
 
-    def __parse_line__(self, line):
+    def __parse_line__(self, line: str) -> None:
         """
         Parse process info from line
         """
@@ -121,7 +121,7 @@ class Process:
             setattr(self, attr, value)
 
     @property
-    def user_id(self):
+    def user_id(self) -> str:
         """
         User ID
         """
@@ -131,7 +131,7 @@ class Process:
         return None
 
     @property
-    def username(self):
+    def username(self) -> str:
         """
         Username
         """
@@ -145,19 +145,25 @@ class Processes(CachedMutableSequence):
     """
     List of operating system processes
     """
+    attributes: Tuple[str]
+    __max_age_seconds__: int
 
-    def __init__(self, attributes=PS_FIELDS, cache_age_seconds=DEFAULT_CACHE_SECONDS):
+    def __init__(self,
+                 attributes: Tuple[str] = PS_FIELDS,
+                 cache_age_seconds: int = DEFAULT_CACHE_SECONDS) -> None:
         self.__max_age_seconds__ = cache_age_seconds
         self.attributes = attributes
 
     @property
-    def command(self):
+    def command(self) -> List[str]:
         """
         CLI command to run to get process list
         """
         return ['ps', '-wwaxo', ','.join(self.attributes)]
 
-    def filter(self, *args, **kwargs):
+    def filter(self,
+               *args: List[Any],
+               **kwargs: Dict) -> List[Process]:
         """Filter processes
 
         Filters entries matching given filters. Filter must be a
@@ -185,7 +191,7 @@ class Processes(CachedMutableSequence):
 
         return filtered
 
-    def update(self):
+    def update(self) -> None:
         """
         Update list of processes visible to current user
         """

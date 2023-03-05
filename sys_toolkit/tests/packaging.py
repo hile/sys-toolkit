@@ -7,7 +7,7 @@ This module implements repeated unit test validators
 from packaging import version
 
 
-def validate_version_string(value):
+def validate_version_string(value: str) -> None:
     """
     Ensure version string is valid
 

@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from sys_toolkit.constants import DEFAULT_ENCODING
 from sys_toolkit.subprocess import run, run_command, run_command_lineoutput
 from sys_toolkit.exceptions import CommandError
 
@@ -16,7 +17,7 @@ VALID_COMMAND = 'uname'
 INVALID_ARGS = (VALID_COMMAND, '--foobar')
 
 
-def verify_string_list(value):
+def verify_string_list(value) -> None:
     """
     Test specified value is list of strings
     """
@@ -25,7 +26,7 @@ def verify_string_list(value):
         assert isinstance(line, str)
 
 
-def test_subprocess_run_uname_as_string(capfd):
+def test_subprocess_run_uname_as_string(capfd) -> None:
     """
     Test running uname command with 'run'
     """
@@ -36,7 +37,7 @@ def test_subprocess_run_uname_as_string(capfd):
     assert len(lines) == 1
 
 
-def test_subprocess_run_uname_as_string_invalid_cwd(tmpdir):
+def test_subprocess_run_uname_as_string_invalid_cwd(tmpdir) -> None:
     """
     Test running uname command with 'run'
     """
@@ -45,7 +46,7 @@ def test_subprocess_run_uname_as_string_invalid_cwd(tmpdir):
         run(VALID_COMMAND, cwd=missing)
 
 
-def test_subprocess_run_uname_invalid_args():
+def test_subprocess_run_uname_invalid_args() -> None:
     """
     Test running an invalid command with 'run' raising CommandError
     """
@@ -53,7 +54,7 @@ def test_subprocess_run_uname_invalid_args():
         run(*INVALID_ARGS)
 
 
-def test_subprocess_run_timeout_ok():
+def test_subprocess_run_timeout_ok() -> None:
     """
     Test running an command with 'run' raising timeout
     """
@@ -61,7 +62,7 @@ def test_subprocess_run_timeout_ok():
     run(*args, timeout=2)
 
 
-def test_subprocess_run_timeout_exceeded():
+def test_subprocess_run_timeout_exceeded() -> None:
     """
     Test running an command with 'run' raising timeout
     """
@@ -70,7 +71,7 @@ def test_subprocess_run_timeout_exceeded():
         run(*args, timeout=0.5)
 
 
-def test_subprocess_run_command_uname_as_string():
+def test_subprocess_run_command_uname_as_string() -> None:
     """
     Test running uname with 'run_command'
     """
@@ -79,7 +80,7 @@ def test_subprocess_run_command_uname_as_string():
     assert isinstance(stderr, bytes)
 
 
-def test_subprocess_run_command_uname_invalid_args():
+def test_subprocess_run_command_uname_invalid_args() -> None:
     """
     Test running an invalid command with 'run_command' raising CommandError
     """
@@ -87,7 +88,7 @@ def test_subprocess_run_command_uname_invalid_args():
         run(*INVALID_ARGS)
 
 
-def test_subprocess_run_command_uname_with_env_path():
+def test_subprocess_run_command_uname_with_env_path() -> None:
     """
     Test running uname with 'run_command' with custom invalid PATH
 
@@ -99,7 +100,7 @@ def test_subprocess_run_command_uname_with_env_path():
         run_command(VALID_COMMAND, env=env)
 
 
-def test_subprocess_run_command_uname_as_args_list():
+def test_subprocess_run_command_uname_as_args_list() -> None:
     """
     Test running uname with 'run_command' with arguments as list
     """
@@ -109,7 +110,7 @@ def test_subprocess_run_command_uname_as_args_list():
     assert isinstance(stderr, bytes)
 
 
-def test_subprocess_run_command_uname_as_args_tuple():
+def test_subprocess_run_command_uname_as_args_tuple() -> None:
     """
     Test running uname with 'run_command' as tuple
     """
@@ -119,7 +120,7 @@ def test_subprocess_run_command_uname_as_args_tuple():
     assert isinstance(stderr, bytes)
 
 
-def test_subprocess_run_command_running_explicit_return_codes():
+def test_subprocess_run_command_running_explicit_return_codes() -> None:
     """
     Test running an command with 'run_command' by specifying list of
     expected return codes
@@ -130,7 +131,7 @@ def test_subprocess_run_command_running_explicit_return_codes():
     assert isinstance(stderr, list)
 
 
-def test_subprocess_run_command_timeout_exceeded():
+def test_subprocess_run_command_timeout_exceeded() -> None:
     """
     Test running an command with 'run_command' raising timeout
     """
@@ -141,7 +142,7 @@ def test_subprocess_run_command_timeout_exceeded():
         run_command_lineoutput(*args, timeout=0.5)
 
 
-def test_subprocess_run_command_with_invalid_args():
+def test_subprocess_run_command_with_invalid_args() -> None:
     """
     Test running an invalid command with 'run_command'
     """
@@ -149,7 +150,7 @@ def test_subprocess_run_command_with_invalid_args():
         run_command(*INVALID_ARGS)
 
 
-def test_subprocess_process_running_command_with_invalid_args():
+def test_subprocess_process_running_command_with_invalid_args() -> None:
     """
     Test running a command with 'run_command' and invalid args
     """
@@ -157,7 +158,7 @@ def test_subprocess_process_running_command_with_invalid_args():
         run_command(*INVALID_ARGS)
 
 
-def test_subprocess_process_running_invalid_command():
+def test_subprocess_process_running_invalid_command() -> None:
     """
     Test running an invalid command with 'run_command'
     """
@@ -165,7 +166,7 @@ def test_subprocess_process_running_invalid_command():
         run_command('49FC61D4-F21B-4A0D-941D-9CC52F163CFF')
 
 
-def test_subprocess_process_lineoutput_running_uname_as_string():
+def test_subprocess_process_lineoutput_running_uname_as_string() -> None:
     """
     Test running uname command with 'run_command_lineoutput'
     """
@@ -174,7 +175,7 @@ def test_subprocess_process_lineoutput_running_uname_as_string():
     verify_string_list(stderr)
 
 
-def test_subprocess_process_lineoutput_running_uname_as_args_list():
+def test_subprocess_process_lineoutput_running_uname_as_args_list() -> None:
     """
     Test running uname command with 'run_command_lineoutput'
     """
@@ -186,7 +187,7 @@ def test_subprocess_process_lineoutput_running_uname_as_args_list():
     verify_string_list(stderr)
 
 
-def test_subprocess_process_lineoutput_running_uname_as_args_tuple():
+def test_subprocess_process_lineoutput_running_uname_as_args_tuple() -> None:
     """
     Test running uname command with 'run_command_lineoutput'
     """
@@ -198,7 +199,7 @@ def test_subprocess_process_lineoutput_running_uname_as_args_tuple():
     verify_string_list(stderr)
 
 
-def test_subprocess_process_lineoutput_mixed_encoding_file_read():
+def test_subprocess_process_lineoutput_mixed_encoding_file_read() -> None:
     """
     Test reading data from a file with mixed encodings with 'run_command_lineoutput'
     """
@@ -206,7 +207,7 @@ def test_subprocess_process_lineoutput_mixed_encoding_file_read():
     with pytest.raises(CommandError):
         run_command_lineoutput(*command)
 
-    encodings = ['utf-8', 'latin1']
+    encodings = [DEFAULT_ENCODING, 'latin1']
     stdout, stderr = run_command_lineoutput(*command, encodings=encodings)
     assert len(stdout) == 2
     assert len(stderr) == 0
