@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2020-2023 by Ilkka Tuohela <hile@iki.fi>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
 """
 Python unit test fixtures for sys_toolkit.tmpdir module
 """

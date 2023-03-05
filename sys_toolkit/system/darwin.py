@@ -1,7 +1,11 @@
+#
+# Copyright (C) 2020-2023 by Ilkka Tuohela <hile@iki.fi>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
 """
 System information lookup functions specific to MacOS Darwin
 """
-
 from inflection import underscore
 
 from ..subprocess import run_command_lineoutput
