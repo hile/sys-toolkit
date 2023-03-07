@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sys-toolkit"
-version = "2.4.7"
+version = "2.4.8"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
 homepage = "https://github.com/hile/sys-toolkit"

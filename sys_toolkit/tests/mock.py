@@ -171,7 +171,7 @@ class MockException(MockCalledMethod):
     exception_kwargs: Dict[Any, Any]
 
     def __init__(self,
-                 exception: Exception = Exception,
+                 exception: BaseException = Exception,
                  default_message: bool = True,
                  **exception_kwargs: Dict[Any, Any]) -> None:
         super().__init__()
@@ -179,7 +179,7 @@ class MockException(MockCalledMethod):
         self.default_message = default_message
         self.exception_kwargs = exception_kwargs if exception_kwargs else {}
 
-    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> Any:
+    def __call__(self, *args: List[Any], **kwargs: Dict[Any, Any]) -> BaseException:
         """
         Store call arguments and raise specified exception with specified arguments
         or mocked message if nothing was specified
