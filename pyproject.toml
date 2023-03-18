@@ -15,7 +15,6 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: POSIX",
     "Operating System :: Unix",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -23,7 +22,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 PyYAML = "^6.0"
 inflection = "^0.5"
 
