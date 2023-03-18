@@ -24,6 +24,7 @@ class PlatformFamily(Enum):
     DARWIN = 'darwin'
     LINUX = 'linux'
     BSD = 'bsd'
+    NETBSD = 'netbsd'
     OPENBSD = 'openbsd'
     WINDOWS = 'windows'
 
@@ -34,6 +35,7 @@ class ToolchainFamily(Enum):
     """
     GNU = 'gnu'
     BSD = 'bsd'
+    NETBSD = 'netbsd'
     OPENBSD = 'openbsd'
     WINDOWS = 'windows'
 
@@ -51,6 +53,9 @@ PLATFORM_PATTERNS = {
         r'^freebsd$',
         r'^freebsd\d+$',
     ),
+    PlatformFamily.NETBSD: {
+        r'^netbsd\d+$',
+    },
     PlatformFamily.OPENBSD: (
         r'^openbsd$',
         r'^openbsd\d+$',
@@ -70,6 +75,9 @@ TOOLCHAIN_FAMILY_PATTERNS = {
         r'^darwin$',
         r'^freebsd$',
         r'^freebsd\d+$',
+    ),
+    ToolchainFamily.NETBSD: (
+        r'^netbsd\d+$',
     ),
     ToolchainFamily.OPENBSD: (
         r'^openbsd$',
