@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sys-toolkit"
-version = "2.4.8"
+version = "2.5.0"
 description = "Classes for operating system utilities"
 authors = ["Ilkka Tuohela <hile@iki.fi>"]
 homepage = "https://github.com/hile/sys-toolkit"
@@ -15,6 +15,7 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: POSIX",
     "Operating System :: Unix",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -22,7 +23,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 PyYAML = "^6.0"
 inflection = "^0.5"
 
