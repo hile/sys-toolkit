@@ -28,15 +28,15 @@ inflection = "^0.5"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7"
-flake8 = "^6"
-flake8-bugbear = "^22"
+flake8 = "^7"
+flake8-bugbear = "^24"
 flake8-quotes = "^3"
+mypy = "^1"
 pycodestyle = "^2"
 pyflakes = "^3"
-pylint = "^2"
-pytest = "^7"
+pytest = "^8"
 tox = "^4"
-ruff = "^0.0.261"
+ruff = "^0.4"
 
 [tool.poetry.plugins.pytest11]
 sys_toolkit_fixtures = 'sys_toolkit.fixtures'
