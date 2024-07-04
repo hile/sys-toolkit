@@ -16,7 +16,7 @@ python version. The module has been tested with python 3.9 and python 3.10.
 
 All tests are run with *tox*.
 
-Run unit tests, flake8 and pylint:
+Run unit tests and linters:
 
 ```bash
 make
@@ -28,7 +28,7 @@ Run unit tests:
 make test
 ```
 
-Run flake8 and pylint:
+Run linters:
 
 ```bash
 make lint
