@@ -61,7 +61,7 @@ def run(
         res = run_real(args, stdout=stdout, stderr=stderr, check=False, cwd=cwd, env=env, timeout=timeout)
         if res.returncode not in expected_return_codes:
             raise CommandError(
-                f'Error running {" ".join(args)}: returns {res.returncode}: {res.stderr}'
+                f"""Error running {' '.join(args)}: returns {res.returncode}: {res.stderr}"""
             )
         return res
     except (CalledProcessError, FileNotFoundError, TimeoutExpired) as error:
@@ -86,7 +86,7 @@ def run_command(
         res = run_real(args, stdout=PIPE, stderr=PIPE, check=False, cwd=cwd, env=env, timeout=timeout)
         if res.returncode not in expected_return_codes:
             raise CommandError(
-                f'Error running {" ".join(args)}: returns {res.returncode}: {res.stderr}'
+                f"""Error running {' '.join(args)}: returns {res.returncode}: {res.stderr}"""
             )
     except (CalledProcessError, FileNotFoundError, TimeoutExpired) as error:
         raise CommandError(error) from error
