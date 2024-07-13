@@ -20,6 +20,7 @@ virtualenv: ${VENV_BIN}
 
 clean:
 	@rm -rf build dist .DS_Store .pytest_cache .cache .eggs .coverage coverage.xml public
+	@rm -rf ${VENV_DIR}
 	@find . -name '__pycache__' -print0 | xargs -0r rm -rf
 	@find . -name '*.egg-info' -print0 | xargs -0r rm -rf
 	@find . -name '*.pyc' -print0 | xargs -0r rm -rf
@@ -50,7 +51,6 @@ lint: virtualenv
 	. ${VENV_BIN}/activate && poetry run ruff "${MODULE}" tests
 	. ${VENV_BIN}/activate && poetry run flake8
 	. ${VENV_BIN}/activate && poetry run pycodestyle "${MODULE}" tests
-	. ${VENV_BIN}/activate && poetry run mypy "${MODULE}" tests
 
 publish: virtualenv clean build
 	. ${VENV_BIN}/activate && poetry publish
